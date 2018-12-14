@@ -64,6 +64,7 @@ dependencies {
     api rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     implementation project(':baselibrary')
+    implementation project(':camera')
 }
 
 

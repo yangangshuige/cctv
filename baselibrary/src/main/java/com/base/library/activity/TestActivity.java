@@ -18,9 +18,10 @@ import com.base.library.net.TestService;
 
 public class TestActivity extends AppCompatActivity {
 
-    private String TAG="TestActivity";
+    private String TAG = "TestActivity";
     String androidID;
     String parkId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +29,16 @@ public class TestActivity extends AppCompatActivity {
         androidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
-    public void getParkInfo(View view){
+    public void getParkInfo(View view) {
         ApiManager.getInstence().getService(TestService.class).getParkInfo(androidID)
                 .compose(RxSchedulers.<BaseResponse<ParkInfo>>applySchedulers())
                 .subscribe(new BaseObserver<BaseResponse<ParkInfo>>() {
                     @Override
                     public void onSuccess(BaseResponse<ParkInfo> parkInfoBaseResponse) {
-                        Log.e(TAG,parkInfoBaseResponse.getData().toString());
-                        if(parkInfoBaseResponse.isResponseSuccess()){
-                            Log.e(TAG,parkInfoBaseResponse.getData().toString());
-                            parkId=parkInfoBaseResponse.getData().getParkNum();
+                        Log.e(TAG, parkInfoBaseResponse.getData().toString());
+                        if (parkInfoBaseResponse.isResponseSuccess()) {
+                            Log.e(TAG, parkInfoBaseResponse.getData().toString());
+                            parkId = parkInfoBaseResponse.getData().getParkNum();
                         }
                     }
 
@@ -48,7 +49,8 @@ public class TestActivity extends AppCompatActivity {
                 });
 
     }
-    public void getRobotInfo(View view){
+
+    public void getRobotInfo(View view) {
         GetConfigRequest request = new GetConfigRequest();
         request.setParkId(parkId);
         request.setRobotId(androidID);
@@ -57,8 +59,8 @@ public class TestActivity extends AppCompatActivity {
                 .subscribe(new BaseObserver<BaseResponse<Robot>>() {
                     @Override
                     public void onSuccess(BaseResponse<Robot> parkInfoBaseResponse) {
-                        Log.e(TAG,parkInfoBaseResponse.getData().toString());
-                        if(parkInfoBaseResponse.isResponseSuccess()){
+                        Log.e(TAG, parkInfoBaseResponse.getData().toString());
+                        if (parkInfoBaseResponse.isResponseSuccess()) {
                         }
                     }
 

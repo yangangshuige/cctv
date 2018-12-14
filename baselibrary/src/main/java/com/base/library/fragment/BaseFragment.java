@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.base.library.R;
 import com.base.library.activity.BaseContract;
 import com.base.library.activity.IBase;
@@ -17,8 +16,6 @@ import com.base.library.utils.DialogHelper;
 import com.base.library.widget.loadstatus.MultiStateView;
 import com.base.library.widget.loadstatus.SimpleMultiStateView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -33,7 +30,6 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
     Unbinder unbinder;
 
     @Nullable
-    @Inject
     protected T1 mPresenter;
 
 //    @Nullable

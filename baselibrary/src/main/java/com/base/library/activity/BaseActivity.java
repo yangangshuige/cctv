@@ -17,7 +17,6 @@ import com.base.library.utils.StatusBarUtil;
 import com.base.library.widget.loadstatus.MultiStateView;
 import com.base.library.widget.loadstatus.SimpleMultiStateView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -37,7 +36,6 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
     SimpleMultiStateView mSimpleMultiStateView;
 
     @Nullable
-    @Inject
     protected T1 mPresenter;
     protected BGASwipeBackHelper mSwipeBackHelper;
 

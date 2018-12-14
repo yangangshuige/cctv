@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main$Generated" generated="true"><source path="E:\git\cctv\camera\src\main\res"/><source path="E:\git\cctv\camera\build\generated\res\rs\debug"/><source path="E:\git\cctv\camera\build\generated\res\resValues\debug"/></dataSet><dataSet config="main" generated-set="main$Generated"><source path="E:\git\cctv\camera\src\main\res"><file name="about" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\about.png" qualifiers="hdpi-v4" type="drawable"/><file name="add" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\add.png" qualifiers="hdpi-v4" type="drawable"/><file name="add_new" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\add_new.png" qualifiers="hdpi-v4" type="drawable"/><file name="bg_andorid" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\bg_andorid.jpg" qualifiers="hdpi-v4" type="drawable"/><file name="bg_title_bar" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\bg_title_bar.png" qualifiers="hdpi-v4" type="drawable"/><file name="bitmap_book_read_chapterlist_repeat" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\bitmap_book_read_chapterlist_repeat.png" qualifiers="hdpi-v4" type="drawable"/><file name="btn_bg" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\btn_bg.xml" qualifiers="hdpi-v4" type="drawable"/><file name="config" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\config.png" qualifiers="hdpi-v4" type="drawable"/><file name="config_new" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\config_new.png" qualifiers="hdpi-v4" type="drawable"/><file name="delete" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\delete.png" qualifiers="hdpi-v4" type="drawable"/><file name="door_new" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\door_new.png" qualifiers="hdpi-v4" type="drawable"/><file name="edit" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\edit.png" qualifiers="hdpi-v4" type="drawable"/><file name="foreface" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\foreface.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_1" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_1.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_2" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_2.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_3" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_3.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_4" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_4.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_5" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_5.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_6" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_6.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_category_mark" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_category_mark.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_item_normal_bg" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_item_normal_bg.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_item_selected_bg" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_item_selected_bg.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_launcher" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_launcher.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_shelf_category_divider" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_shelf_category_divider.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_top_bar_category" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_top_bar_category.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_top_divider" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\ic_top_divider.png" qualifiers="hdpi-v4" type="drawable"/><file name="main" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\main.png" qualifiers="hdpi-v4" type="drawable"/><file name="plate" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\plate.png" qualifiers="hdpi-v4" type="drawable"/><file name="play" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\play.png" qualifiers="hdpi-v4" type="drawable"/><file name="rounded_rectangle" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\rounded_rectangle.png" qualifiers="hdpi-v4" type="drawable"/><file name="serial_new" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\serial_new.png" qualifiers="hdpi-v4" type="drawable"/><file name="stop" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\stop.png" qualifiers="hdpi-v4" type="drawable"/><file name="trigger_new" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\trigger_new.png" qualifiers="hdpi-v4" type="drawable"/><file name="videoeditor" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\videoeditor.png" qualifiers="hdpi-v4" type="drawable"/><file name="wheel_bg" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\wheel_bg.png" qualifiers="hdpi-v4" type="drawable"/><file name="wheel_val" path="E:\git\cctv\camera\src\main\res\drawable-hdpi\wheel_val.xml" qualifiers="hdpi-v4" type="drawable"/><file name="input_normal" path="E:\git\cctv\camera\src\main\res\drawable-ldpi\input_normal.9.png" qualifiers="ldpi-v4" type="drawable"/><file name="ic_launcher" path="E:\git\cctv\camera\src\main\res\drawable-mdpi\ic_launcher.png" qualifiers="mdpi-v4" type="drawable"/><file name="ic_launcher" path="E:\git\cctv\camera\src\main\res\drawable-xhdpi\ic_launcher.png" qualifiers="xhdpi-v4" type="drawable"/><file name="ic_launcher" path="E:\git\cctv\camera\src\main\res\drawable-xxhdpi\ic_launcher.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="activity_about" path="E:\git\cctv\camera\src\main\res\layout\activity_about.xml" qualifiers="" type="layout"/><file name="activity_device" path="E:\git\cctv\camera\src\main\res\layout\activity_device.xml" qualifiers="" type="layout"/><file name="activity_login" path="E:\git\cctv\camera\src\main\res\layout\activity_login.xml" qualifiers="" type="layout"/><file name="activity_plate" path="E:\git\cctv\camera\src\main\res\layout\activity_plate.xml" qualifiers="" type="layout"/><file name="activity_snap_image" path="E:\git\cctv\camera\src\main\res\layout\activity_snap_image.xml" qualifiers="" type="layout"/><file name="activity_surface" path="E:\git\cctv\camera\src\main\res\layout\activity_surface.xml" qualifiers="" type="layout"/><file name="activity_video_config" path="E:\git\cctv\camera\src\main\res\layout\activity_video_config.xml" qualifiers="" type="layout"/><file name="activity_wlist" path="E:\git\cctv\camera\src\main\res\layout\activity_wlist.xml" qualifiers="" type="layout"/><file name="activity_wlist_edit" path="E:\git\cctv\camera\src\main\res\layout\activity_wlist_edit.xml" qualifiers="" type="layout"/><file name="dialog_time" path="E:\git\cctv\camera\src\main\res\layout\dialog_time.xml" qualifiers="" type="layout"/><file name="gate" path="E:\git\cctv\camera\src\main\res\layout\gate.xml" qualifiers="" type="layout"/><file name="layout_title_bar" path="E:\git\cctv\camera\src\main\res\layout\layout_title_bar.xml" qualifiers="" type="layout"/><file name="list" path="E:\git\cctv\camera\src\main\res\layout\list.xml" qualifiers="" type="layout"/><file name="serial" path="E:\git\cctv\camera\src\main\res\layout\serial.xml" qualifiers="" type="layout"/><file name="slidermenu" path="E:\git\cctv\camera\src\main\res\layout\slidermenu.xml" qualifiers="" type="layout"/><file name="snap_image_item" path="E:\git\cctv\camera\src\main\res\layout\snap_image_item.xml" qualifiers="" type="layout"/><file name="test" path="E:\git\cctv\camera\src\main\res\layout\test.xml" qualifiers="" type="layout"/><file name="timepicker" path="E:\git\cctv\camera\src\main\res\layout\timepicker.xml" qualifiers="" type="layout"/><file name="vedioset" path="E:\git\cctv\camera\src\main\res\layout\vedioset.xml" qualifiers="" type="layout"/><file name="voice" path="E:\git\cctv\camera\src\main\res\layout\voice.xml" qualifiers="" type="layout"/><file name="wlist_group" path="E:\git\cctv\camera\src\main\res\layout\wlist_group.xml" qualifiers="" type="layout"/><file name="wlist_group_child" path="E:\git\cctv\camera\src\main\res\layout\wlist_group_child.xml" qualifiers="" type="layout"/><file name="about" path="E:\git\cctv\camera\src\main\res\menu\about.xml" qualifiers="" type="menu"/><file name="device" path="E:\git\cctv\camera\src\main\res\menu\device.xml" qualifiers="" type="menu"/><file name="login" path="E:\git\cctv\camera\src\main\res\menu\login.xml" qualifiers="" type="menu"/><file name="main" path="E:\git\cctv\camera\src\main\res\menu\main.xml" qualifiers="" type="menu"/><file name="plate" path="E:\git\cctv\camera\src\main\res\menu\plate.xml" qualifiers="" type="menu"/><file name="snap_image" path="E:\git\cctv\camera\src\main\res\menu\snap_image.xml" qualifiers="" type="menu"/><file name="surface" path="E:\git\cctv\camera\src\main\res\menu\surface.xml" qualifiers="" type="menu"/><file name="video_config" path="E:\git\cctv\camera\src\main\res\menu\video_config.xml" qualifiers="" type="menu"/><file name="wlist" path="E:\git\cctv\camera\src\main\res\menu\wlist.xml" qualifiers="" type="menu"/><file name="wlist_edit" path="E:\git\cctv\camera\src\main\res\menu\wlist_edit.xml" qualifiers="" type="menu"/><file path="E:\git\cctv\camera\src\main\res\values\arrays.xml" qualifiers=""><string-array name="FrameSize">
+        <item>352x288</item>
+        <item>704x576 </item>
+        <item>1280x720</item>
+        <item>1920x1080</item>
+    </string-array><string-array name="FrameRate">
+        <item>1</item>
+         <item>2</item>
+         <item>3</item>
+         <item>4</item>
+         <item>5</item>
+         <item>6</item>
+         <item>7</item>
+         <item>8</item>
+         <item>9</item>
+         <item>10</item>
+         <item>11</item>
+         <item>12</item>
+         <item>13</item>
+         <item>14</item>
+         <item>15</item>
+         <item>16</item>
+         <item>17</item>
+         <item>18</item>
+         <item>19</item>
+         <item>20</item>
+         <item>21</item>
+         <item>22</item>
+         <item>23</item>
+         <item>24</item>
+         <item>25</item>
+    </string-array><string-array name="EncodeType">
+        <item>JEPG</item>
+        <item>H264 </item>
+    </string-array><string-array name="serials">
+        <item>1</item>
+        <item>2</item>
+        <item>全部</item>
+    </string-array><string-array name="enable">
+        <item>否</item>
+        <item>是</item>
+    </string-array><string-array name="plateColor">
+        <item>白</item>
+        <item>灰银</item>
+        <item>黄</item>
+        <item>粉</item>
+        <item>红</item>
+        <item>绿</item>
+        <item>蓝</item>
+         <item>棕</item>
+          <item>黑</item>
+    </string-array><string-array name="plateType">
+        <item>未知类型</item>
+        <item>蓝牌小汽车</item>
+        <item>黑牌小汽车</item>
+        <item>单排黄牌</item>
+        <item>双排黄牌</item>
+         <item>警车车牌</item>
+         <item>武警车牌</item>
+         <item>个性化车牌</item>
+         <item>单排军车</item>
+         <item>双排车牌</item>
+         <item>使馆车牌</item>
+         <item>香港进出口车牌</item>
+         <item>农用车牌</item>
+         <item>教练车牌</item>
+         <item>澳门进出中国</item>
+         <item>双层武警车牌</item>
+         <item>武警总队车牌</item>
+         <item>双层武警总队车牌</item>
+    </string-array><string-array name="gateNum">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array></file><file path="E:\git\cctv\camera\src\main\res\values\attrs.xml" qualifiers=""><declare-styleable name="CellDefinedAttr"> 
+      <attr format="integer" name="lineNum"/> 
+      <attr format="integer" name="columnNum"/>
+    </declare-styleable></file><file path="E:\git\cctv\camera\src\main\res\values\dimens.xml" qualifiers=""><dimen name="activity_horizontal_margin">16dp</dimen><dimen name="activity_vertical_margin">16dp</dimen></file><file path="E:\git\cctv\camera\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">一体机工具</string><string name="hello_world">Hello world!</string><string name="action_settings">Settings</string><string name="title_activity_surface">SurfaceActivity</string><string name="title_activity_plate">PlateActivity</string><string name="title_activity_wlist">WlistActivity</string><string name="title_activity_device">DeviceActivity</string><string name="title_activity_video_config">VideoConfigActivity</string><string name="title_activity_snap_image">SnapImageActivity</string><string name="title_activity_wlist_edit">WListEditActivity</string><string name="title_activity_about">AboutActivity</string><string name="title_activity_login">LoginActivity</string></file><file path="E:\git\cctv\camera\src\main\res\values\styles.xml" qualifiers=""><style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        
+    </style><style name="AppTheme" parent="AppBaseTheme">
+        
+    </style></file><file path="E:\git\cctv\camera\src\main\res\values-v11\styles.xml" qualifiers="v11"><style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        
+    </style></file><file path="E:\git\cctv\camera\src\main\res\values-v14\styles.xml" qualifiers="v14"><style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        
+    </style></file><file path="E:\git\cctv\camera\src\main\res\values-w820dp\dimens.xml" qualifiers="w820dp-v13"><dimen name="activity_horizontal_margin">64dp</dimen></file><file name="activity_camera_main" path="E:\git\cctv\camera\src\main\res\layout\activity_camera_main.xml" qualifiers="" type="layout"/></source><source path="E:\git\cctv\camera\build\generated\res\rs\debug"/><source path="E:\git\cctv\camera\build\generated\res\resValues\debug"/></dataSet><dataSet config="debug$Generated" generated="true"><source path="E:\git\cctv\camera\src\debug\res"/></dataSet><dataSet config="debug" generated-set="debug$Generated"><source path="E:\git\cctv\camera\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="CellDefinedAttr"><attr format="integer" name="lineNum"/><attr format="integer" name="columnNum"/></declare-styleable></configuration></mergedItems></merger>
