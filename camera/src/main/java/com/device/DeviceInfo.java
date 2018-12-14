@@ -5,8 +5,8 @@ public class DeviceInfo {
     public int handle = 0;
     public int id = 0;
     public String DeviceName = "…Ë±∏1";
-    public String ip = "192.168.0.120";
-    public int port = 80;
+    public String ip = "192.168.0.113";
+    public int port = 8131;
     public String username = "admin";
     public String userpassword = "admin";
 

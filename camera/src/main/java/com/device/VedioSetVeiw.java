@@ -186,13 +186,13 @@ public class VedioSetVeiw extends LinearLayout {
 //	 @Override
     public void setVisibility(int visibility) {
 
-        mainLayout.setVisibility(visibility);
-        DeviceNameEdit.setVisibility(visibility);
-        plateImageView.setVisibility(visibility);
-
-        if (ErrorEditDisplayFlag)
-            ErrorEdit.setVisibility(visibility);
-        mediaPlayer.setVisibility(visibility);
+//        mainLayout.setVisibility(visibility);
+//        DeviceNameEdit.setVisibility(visibility);
+////        plateImageView.setVisibility(visibility);
+//
+//        if (ErrorEditDisplayFlag)
+//            ErrorEdit.setVisibility(visibility);
+//        mediaPlayer.setVisibility(visibility);
 
         super.setVisibility(visibility);
     }
@@ -367,7 +367,7 @@ public class VedioSetVeiw extends LinearLayout {
 
 
     public void ZoomOutVedio() {
-        plateImageView.setVisibility(View.VISIBLE);
+//        plateImageView.setVisibility(View.VISIBLE);
         trriglePlate.setVisibility(View.VISIBLE);
     }
 

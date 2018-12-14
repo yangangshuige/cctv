@@ -221,6 +221,15 @@ public class CellLayout extends ViewGroup {
                 child.setVisibility(View.VISIBLE);
             }
         }
+        int total=lineNum*columnNum;
+        if(count>=total){
+            for (int i = total+1; i <count+1 ; i++) {
+                View child = getChildAt(i);
+                if (child != null) {
+                    child.setVisibility(View.GONE);
+                }
+            }
+        }
 
         this.requestLayout();
     }

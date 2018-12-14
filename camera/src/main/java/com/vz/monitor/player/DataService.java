@@ -31,14 +31,11 @@ public class DataService implements OnDataReceiver {
 //	private String url  = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
 //	private String url = "rtsp://192.168.3.30:8557/h264";
 //	private String url = "rtsp://admin:12345@192.168.3.79:554/Streaming/Channels/1?transportmode=unicast&profile=Profile_1";
-	private boolean isReceive = false; //閺勵垰鎯侀幒銉︽暪閺佺増宓�
-	private boolean isRecording = false; //閺勵垰鎯佸锝呮躬瑜版洖鍩�
+	private boolean isReceive = false;
+	private boolean isRecording = false;
 	
 	private long lastTime = System.currentTimeMillis();
 	
-	/**
-	 * 閻€劋绨拋锛勭暬閻焦绁﹂柅鐔哄芳閻ㄥ嫪绗佹稉顏勫綁闁插骏绱�.閻胶宸�2.瀵拷顫愰弮鍫曟？ 3.閹恒儲鏁归弫鐗堝祦閹鏆辨惔锟�
-	 */
 	private float dataRate = 0.0f;
 	private long startTime = 0L;
 	private int totalLength = 0;
@@ -283,10 +280,6 @@ public class DataService implements OnDataReceiver {
 		}
 	}
 	
-	/**
-	 * 鐠侊紕鐣婚惍浣圭ウ闁喓宸�
-	 * @param length 閺佺増宓侀梹鍨
-	 */
 	private void countDataRate(int length) {
 		totalLength+=length;
 		if(startTime==0) {

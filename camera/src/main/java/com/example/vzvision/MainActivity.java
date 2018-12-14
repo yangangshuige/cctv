@@ -4,6 +4,7 @@ import com.device.*;
 import com.database.*;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -49,7 +50,7 @@ import com.vz.PlateResult;
 import com.vz.tcpsdk;
 
 
-public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
+public class MainActivity extends Activity implements tcpsdk.OnDataReceiver, View.OnClickListener {
 
     public static final int StopVedio = 0x20001;
     public static final int StartVedio = 0x20002;
@@ -65,35 +66,15 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
     public static final String devicePortLabel = "DevicePort";
     public static final String UserNameLabel = "UserName";
     public static final String UserPasswordLabel = "UserPassowrd";
-
     private DisplayMetrics dm;
-    private android.widget.GridLayout layout;
-
-    private LayoutInflater mInflater;
-
-    private List<MediaPlayer> mediaPlayerGroup;
-
     private SlideMenu slideMenu;
-
-    //	private RelativeLayout layout_vedio;
-    private DeviceManage deviceManage;
-
     private int selectId;
-
     private GlobalVariable m_gb = null;
-
-    private RelativeLayout mainLayout;
     private CellLayout celllayout;
-
     private Map<Integer, DeviceSet> vedioGroup;
-
     private BussionPopWindow mPop = null;
-
-
     private DeviceInfoTable m_DeviceInfoTable = null;
     private boolean m_zoomInFlag = false;
-    private LinearLayout m_ImgGroup;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +83,7 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
         System.out.print(" System.out.print(viewid);");
 
         setContentView(R.layout.activity_camera_main);
-
-        //	deviceManage = new DeviceManage();
-
         tcpsdk.getInstance().setup();
-
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
-
         plateHelper so = new plateHelper(MainActivity.this, "yitijiDatabase.db", null, 1);
         plateCallbackInfoTable pct = new plateCallbackInfoTable();
         pct.setDataBaseHelper(so);
@@ -144,43 +119,6 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
             Log.e("visizion", e.toString());
         }
 
-        m_ImgGroup = (LinearLayout) findViewById(R.id.linerLayout_main_ImgGroup);
-
-
-        ImageView image = (ImageView) findViewById(R.id.imageView_Trigger);
-        //	image.setId(DeviceID );
-        image.setOnClickListener(clickListener);
-
-//		image = (ImageView)findViewById(R.id.ImageView_PlateInfo);
-//		image.setId(PlateInfoID );
-//		image.setOnClickListener(clickListener);
-
-        image = (ImageView) findViewById(R.id.ImageView_Serial);
-        //	image.setId(SerialID );
-        image.setOnClickListener(clickListener);
-
-        image = (ImageView) findViewById(R.id.ImageView_SnapPicture);
-        //	image.setId(CpaturePicID );
-        image.setOnClickListener(clickListener);
-
-        image = (ImageView) findViewById(R.id.ImageView_voice);
-        //	image.setId(VoiceID );
-        image.setOnClickListener(clickListener);
-
-        image = (ImageView) findViewById(R.id.ImageView_WhiteList);
-        //	image.setId(WhlistID );
-        image.setOnClickListener(clickListener);
-
-        image = (ImageView) findViewById(R.id.ImageView_videoConfig);
-        //	image.setId(ConfigVedioID );
-        image.setOnClickListener(clickListener);
-        image.setVisibility(View.GONE);
-
-        image = (ImageView) findViewById(R.id.ImageView_openGate);
-        //	image.setId(ConfigVedioID );
-        image.setOnClickListener(clickListener);
-
-
         slideMenu = (SlideMenu) findViewById(R.id.slide_menu);
         ImageView menuImg = (ImageView) findViewById(R.id.title_bar_menu_btn);
         menuImg.setOnClickListener(new View.OnClickListener() {
@@ -211,21 +149,16 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
         TextView aboutView = (TextView) slideMenu.findViewById(R.id.TextView_about);
         //	snapView.setId(SnapImageID );
         aboutView.setOnClickListener(clickListener);
-
-        mainLayout = (RelativeLayout) findViewById(R.id.MainLayout);
-
-        celllayout.setColumnNum(2);
+        initView();
         vedioGroup = new HashMap<Integer, DeviceSet>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 12; i++) {
             DeviceInfo di = new DeviceInfo(10 + i);
-
             m_DeviceInfoTable.GetCallbackInfo(10 + i, di);
 
             VedioSetVeiw vsv = new VedioSetVeiw(MainActivity.this);
 
             vsv.sethandle(handler);
             vsv.setId(di.id);
-
             DeviceSet ds = new DeviceSet(di, vsv);
 
             ds.setPlateInfoCallBack(this, 1);
@@ -236,7 +169,43 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
 
             vedioGroup.put(10 + i, ds);
         }
+    }
+    private void initView() {
+        findViewById(R.id.btn_two).setOnClickListener(this);
+        findViewById(R.id.btn_four).setOnClickListener(this);
+        findViewById(R.id.btn_six).setOnClickListener(this);
+        findViewById(R.id.btn_nine).setOnClickListener(this);
+        findViewById(R.id.btn_ten).setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.btn_two) {
+            celllayout.setLineNum(1);
+            celllayout.setColumnNum(2);
+            celllayout.recover();
+        }
+        if (i == R.id.btn_four) {
+            celllayout.setLineNum(2);
+            celllayout.setColumnNum(2);
+            celllayout.recover();
+        }
+        if (i == R.id.btn_six) {
+            celllayout.setLineNum(3);
+            celllayout.setColumnNum(2);
+            celllayout.recover();
+        }
+        if (i == R.id.btn_nine) {
+            celllayout.setLineNum(3);
+            celllayout.setColumnNum(3);
+            celllayout.recover();
+        }
+        if (i == R.id.btn_ten) {
+            celllayout.setLineNum(4);
+            celllayout.setColumnNum(3);
+            celllayout.recover();
+        }
     }
 
     @Override
@@ -319,21 +288,6 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
 
         m_gb.getplateCallbackInfoTable().ClearAll();
         m_gb.getSnapImageTable().ClearAll();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-//		int width = layout.getWidth();
-//		int heiht = layout.getHeight();
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {   //横屏
-            m_ImgGroup.setVisibility(View.GONE);
-
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {   //竖屏
-            m_ImgGroup.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -611,13 +565,6 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
             if (ds != null) {
                 DeviceInfo di = ds.getDeviceInfo();
 
-//				di.DeviceName = devicename;
-//				di.ip = deviceip;
-//				di.port = Integer.parseInt(deviceport);
-//				di.username = userName;
-//				di.userpassword = userPassword;
-
-                //  if(di.ip != deviceip)
                 {
 
                     ds.stopVideo();
@@ -648,110 +595,6 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
             } else if (id == R.id.TextView_PlateInfo) {
                 Intent intent = new Intent(MainActivity.this, PlateActivity.class);
                 MainActivity.this.startActivity(intent);
-
-
-            } else if (id == R.id.ImageView_WhiteList) {
-                DeviceSet ds = MainActivity.this.getDeviceSetFromId(selectId);
-                if (ds != null && ds.getopenFlag()) {
-
-                    m_gb.setDeviceSet(ds);
-
-                    Intent intent = new Intent(MainActivity.this, WlistActivity.class);
-
-                    MainActivity.this.startActivity(intent);
-
-                } else
-                    Toast.makeText(MainActivity.this, "请先选中或打开设备", Toast.LENGTH_SHORT).show();
-
-
-            } else if (id == R.id.ImageView_voice) {
-                if (mPop != null && mPop.isShowing()) {
-                    mPop.dismiss();
-
-                }
-                DeviceSet ds = MainActivity.this.getDeviceSetFromId(selectId);
-                if (ds != null && ds.getopenFlag()) {
-                    mPop = new VoicePopWindow(MainActivity.this, ds);
-
-                    mPop.show();
-
-
-                } else
-                    Toast.makeText(MainActivity.this, "请先选中或打开设备", Toast.LENGTH_SHORT).show();
-
-
-            } else if (id == R.id.ImageView_Serial) {
-                if (mPop != null && mPop.isShowing()) {
-                    mPop.dismiss();
-
-                }
-                DeviceSet ds = MainActivity.this.getDeviceSetFromId(selectId);
-                if (ds != null && ds.getopenFlag()) {
-                    mPop = new SerialPopWindow(MainActivity.this, ds);
-
-                    mPop.show();
-
-                } else
-                    Toast.makeText(MainActivity.this, "请先选中或打开设备", Toast.LENGTH_SHORT).show();
-
-            } else if (id == R.id.imageView_Trigger) {
-                DeviceSet ds = MainActivity.this.getDeviceSetFromId(selectId);
-                if (ds != null && ds.getopenFlag()) {
-                    ds.forceTrigger();
-                    Toast.makeText(MainActivity.this, "触发成功", Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(MainActivity.this, "请先选中或打开设备", Toast.LENGTH_SHORT).show();
-
-
-            } else if (id == R.id.ImageView_openGate) {
-                if (mPop != null && mPop.isShowing()) {
-                    mPop.dismiss();
-
-                }
-                DeviceSet ds = MainActivity.this.getDeviceSetFromId(selectId);
-                if (ds != null && ds.getopenFlag()) {
-                    mPop = new GatePopWindow(MainActivity.this, ds);
-
-                    mPop.show();
-
-
-                } else
-                    Toast.makeText(MainActivity.this, "请先选中或打开设备", Toast.LENGTH_SHORT).show();
-
-            } else if (id == R.id.ImageView_SnapPicture) {
-                DeviceSet ds = getDeviceSetFromId(MainActivity.this.selectId);
-                if (ds != null && ds.getopenFlag()) {
-                    byte[] imgBuffer = new byte[1024 * 200];
-//                        tcpsdk.getInstance().setIoOutput(ds.getDeviceInfo().handle, (short) 0,1);
-                    int snapImgLength = ds.getSnapImageData(imgBuffer, imgBuffer.length);
-
-                    if (snapImgLength > 0)   //成功
-                    {
-                        Date now = new Date();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
-
-                        String currentTime = dateFormat.format(now);
-                        byte[] realimgBuffer = new byte[snapImgLength];
-
-                        System.arraycopy(imgBuffer, 0, realimgBuffer, 0, snapImgLength);
-
-                        m_gb.getSnapImageTable().add(currentTime, realimgBuffer);
-                        Toast.makeText(MainActivity.this, "截图成功", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MainActivity.this, "截图失败", Toast.LENGTH_SHORT).show();
-                    }
-                } else
-                    Toast.makeText(MainActivity.this, "请先选中或者打开设备", Toast.LENGTH_SHORT).show();
-
-            } else if (id == R.id.ImageView_videoConfig) {
-                DeviceSet ds = getDeviceSetFromId(selectId);
-                if (ds == null || !ds.getopenFlag()) {
-                    Toast.makeText(MainActivity.this, "请先选中或者打开设备", Toast.LENGTH_SHORT).show();
-                }
-                Intent intent = new Intent(MainActivity.this, VideoConfigActivity.class);
-                m_gb.setDeviceSet(ds);
-                MainActivity.this.startActivity(intent);
-
 
             } else if (id == R.id.TextView_about) {
                 Intent intent = new Intent(MainActivity.this, AboutActivity.class);
@@ -794,6 +637,7 @@ public class MainActivity extends Activity implements tcpsdk.OnDataReceiver {
 
         return null;
     }
+
 
 }
 
