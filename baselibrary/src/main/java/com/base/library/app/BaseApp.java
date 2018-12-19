@@ -28,9 +28,9 @@ public class BaseApp extends Application {
         //初始化滑动返回
         BGASwipeBackManager.getInstance().init(this);
         //初始化数据库
-        LitePal.initialize(this);
+//        LitePal.initialize(this);
         //异常抓取日志
-        exceptionCrash();
+//        exceptionCrash();
         //设置字体不随着系统的字体变大而变大
         unSppuortSystemFont();
 

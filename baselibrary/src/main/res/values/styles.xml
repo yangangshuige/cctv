@@ -32,6 +32,7 @@
         <item name="android:activityOpenExitAnimation">@anim/anim_no</item>
         <item name="android:activityCloseEnterAnimation">@anim/anim_no</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 </resources>

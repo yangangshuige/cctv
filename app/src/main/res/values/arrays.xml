@@ -66,8 +66,8 @@
         <item>黑牌小汽车</item>
         <item>单排黄牌</item>
         <item>双排黄牌</item>
-        <item>警车车牌车牌</item>
-        <item>武警车牌</item>
+         <item>警车车牌</item>
+         <item>武警车牌</item>
          <item>个性化车牌</item>
          <item>单排军车</item>
          <item>双排车牌</item>
@@ -85,5 +85,13 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+    </string-array>
+    <string-array name="homeType">
+        <item>场内明细</item>
+        <item>出场明细</item>
+        <item>车辆信息</item>
+        <item>出入流水</item>
+        <item>系统状态</item>
+        <item>监控中心</item>
     </string-array>
 </resources>

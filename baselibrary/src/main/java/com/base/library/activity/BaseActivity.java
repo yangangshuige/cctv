@@ -1,6 +1,7 @@
 package com.base.library.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -137,7 +139,12 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
     public void setStatusBarColor(@ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha) {
         StatusBarUtil.setColorForSwipeBack(this, color, statusBarAlpha);
     }
-
+    public void closeKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (getCurrentFocus() != null) {
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
     protected void showLoadingDialog() {
         if (mLoadingDialog != null)
             mLoadingDialog.show();

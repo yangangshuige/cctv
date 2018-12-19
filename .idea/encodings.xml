@@ -1,40 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/crash" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/crash/CrashHandler.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/database" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/database/DeviceInfoTable.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/database/SnapImageTable.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/database/plateCallbackInfoTable.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/database/plateHelper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/device" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/device/DeviceInfo.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/device/DeviceManage.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/device/DeviceSet.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/device/HttpRequest.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/device/MyImageView.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/device/VedioSetVeiw.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/AboutActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/BussionPopWindow.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/CameraActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/CellLayout.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/DeviceActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/GLToolbox.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/GatePopWindow.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/GlobalVariable.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/LogService.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/LoginActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/PlateActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/SerialPopWindow.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/SingleItemScrollView.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/SlideMenu.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/SnapImageActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/SurfaceActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/TextureRenderer.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/VideoConfigActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/ViewSetInnerType.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/VoicePopWindow.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/WListEditActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/vzvision/WlistActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision/mobbroadcast/time/NumericWheelAdapter.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision/mobbroadcast/time/OnWheelChangedListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision/mobbroadcast/time/OnWheelScrollListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision/mobbroadcast/time/ScreenInfo.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision/mobbroadcast/time/WheelAdapter.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision/mobbroadcast/time/WheelMain.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/jovision/mobbroadcast/time/WheelView.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/media" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/media/G711.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/media/H264Decoder.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/media/H264Decoder.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/media/MP4Recorder.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/media/MediaConverter.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/media/RTSP.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/time/NumericWheelAdapter.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/time/OnWheelChangedListener.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/time/OnWheelScrollListener.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/time/ScreenInfo.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/time/WheelAdapter.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/time/WheelMain.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/time/WheelView.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/view/DateTimePickerView.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/PlateResult.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/PlateResult.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/THRECT.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/THRECT.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/VZ_TIMEVAL.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/VZ_TIMEVAL.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/VzBDTime.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/VzBDTime.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/VzDateTime.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/VzDateTime.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/WlistVehicle.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/WlistVehicle.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/monitor/player/AudioFormat.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/monitor/player/AudioPlayer.java" charset="GBK" />
@@ -62,63 +85,9 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/monitor/util/StreamUtil.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/monitor/util/Utility.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/tcpsdk.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vz/tcpsdk.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/AboutActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/App.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/BussionPopWindow.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/CellLayout.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/DeviceActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/GLToolbox.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/GatePopWindow.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/LogService.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/LoginActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/MainActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/PlateActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/SerialPopWindow.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/SingleItemScrollView.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/SlideMenu.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/SnapImageActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/SurfaceActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/TextureRenderer.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/VideoConfigActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/ViewSetInnerType.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/VoicePopWindow.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/WListEditActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vzvision/WlistActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/jniLibs" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_about.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_device.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/xjs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/xjs/example/time/view/DateTimePickerView.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_plate.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_snap_image.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_surface.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_video_config.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_wlist.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_wlist_edit.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_time.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/gate.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/layout_title_bar.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/serial.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/slidermenu.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/snap_image_item.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/test.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/timepicker.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/vedioset.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/voice.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/wlist_group.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/wlist_group_child.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/menu" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/values/arrays.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/camera" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/camera" charset="GBK" />
     <file url="PROJECT" charset="GBK" />
   </component>
 </project>

@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vzvision.CameraActivity">
+
+    <com.example.vzvision.SlideMenu
+        android:id="@+id/slide_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/bg_andorid">
+
+        <include layout="@layout/slidermenu" />
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/layout_title_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="39dp"
+                android:minHeight="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.example.vzvision.CellLayout
+                    android:id="@+id/gridLayoutMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:columnCount="2"
+                    android:minHeight="100dp"
+                    android:rowCount="2"></com.example.vzvision.CellLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="二画面" />
+
+                    <TextView
+                        android:id="@+id/btn_four"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="四画面" />
+
+                    <TextView
+                        android:id="@+id/btn_six"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="六画面" />
+
+                    <TextView
+                        android:id="@+id/btn_nine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="九画面" />
+
+                    <TextView
+                        android:id="@+id/btn_ten"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="十二画面" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.example.vzvision.SlideMenu>
+
+</RelativeLayout>
