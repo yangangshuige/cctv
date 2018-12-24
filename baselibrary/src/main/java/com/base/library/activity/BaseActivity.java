@@ -2,6 +2,7 @@ package com.base.library.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
@@ -91,7 +92,7 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
     /**
      * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法
      */
-    private void initSwipeBackFinish() {
+    public void initSwipeBackFinish() {
         mSwipeBackHelper = new BGASwipeBackHelper(this, this);
         // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
         // 下面几项可以不配置，这里只是为了讲述接口用法。
@@ -229,5 +230,4 @@ public abstract class BaseActivity<T1 extends BaseContract.BasePresenter> extend
     public void onSwipeBackLayoutExecuted() {
         mSwipeBackHelper.swipeBackward();
     }
-
 }

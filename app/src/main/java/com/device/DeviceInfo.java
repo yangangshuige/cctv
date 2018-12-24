@@ -4,7 +4,7 @@ package com.device;
 public class DeviceInfo {
     public int handle = 0;
     public int id = 0;
-    public String DeviceName = "�豸1";
+    public String DeviceName = "设备1";
     public String ip = "192.168.0.120";
     public int port = 80;
     public String username = "admin";

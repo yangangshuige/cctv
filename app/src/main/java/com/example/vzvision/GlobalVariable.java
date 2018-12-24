@@ -18,8 +18,8 @@ public class GlobalVariable extends BaseApp {
 	public void onCreate() {
 		super.onCreate();
 		
-		  CrashHandler crashHandler = CrashHandler.getInstance();
-	      crashHandler.init(getApplicationContext());  
+//		  CrashHandler crashHandler = CrashHandler.getInstance();
+//	      crashHandler.init(getApplicationContext());
 	}
 	
 	void setplateCallbackInfoTable(plateCallbackInfoTable table)

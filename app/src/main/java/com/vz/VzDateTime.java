@@ -1,10 +1,10 @@
 package com.vz;
 
 public class VzDateTime {
-	public short nYear;	/**<Äê*/
-	public short nMonth;	/**<ÔÂ*/
-	public short nMDay;	/**<ÈÕ*/
-	public short nHour;	/**<Ê±*/
-	public short nMin;		/**<·Ö*/
-	public short nSec;		/**<Ãë*/
+	public short nYear;	/**<å¹´*/
+	public short nMonth;	/**<æœˆ*/
+	public short nMDay;	/**<æ—¥*/
+	public short nHour;	/**<æ—¶*/
+	public short nMin;		/**<åˆ†*/
+	public short nSec;		/**<ç§’*/
 }

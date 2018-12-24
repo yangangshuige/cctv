@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 public class StreamUtil {
-	
+
 	public static final byte[] readStream(InputStream is) {
 		if(null == is) {
 			return null;
@@ -12,21 +12,21 @@ public class StreamUtil {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		byte[] buffer = new byte[1024];
 		int length = 0;
-		try { 
+		try {
 			while(-1 != (length = is.read(buffer, 0, buffer.length))) {
 				baos.write(buffer, 0, length);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		return baos.toByteArray();
 	}
-	
+
 	/**
-	 * ´ÓÊäÈëÊı¾İÁ÷ÖĞ¶ÁÈ¡Ö¸¶¨³¤¶ÈµÄÊı¾İ£¬Èç¹ûÊı¾İÁ÷µÄ³¤¶ÈĞ¡ÓÚÖ¸¶¨³¤¶È£¬Ôò·µ»ØÊı¾İÁ÷µÄÊµ¼Ê³¤¶È
-	 * @param is ÊäÈëÁ÷
-	 * @param length Òª¶ÁÈ¡µÄÊı¾İ³¤¶È
-	 * @return ¶ÁÈ¡µ½µÄ¶ş½øÖÆÊı¾İ
+	 * ä»è¾“å…¥æ•°æ®æµä¸­è¯»å–æŒ‡å®šé•¿åº¦çš„æ•°æ®ï¼Œå¦‚æœæ•°æ®æµçš„é•¿åº¦å°äºæŒ‡å®šé•¿åº¦ï¼Œåˆ™è¿”å›æ•°æ®æµçš„å®é™…é•¿åº¦
+	 * @param is è¾“å…¥æµ
+	 * @param length è¦è¯»å–çš„æ•°æ®é•¿åº¦
+	 * @return è¯»å–åˆ°çš„äºŒè¿›åˆ¶æ•°æ®
 	 */
 	public static final byte[] readStream(InputStream is, int length) {
 		if(null == is || length < 0) {
@@ -38,7 +38,7 @@ public class StreamUtil {
 		int realLength = length;
 		try {
 			buffer = new byte[realLength];
-			
+
 			while(-1 != (readLen = is.read(buffer, 0, realLength))) {
 				baos.write(buffer, 0, readLen);
 				realLength -= readLen;

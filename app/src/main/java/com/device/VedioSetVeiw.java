@@ -20,21 +20,12 @@ import android.widget.Toast;
 import android.widget.TextView;
 
 import com.example.vzvision.CameraActivity;
-
 import com.example.vzvision.ViewSetInnerType;
 import com.todayin.cctv.R;
 import com.vz.monitor.player.MediaPlayer;
-//import com.example.vzvision.*;
-
 public class VedioSetVeiw extends LinearLayout {
     public static final int clickMediaPlayerId = 0x1001;
     public static final int LONG_TIME_NO_DATA = 0x1001;
-//	private final int     clickPlayId = 0x1002;
-//	private final int     clickStopId = 0x1003;
-//	private final int     clickConfigId = 0x1004;
-
-    //	private LayoutInflater layoutInflater;
-//	private RelativeLayout  layout;
     private ImageView startView;
     private ImageView stopView;
     private ImageView configView;
@@ -59,7 +50,6 @@ public class VedioSetVeiw extends LinearLayout {
     public VedioSetVeiw(Context context) {
         super(context);
         ((Activity) getContext()).getLayoutInflater().inflate(R.layout.vedioset, this);
-
         startView = (ImageView) this.findViewById(R.id.imageView_start);
         stopView = (ImageView) this.findViewById(R.id.imageView_stop);
 
@@ -70,10 +60,10 @@ public class VedioSetVeiw extends LinearLayout {
         PicTime = (TextView) this.findViewById(R.id.textView_PicTime);
 
         mainLayout = (LinearLayout) findViewById(R.id.relativeLayout_vedioset_main);
-        DeviceNameEdit.setText("Éè±¸1");
+        DeviceNameEdit.setText("è®¾å¤‡1");
 
         ErrorEdit = (TextView) this.findViewById(R.id.textView_plateID);
-        ErrorEdit.setText("ÎŞÊÓÆµ");
+        ErrorEdit.setText("æ— è§†é¢‘");
 
         plateImageView = (MyImageView) this.findViewById(R.id.imageView_snapPlate);
         this.registerDoubleClickListener(plateImageView, mediaOnDoubleClick);
@@ -127,16 +117,17 @@ public class VedioSetVeiw extends LinearLayout {
 //	 {
 //		 return mediaPlayer;
 //	 }
-    @Override
+//	 @Override
     public void setVisibility(int visibility) {
 
 //        mainLayout.setVisibility(visibility);
 //        DeviceNameEdit.setVisibility(visibility);
-////        plateImageView.setVisibility(visibility);
+//        plateImageView.setVisibility(visibility);
 //
 //        if (ErrorEditDisplayFlag)
 //            ErrorEdit.setVisibility(visibility);
 //        mediaPlayer.setVisibility(visibility);
+
         super.setVisibility(visibility);
     }
 
@@ -167,7 +158,7 @@ public class VedioSetVeiw extends LinearLayout {
 
         if (mediaPlayer.getUrlip() == "") {
             setErrorTextIsVisible(true);
-            setErrorText("ÇëÏÈ´ò¿ªÉè±¸");
+            setErrorText("è¯·å…ˆæ‰“å¼€è®¾å¤‡");
 
             return;
         }
@@ -212,7 +203,7 @@ public class VedioSetVeiw extends LinearLayout {
     }
 
     public void setTrriglePlateText(String plateText) {
-        String s = plateText;
+        String s=plateText;
         trriglePlate.setText(plateText);
     }
 
@@ -221,30 +212,60 @@ public class VedioSetVeiw extends LinearLayout {
         public void onClick(View view) {
             int id = view.getId();
 
-            if (id == clickMediaPlayerId) {
-                Message message = new Message();
-                message.what = CameraActivity.SelectVedio;
-                message.arg1 = VedioSetVeiw.this.getId();
-                parentHandler.sendMessage(message);
+            switch (id) {
+                case clickMediaPlayerId: {
+                    Message message = new Message();
+                    message.what = CameraActivity.SelectVedio;
+                    message.arg1 = VedioSetVeiw.this.getId();
 
-            } else if (id == R.id.imageView_start) {
-                Message message = new Message();
-                if (playFlag)
-                    message.what = CameraActivity.StopVedio;
-                else
-                    message.what = CameraActivity.StartVedio;
-                message.arg1 = VedioSetVeiw.this.getId();
-                parentHandler.sendMessage(message);
+                    parentHandler.sendMessage(message);
+                }
+                break;
+                case R.id.imageView_start: {
+//					 if(playFlag)
+//						 StopPlay();
+//					  else
+//						 StartPlay();
+                    Message message = new Message();
 
-            } else if (id == R.id.imageView_stop) {
-                Toast.makeText(VedioSetVeiw.this.getContext(), "Í£Ö¹", Toast.LENGTH_SHORT).show();
+                    if (playFlag)
+                        message.what = CameraActivity.StopVedio;
+                    else
+                        message.what = CameraActivity.StartVedio;
+                    message.arg1 = VedioSetVeiw.this.getId();
 
-            } else if (id == R.id.imageView_config) {
-                Message message = new Message();
-                message.what = CameraActivity.ConfigDeivce;
-                message.arg1 = VedioSetVeiw.this.getId();
-                parentHandler.sendMessage(message);
 
+                    parentHandler.sendMessage(message);
+
+//					if( mediaPlayer.getUrl() != "" )
+//					{
+//						if( mediaPlayer.isVideoPlaying() )
+//						{
+//							mediaPlayer.stopPlay();
+//						}
+//						else
+//						{
+//							mediaPlayer.startPlay();
+//						}
+//					}
+//					else
+//					{
+//						 Toast.makeText(VedioSetVeiw.this.getContext(), "è¯·å…ˆé…ç½®è®¾å¤‡", Toast.LENGTH_SHORT).show();
+//					}
+
+                }
+                break;
+                case R.id.imageView_stop:
+                    Toast.makeText(VedioSetVeiw.this.getContext(), "åœæ­¢", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.imageView_config: {
+                    Message message = new Message();
+                    message.what = CameraActivity.ConfigDeivce;
+                    message.arg1 = VedioSetVeiw.this.getId();
+
+                    parentHandler.sendMessage(message);
+                }
+                break;
             }
         }
 
@@ -403,7 +424,7 @@ public class VedioSetVeiw extends LinearLayout {
     public static void registerDoubleClickListener(View view, final OnDoubleClickListener listener) {
         if (listener == null) return;
         view.setOnClickListener(new View.OnClickListener() {
-            private static final int DOUBLE_CLICK_TIME = 350;        //Ë«»÷¼ä¸ôÊ±¼ä350ºÁÃë
+            private static final int DOUBLE_CLICK_TIME = 350;        //åŒå‡»é—´éš”æ—¶é—´350æ¯«ç§’
             private boolean waitDouble = true;
 
             private Handler handler = new Handler() {
@@ -414,10 +435,10 @@ public class VedioSetVeiw extends LinearLayout {
 
             };
 
-            //µÈ´ıË«»÷
+            //ç­‰å¾…åŒå‡»
             public void onClick(final View v) {
                 if (waitDouble) {
-                    waitDouble = false;        //ÓëÖ´ĞĞË«»÷ÊÂ¼ş
+                    waitDouble = false;        //ä¸æ‰§è¡ŒåŒå‡»äº‹ä»¶
                     new Thread() {
 
                         public void run() {
@@ -426,9 +447,9 @@ public class VedioSetVeiw extends LinearLayout {
                             } catch (InterruptedException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
-                            }    //µÈ´ıË«»÷Ê±¼ä£¬·ñÔòÖ´ĞĞµ¥»÷ÊÂ¼ş
+                            }    //ç­‰å¾…åŒå‡»æ—¶é—´ï¼Œå¦åˆ™æ‰§è¡Œå•å‡»äº‹ä»¶
                             if (!waitDouble) {
-                                //Èç¹û¹ıÁËµÈ´ıÊÂ¼ş»¹ÊÇÔ¤Ö´ĞĞË«»÷×´Ì¬£¬ÔòÊÓÎªµ¥»÷
+                                //å¦‚æœè¿‡äº†ç­‰å¾…äº‹ä»¶è¿˜æ˜¯é¢„æ‰§è¡ŒåŒå‡»çŠ¶æ€ï¼Œåˆ™è§†ä¸ºå•å‡»
                                 waitDouble = true;
                                 Message msg = handler.obtainMessage();
                                 msg.obj = v;
@@ -439,7 +460,7 @@ public class VedioSetVeiw extends LinearLayout {
                     }.start();
                 } else {
                     waitDouble = true;
-                    listener.OnDoubleClick(v);    //Ö´ĞĞË«»÷
+                    listener.OnDoubleClick(v);    //æ‰§è¡ŒåŒå‡»
                 }
             }
         });

@@ -5,31 +5,31 @@ import android.content.*;
 
 
 public class plateHelper extends SQLiteOpenHelper {
-    
- public static final String TB_NAME = "PlateTable";
- public static final String ID = "_id";
- public static final String COUNTRY = "country";
- public static final String CODE = "code";
-    
-    
- public plateHelper(Context context, String name,
-                    SQLiteDatabase.CursorFactory factory, int version) {
-     super(context, name, factory, version);   
- }   
 
- public void onCreate(SQLiteDatabase db) {
-        
-//     db.execSQL("CREATE TABLE IF NOT EXISTS "    
-//             + TB_NAME + " ("    
-//             + ID + " INTEGER PRIMARY KEY,"    
-//             + COUNTRY + " VARCHAR,"  
-//             + CODE + " INTEGER)");   
- }   
+    public static final String TB_NAME = "PlateTable";
+    public static final String ID = "_id";
+    public static final String COUNTRY = "country";
+    public static final String CODE = "code";
 
- public void onUpgrade(SQLiteDatabase db,
-         int oldVersion, int newVersion) {   
-     //TODO …æ≥˝ ˝æ›ø‚÷Æ«∞ ◊ˆ ˝æ›±∏∑›
-     db.execSQL("DROP TABLE IF EXISTS "+TB_NAME);   
-     onCreate(db);   
- }   
+
+    public plateHelper(Context context, String name,
+                       SQLiteDatabase.CursorFactory factory,int version) {
+        super(context, name, factory, version);
+    }
+
+    public void onCreate(SQLiteDatabase db) {
+
+//     db.execSQL("CREATE TABLE IF NOT EXISTS "
+//             + TB_NAME + " ("
+//             + ID + " INTEGER PRIMARY KEY,"
+//             + COUNTRY + " VARCHAR,"
+//             + CODE + " INTEGER)");
+    }
+
+    public void onUpgrade(SQLiteDatabase db,
+                          int oldVersion, int newVersion) {
+        //TODO Âà†Èô§Êï∞ÊçÆÂ∫ì‰πãÂâç ÂÅöÊï∞ÊçÆÂ§á‰ªΩ
+        db.execSQL("DROP TABLE IF EXISTS "+TB_NAME);
+        onCreate(db);
+    }
 }  

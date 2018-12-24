@@ -10,42 +10,42 @@ import android.os.StatFs;
 
 public class Utility {
 	/**
-	 * »ñÈ¡AndroidManifest.xmlÎÄ¼şÖĞµÄandroid:versionName×Ö¶ÎµÄ°æ±¾Ãû
-	 * @param context ÉÏÏÂÎÄ
-	 * @return	°æ±¾Ãû
-     */
-    public static final String getVersionName(Context context) {
-    	try {
+	 * è·å–AndroidManifest.xmlæ–‡ä»¶ä¸­çš„android:versionNameå­—æ®µçš„ç‰ˆæœ¬å
+	 * @param context ä¸Šä¸‹æ–‡
+	 * @return	ç‰ˆæœ¬å
+	 */
+	public static final String getVersionName(Context context) {
+		try {
 			PackageManager manager = context.getPackageManager();
 			PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
 			return info.versionName;
-    	} catch (Exception e) {
+		} catch (Exception e) {
 			return "";
 		}
-    }
+	}
 
-    /**
-     * ÊÇ·ñÓĞSDCard
-     * @return ÓĞ£¬true  Ã»ÓĞ£¬false
-     */
-    public static final boolean hasSDCard() {
-    	if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-    		return true;
-    	}
-    	return false;
-    }
+	/**
+	 * æ˜¯å¦æœ‰SDCard
+	 * @return æœ‰ï¼Œtrue  æ²¡æœ‰ï¼Œfalse
+	 */
+	public static final boolean hasSDCard() {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * »ñÈ¡SDCardµÄ¿ÉÓÃ¿Õ¼ä
-     * @return ¿ÉÓÃ¿Õ¼ä£¬µ¥Î»ÎªMB
-     */
-    public static final long getSDCardAvailableSize(){
-        File path = Environment.getExternalStorageDirectory();
-        StatFs sf = new StatFs(path.getPath());
-        long blockSize = sf.getBlockSize();
-        long freeBlocks = sf.getAvailableBlocks();
-        //return freeBlocks * blockSize;  //µ¥Î»Byte
-        //return (freeBlocks * blockSize)/1024;   //µ¥Î»KB
-        return (freeBlocks * blockSize) /1024 /1024; //µ¥Î»MB
-    }  
+	/**
+	 * è·å–SDCardçš„å¯ç”¨ç©ºé—´
+	 * @return å¯ç”¨ç©ºé—´ï¼Œå•ä½ä¸ºMB
+	 */
+	public static final long getSDCardAvailableSize(){
+		File path = Environment.getExternalStorageDirectory();
+		StatFs sf = new StatFs(path.getPath());
+		long blockSize = sf.getBlockSize();
+		long freeBlocks = sf.getAvailableBlocks();
+		//return freeBlocks * blockSize;  //å•ä½Byte
+		//return (freeBlocks * blockSize)/1024;   //å•ä½KB
+		return (freeBlocks * blockSize) /1024 /1024; //å•ä½MB
+	}
 }

@@ -13,5 +13,6 @@
     <color name="linecolor">#E9E9EB</color>
     <color name="c5">#C5CDDB</color>
     <color name="black">#000000</color>
+    <color name="text_color">#8a000000</color>
     <color name="transparent">#00000000</color>
 </resources>

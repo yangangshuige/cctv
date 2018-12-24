@@ -1,8 +1,7 @@
 package com.example.vzvision;
 
 import com.database.*;
-import com.vz.tcpsdk;
-
+import com.todayin.cctv.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,45 +9,38 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.*;
 import android.widget.*;
-
 import java.util.*;
-import com.todayin.cctv.R;
 import android.view.LayoutInflater;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.Bitmap;  
 import android.graphics.BitmapFactory;
 
 public class PlateActivity extends Activity {
 	private ListView listView_plate = null;
-    private MyAdspter  myAdpter = null;
-	
+	private MyAdspter  myAdpter = null;
+
 	private GlobalVariable m_gb = null;
 	private boolean      exitFlag = false;
 	private SearchPlateThread    m_SearchPlateThread;
-    
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plate);
-		
+
 		listView_plate = (ListView) findViewById(R.id.listView_plate);
-		
-		
+
+
 		m_gb = (GlobalVariable)getApplicationContext();;
-		
-		 List<Map<String, Object>> list=getData();
-		 myAdpter = new MyAdspter(this, list);
-		 listView_plate.setAdapter(myAdpter);  
-		 
-		 m_SearchPlateThread = new SearchPlateThread();
-		 m_SearchPlateThread.start();
-		 
-		 
+
+		List<Map<String, Object>> list=getData();
+		myAdpter = new MyAdspter(this, list);
+		listView_plate.setAdapter(myAdpter);
+
+		m_SearchPlateThread = new SearchPlateThread();
+		m_SearchPlateThread.start();
+
+
 	}
 
 	@Override
@@ -69,7 +61,7 @@ public class PlateActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -80,113 +72,113 @@ public class PlateActivity extends Activity {
 		}
 		catch (InterruptedException e)
 		{
-			
+
 		}
-	
+
 	}
-	
+
 	private int plateSearchPos = 0;
 	public class SearchPlateThread extends Thread
 	{
 		public  void  run()
 		{
-			
+
 			while(true)
 			{
-				 if(exitFlag)
-        			 break;
-				 
-                plateCallbackInfoTable pci = m_gb.getplateCallbackInfoTable();
-		        
-		        if( pci == null)
-		        {
-		            break;	
-		        }
-		        	
-		        int rowcount = pci.getRowCount();
-		        	
-		        plateCallbackInfoTable.plateCallbackElement ele = pci.new plateCallbackElement();
-		        	
-		        Bitmap bmp;
-		        	   
-		        if( plateSearchPos >=  rowcount )
-		        { 
-		        		
-		        	try
-		        	{
-		        		this.sleep(1000);
-		        	}
-		        	catch(InterruptedException e)
-		        	{
-		        	   break;
-		        	}
-		        	continue;
-		       	}
-		        		 
-		 	    Map<String, Object> map=new HashMap<String, Object>();
-		 	             
-		 	            if(pci.GetCallbackInfo(plateSearchPos, ele))
-		 	            {
-		 	            	bmp = BitmapFactory.decodeByteArray(ele.ImageSmallData, 0, ele.ImageSmallData.length);
-		 	            	map.put("shibieImage", bmp);  
-			 	            map.put("deviceName",ele.devicename);  
-			 	            map.put("plateName",  ele.plateNumber);  
-			 	            map.put("shibieTIme", ele.recongnizetime );  
-			 	            
-			 	           //myAdpter.Add(map);
-			 	            
-			 	            Message message = new Message();
-			 	            message.what = 1;
-			 	            message.obj = map;
-			 	            handler.sendMessage(message);
-			 	            
-			 	           plateSearchPos++;
-		 	            }
-		 	             
-		 	            
-			 	       	try
-		        		{
-		        			this.sleep(100);
-		        		}
-		        		catch(InterruptedException e)
-		        		{
-		        		   break;
-		        		}
-		 	        }  
-		  
+				if(exitFlag)
+					break;
+
+				plateCallbackInfoTable pci = m_gb.getplateCallbackInfoTable();
+
+				if( pci == null)
+				{
+					break;
+				}
+
+				int rowcount = pci.getRowCount();
+
+				plateCallbackInfoTable.plateCallbackElement ele = pci.new plateCallbackElement();
+
+				Bitmap bmp;
+
+				if( plateSearchPos >=  rowcount )
+				{
+
+					try
+					{
+						this.sleep(1000);
+					}
+					catch(InterruptedException  e)
+					{
+						break;
+					}
+					continue;
+				}
+
+				Map<String, Object> map=new HashMap<String, Object>();
+
+				if(pci.GetCallbackInfo(plateSearchPos, ele))
+				{
+					bmp = BitmapFactory.decodeByteArray(ele.ImageSmallData, 0, ele.ImageSmallData.length);
+					map.put("shibieImage", bmp);
+					map.put("deviceName",ele.devicename);
+					map.put("plateName",  ele.plateNumber);
+					map.put("shibieTIme", ele.recongnizetime );
+
+					//myAdpter.Add(map);
+
+					Message message = new Message();
+					message.what = 1;
+					message.obj = map;
+					handler.sendMessage(message);
+
+					plateSearchPos++;
+				}
+
+
+				try
+				{
+					this.sleep(100);
+				}
+				catch(InterruptedException  e)
+				{
+					break;
+				}
+			}
+
 		}
 	};
-	
-	 public List<Map<String, Object>> getData(){
-	        List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
-	        return list;
-	        
-	      
-	    }  
-	 
-	 @SuppressLint("HandlerLeak")
-		private Handler handler = new Handler() {
-			public void handleMessage(android.os.Message msg) {
-				 Map<String, Object> map = (Map<String, Object>)msg.obj;
-				 
-				 myAdpter.Add(map);
-			}
-		
-	 };
-				
-	 
+
+	public List<Map<String, Object>> getData(){
+		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+		return list;
+
+
+	}
+
+	@SuppressLint("HandlerLeak")
+	private Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			Map<String, Object> map = ( Map<String, Object>)msg.obj;
+
+			myAdpter.Add(map);
+		}
+
+	};
+
+
 	public class MyAdspter extends BaseAdapter {
 
 		private List<Map<String, Object>> data;
 		private LayoutInflater layoutInflater;
 		private Context context;
-		public MyAdspter(Context context, List<Map<String, Object>> data){
+		public MyAdspter(Context context,List<Map<String, Object>> data){
 			this.context=context;
 			this.data=data;
-			this.layoutInflater= LayoutInflater.from(context);
+			this.layoutInflater=LayoutInflater.from(context);
 		}
 		/**
-		 * ×é¼ş¼¯ºÏ£¬¶ÔÓ¦list.xmlÖĞµÄ¿Ø¼ş
+		 * ç»„ä»¶é›†åˆï¼Œå¯¹åº”list.xmlä¸­çš„æ§ä»¶
 		 * @author Administrator
 		 */
 		public final class Zujian{
@@ -200,14 +192,14 @@ public class PlateActivity extends Activity {
 			return data.size();
 		}
 		/**
-		 * »ñµÃÄ³Ò»Î»ÖÃµÄÊı¾İ
+		 * è·å¾—æŸä¸€ä½ç½®çš„æ•°æ®
 		 */
 		@Override
 		public Object getItem(int position) {
 			return data.get(position);
 		}
 		/**
-		 * »ñµÃÎ¨Ò»±êÊ¶
+		 * è·å¾—å”¯ä¸€æ ‡è¯†
 		 */
 		@Override
 		public long getItemId(int position) {
@@ -219,44 +211,44 @@ public class PlateActivity extends Activity {
 			Zujian zujian=null;
 			if(convertView==null){
 				zujian=new Zujian();
-				//»ñµÃ×é¼ş£¬ÊµÀı»¯×é¼ş
+				//è·å¾—ç»„ä»¶ï¼Œå®ä¾‹åŒ–ç»„ä»¶
 				convertView=layoutInflater.inflate(R.layout.list, null);
 				zujian.image=(ImageView)convertView.findViewById(R.id.imageView_plate);
 				zujian.plateName=(TextView)convertView.findViewById(R.id.textView_plate);
 				zujian.deviceName=(TextView)convertView.findViewById(R.id.textView_VideoDeviceName);
-			 
+
 				zujian.shibieTime=(TextView)convertView.findViewById(R.id.textView_shibieTime);
 				convertView.setTag(zujian);
 			}else{
 				zujian=(Zujian)convertView.getTag();
 			}
 			Bitmap t =  (Bitmap)data.get(position).get("shibieImage");
-			//°ó¶¨Êı¾İ
+			//ç»‘å®šæ•°æ®
 			zujian.image.setImageBitmap((Bitmap)data.get(position).get("shibieImage") );//setBackgroundResource((Integer)data.get(position).get("image"));
 			zujian.plateName.setText((String)data.get(position).get("plateName"));
 			zujian.deviceName.setText((String)data.get(position).get("deviceName"));
-			
+
 			String text = (String)data.get(position).get("shibieTIme");
 			zujian.shibieTime.setText((String)data.get(position).get("shibieTIme"));
-			
+
 			return convertView;
 		}
-		
-		
+
+
 		public void Add(Map<String, Object> item)
 		{
-//			Map<String, Object> map=new HashMap<String, Object>();  
-//            map.put("image", R.drawable.ic_launcher);  
-//            map.put("title", "ÕâÊÇÒ»¸ö±êÌâ"+data.size());  
-//            map.put("info", "ÕâÊÇÒ»¸öÏêÏ¸ĞÅÏ¢"+data.size());  
-//            
+//			Map<String, Object> map=new HashMap<String, Object>();
+//            map.put("image", R.drawable.ic_launcher);
+//            map.put("title", "è¿™æ˜¯ä¸€ä¸ªæ ‡é¢˜"+data.size());
+//            map.put("info", "è¿™æ˜¯ä¸€ä¸ªè¯¦ç»†ä¿¡æ¯"+data.size());
+//
 //            data.add(map);
 			data.add(item);
-            this.notifyDataSetChanged();   
+			this.notifyDataSetChanged();
 		}
 
 	}
-	
+
 //	  private View.OnClickListener clickListener =  new View.OnClickListener(){
 //			@Override
 //			public void onClick(View view)
@@ -264,26 +256,26 @@ public class PlateActivity extends Activity {
 //				if(!myAdpter.isEmpty())
 //				{
 //					myAdpter.Add();
-//				
+//
 //					myAdpter.notifyDataSetChanged();
 //				}
 //			}
 //	  };
-	
-     
-//     String mstrTitle = "ÎŞÊÓÆµ";
+
+
+//     String mstrTitle = "æ— è§†é¢‘";
 //	    Bitmap bmp = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
 //     Canvas canvasTemp = new Canvas(bmp);
 //     canvasTemp.drawColor(Color.BLACK);
 //     Paint p = new Paint();
-//     String familyName = "ËÎÌå";
+//     String familyName = "å®‹ä½“";
 //     Typeface font = Typeface.create(familyName, Typeface.BOLD);
 //     p.setColor(Color.RED);
 //     p.setTypeface(font);
 //     p.setTextSize(27);
 //     canvasTemp.drawText(mstrTitle, 0, 100, p);
-     
- //   BitmapFactory.decodeByteArray(data, 0, data.length);  
+
+	//   BitmapFactory.decodeByteArray(data, 0, data.length);
 
 }
 

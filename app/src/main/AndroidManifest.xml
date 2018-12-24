@@ -34,11 +34,13 @@
             android:name="com.example.vzvision.CameraActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name="com.example.vzvision.SurfaceActivity"
@@ -72,22 +74,35 @@
 
         <activity
             android:name="com.example.vzvision.LoginActivity"
-            android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Transparent"
-            >
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme.Transparent"
+        <activity
+            android:name=".activity.MainActivity"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".activity.InParkDetailActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             >
-
         </activity>
+        <activity
+            android:name=".activity.OutParkDetailActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.CarDetailActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.SystemStatusActivity"
+            android:theme="@style/AppTheme.Transparent"
+            ></activity>
     </application>
 
 </manifest>

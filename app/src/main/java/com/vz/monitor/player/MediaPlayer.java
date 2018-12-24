@@ -48,7 +48,7 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 	public static final int TYPE_FILE = 2;
 
 	private int dataSourceType = TYPE_INTERNET;
-	
+
 	private File file;
 
 	private VideoPlayer videoPlayer;
@@ -64,23 +64,23 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 	private boolean isAudioPlaying = false;
 	private boolean isRecording = false;
 	private boolean isPause = false;
-	
+
 	private AudioPlayer audioPlayer;
 	private int channel;
 	private int encoding;
 	private int sampleRateInHz;
-	
+
 	//private GlobalDefine gd;
 	private String url = "";
 	private String ip;
 	private int port;
-	
+
 	private boolean isPtzStop = true;
 	private int ptzType = -1;
-	
+
 	public int recvFrameTime = 0;
 	public int recvPicTime = 0;
-	
+
 	public MediaPlayer(Context context) {
 		this(context,TYPE_INTERNET);
 	}
@@ -89,64 +89,64 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 		super(context);
 		this.context = context;
 		this.dataSourceType = dataSourceType;
-		
+
 		this.setEGLContextClientVersion(2);
 		videoPlayer = new VideoPlayer(this);
 		this.setRenderer(videoPlayer);
 		this.setRenderMode(RENDERMODE_WHEN_DIRTY);
 		//this.setOnTouchListener(new OnTouchListener());
-		 
-		
+
+
 		dataService = new DataService(frameQueue);
-		
+
 		dataDecoder = new DataDecoder();
-		
-	//	this.gd = (GlobalDefine) context.getApplicationContext();
+
+		//	this.gd = (GlobalDefine) context.getApplicationContext();
 	}
-	
-	   public MediaPlayer(Context context, AttributeSet attrs) {
-	       // super(context, attrs);
-	        this(context,TYPE_INTERNET);
-	    }
-	
-	  protected void finalize() throws Throwable
-	   {
-		  if(this.isRecording())
-	        {
-	        	this.stopRecord();
-	        }
-		  
-		  if(this.isAudioPlaying())
-	        {
-	        	this.stopAudio();
-	        }
-		  
-	        if(this.isVideoPlaying())
-	        {
-	        	this.stopPlay();
-	        }
-	   }
-	 
+
+	public MediaPlayer(Context context, AttributeSet attrs) {
+		// super(context, attrs);
+		this(context,TYPE_INTERNET);
+	}
+
+	protected void finalize() throws Throwable
+	{
+		if(this.isRecording())
+		{
+			this.stopRecord();
+		}
+
+		if(this.isAudioPlaying())
+		{
+			this.stopAudio();
+		}
+
+		if(this.isVideoPlaying())
+		{
+			this.stopPlay();
+		}
+	}
+
 	public void setDataSourceType(int dataSourceType) {
 		this.dataSourceType = dataSourceType;
 	}
-	
+
 	public void setFile(File file) {
 		this.file = file;
 	}
-	
+
 	public void setHandler(Handler handler) {
 		this.handler = handler;
 	}
-	
+
 	public void setUrlip(String ip) {
 		this.ip = ip;
 	}
-	
+
 	public String getUrlip( ) {
 		return this.ip;
 	}
-	
+
 	public boolean isVideoPlaying() {
 		return isVideoPlaying;
 	}
@@ -154,43 +154,43 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 	public boolean isAudioPlaying() {
 		return isAudioPlaying;
 	}
-	
+
 	public boolean isRecording() {
 		return isRecording;
 	}
-	
+
 	public boolean isPause() {
 		return isPause;
 	}
-	
+
 	public void startPlay() {
 		isVideoPlaying = true;
 		isAudioPlaying = false;
-		
-		
+
+
 		dataService.setUrl(ip);
 		dataService.setHandler(handler);
 		dataService.start();
-		
+
 		Log.i("mediaplayer","dataService");
-		
+
 		dataDecoder.start();
-		
+
 		Log.i("mediaplayer","dataDecoder");
-		
+
 		videoPlayer.setFrameQueue(videoDecodedQueue);
 		videoPlayer.start();
-		
+
 		Log.i("mediaplayer","videoPlayer");
-		
+
 		recvFrameTime = 0;
-	    recvPicTime = 0;
+		recvPicTime = 0;
 	}
 
 	public void stopPlay() {
 		this.isVideoPlaying = false;
 		this.isAudioPlaying = false;
-		
+
 		if(null != dataService) {
 			dataService.stop();
 		}
@@ -200,47 +200,47 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 		if(null != videoPlayer) {
 			videoPlayer.stop();
 		}
-		
+
 		frameQueue.clear();
 		videoDecodedQueue.clear();
 		audioDecodedQueue.clear();
 	}
-	
-	
+
+
 	public void pause()
 	{
 		if(dataDecoder != null)
-		dataDecoder.pause();
+			dataDecoder.pause();
 		if(videoPlayer != null)
-		videoPlayer.pause();
+			videoPlayer.pause();
 	}
 	public void resum()
 	{
 		if(dataDecoder != null)
-		dataDecoder.resum();
+			dataDecoder.resum();
 		if(videoPlayer != null)
-		videoPlayer.resum();
+			videoPlayer.resum();
 	}
-	
+
 	public boolean snapshot(String fileName) {
 		if(null != videoPlayer) {
 			return videoPlayer.snapshot(fileName);
 		}
 		return false;
 	}
-	
+
 	public boolean startRecord(String fileName) {
 		if(null != dataService) {
 			isRecording = dataService.startRecord(fileName);
 		}
 		return isRecording;
 	}
-	
+
 	public void stopRecord() {
 		isRecording = false;
 		dataService.stopRecord();
 	}
-	
+
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		@Override
@@ -248,8 +248,8 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 			super.handleMessage(msg);
 		}
 	};
-	
-	
+
+
 	public void process() {
 		if(ptzType!=-1 && !isPtzStop) {
 			try {
@@ -260,7 +260,7 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 			isPtzStop = true;
 		}
 	}
-	
+
 	private class OnTouchListener implements android.view.View.OnTouchListener {
 		private static final int FINGER_NONE	= 0;
 		private static final int FINGER_ONE		= 1;
@@ -274,99 +274,99 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 		private int finger = FINGER_NONE;
 		private int mode = MODE_NONE;
 		private PointF startPoint = new PointF();
-        private PointF midPoint = new PointF();
-        private float startDist = 0f;
+		private PointF midPoint = new PointF();
+		private float startDist = 0f;
 
-        @SuppressLint("FloatMath")
+		@SuppressLint("FloatMath")
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			switch (event.getAction() & MotionEvent.ACTION_MASK) {
-			case MotionEvent.ACTION_DOWN:
-				finger = FINGER_ONE;
-				mode = MODE_DRAG;
-				startPoint.set(event.getX(), event.getY());
-				break;
-			case MotionEvent.ACTION_UP:
-				finger = FINGER_NONE;
-				mode = MODE_NONE;
-				break;
-			case MotionEvent.ACTION_POINTER_DOWN:
-				finger = FINGER_TWO;
-				startDist = distance(event);
-				break;
-			case MotionEvent.ACTION_POINTER_UP:
-				finger = FINGER_ONE;
-				mode = MODE_NONE;
-				break;
-			case MotionEvent.ACTION_MOVE:
-				int ptzType = PTZ.NONE;
-				if(finger==FINGER_ONE && mode==MODE_DRAG) {
+				case MotionEvent.ACTION_DOWN:
+					finger = FINGER_ONE;
+					mode = MODE_DRAG;
+					startPoint.set(event.getX(), event.getY());
+					break;
+				case MotionEvent.ACTION_UP:
+					finger = FINGER_NONE;
+					mode = MODE_NONE;
+					break;
+				case MotionEvent.ACTION_POINTER_DOWN:
+					finger = FINGER_TWO;
+					startDist = distance(event);
+					break;
+				case MotionEvent.ACTION_POINTER_UP:
+					finger = FINGER_ONE;
+					mode = MODE_NONE;
+					break;
+				case MotionEvent.ACTION_MOVE:
+					int ptzType = PTZ.NONE;
+					if(finger==FINGER_ONE && mode==MODE_DRAG) {
 //					pztTime = System.currentTimeMillis();
-					float dx = event.getX()-startPoint.x;
-					float dy = event.getY()-startPoint.y;
-					int diret = 0;
-					if(dx < -35f) { //鍚戝�?
-						ptzType = PTZ.RIGHT;
-					} else if(dx > 35f) { //鍚戝�?
-						ptzType = PTZ.LEFT;
-					} else if(dy < -35f) { //鍚戜�?
-						ptzType = PTZ.DOWN;
-					} else if(dy > 35f) { //鍚戜�?
-						ptzType = PTZ.UP;
-					}
-				} else if(finger==FINGER_TWO){
-					float dist = distance(event);
-					if(Math.abs(dist-startDist) > 15f) {
-						mode=MODE_ZOOM;
-					} else {
-						mode=MODE_FOCUS;
-					}
-					if(mode==MODE_ZOOM) {
-						if(dist - startDist > 35f) {
-							ptzType= PTZ.ZOOM_OUT;
-						} else if(startDist - dist > 35f) {
-							ptzType= PTZ.ZOOM_IN;
-						}
-					} else if(mode==MODE_FOCUS) {
-						float dx = event.getX() - startPoint.x;
+						float dx = event.getX()-startPoint.x;
 						float dy = event.getY()-startPoint.y;
-						if(Math.abs(dx) < 15.0f) {
-							if(dy < -35f) {
-								ptzType= PTZ.FOCUS_IN;
-							} else if(dy > 35f) {
-								ptzType= PTZ.FOCUS_OUT;
+						int diret = 0;
+						if(dx < -35f) { //鍚戝�?
+							ptzType = PTZ.RIGHT;
+						} else if(dx > 35f) { //鍚戝�?
+							ptzType = PTZ.LEFT;
+						} else if(dy < -35f) { //鍚戜�?
+							ptzType = PTZ.DOWN;
+						} else if(dy > 35f) { //鍚戜�?
+							ptzType = PTZ.UP;
+						}
+					} else if(finger==FINGER_TWO){
+						float dist = distance(event);
+						if(Math.abs(dist-startDist) > 15f) {
+							mode=MODE_ZOOM;
+						} else {
+							mode=MODE_FOCUS;
+						}
+						if(mode==MODE_ZOOM) {
+							if(dist - startDist > 35f) {
+								ptzType= PTZ.ZOOM_OUT;
+							} else if(startDist - dist > 35f) {
+								ptzType= PTZ.ZOOM_IN;
+							}
+						} else if(mode==MODE_FOCUS) {
+							float dx = event.getX() - startPoint.x;
+							float dy = event.getY()-startPoint.y;
+							if(Math.abs(dx) < 15.0f) {
+								if(dy < -35f) {
+									ptzType= PTZ.FOCUS_IN;
+								} else if(dy > 35f) {
+									ptzType= PTZ.FOCUS_OUT;
+								}
 							}
 						}
 					}
-				}
-				startPoint.set(event.getX(), event.getY());
-				if((mode==MODE_DRAG || mode==MODE_ZOOM || mode==MODE_FOCUS) && ptzType > 0 && isPtzStop) {
-					isPtzStop = false;
-					setPtz(ptzType,false);
+					startPoint.set(event.getX(), event.getY());
+					if((mode==MODE_DRAG || mode==MODE_ZOOM || mode==MODE_FOCUS) && ptzType > 0 && isPtzStop) {
+						isPtzStop = false;
+						setPtz(ptzType,false);
 //					process();
-				}
-				break;
+					}
+					break;
 			}
 			return true;
 		}
 
-        /**
-         * 璁＄畻涓ょ偣涔嬪墠鐨勮窛绂�
-         * @param event
-         * @return
-         */
-        @SuppressLint("FloatMath")
+		/**
+		 * 璁＄畻涓ょ偣涔嬪墠鐨勮窛绂�
+		 * @param event
+		 * @return
+		 */
+		@SuppressLint("FloatMath")
 		private float distance(MotionEvent event) {
-            float dx = event.getX(0) - event.getX(1);
-            float dy = event.getY(0) - event.getY(1);
-            return (float) Math.sqrt(dx*dx + dy*dy);
-        }
+			float dx = event.getX(0) - event.getX(1);
+			float dy = event.getY(0) - event.getY(1);
+			return (float) Math.sqrt(dx*dx + dy*dy);
+		}
 
-        private PointF midPoint(MotionEvent event){
-            float x = (event.getX(1) + event.getX(0)) / 2;
-            float y = (event.getY(1) + event.getY(0)) / 2;
-            return new PointF(x,y);
-        }
+		private PointF midPoint(MotionEvent event){
+			float x = (event.getX(1) + event.getX(0)) / 2;
+			float y = (event.getY(1) + event.getY(0)) / 2;
+			return new PointF(x,y);
+		}
 	}
 
 	private void sendPztCommand(final String command) {
@@ -396,65 +396,65 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 		int nLeft=0,nUp=0,nZoom=0,nFoucs=0,nIris=0,nSpeedX=0,nSpeedY=0;
 		if(isStop) {
 			if(type== PTZ.LEFT) {
-		        nLeft=-1;
-		        nSpeedX=7;
-		    } else if(type== PTZ.RIGHT) {
-		        nLeft=-1;
-		        nSpeedX=7;
-		    } else if(type== PTZ.UP) {
-		        nUp=-1;
-		        nSpeedY=7;
-		    } else if(type== PTZ.DOWN) {
-		        nUp=-1;
-		        nSpeedY=7;
-		    } else if(type== PTZ.ZOOM_IN) {
-		        nZoom=-1;
-		    } else if(type== PTZ.ZOOM_OUT) {
-		        nZoom=-1;
-		    } else if(type== PTZ.FOCUS_IN) {
-		        nFoucs=-1;
-		    } else if(type== PTZ.FOCUS_OUT) {
-		        nFoucs=-1;
-		    } else if(type== PTZ.IRIS_IN) {
-		        nIris=-1;
-		    } else if(type== PTZ.IRIS_OUT) {
-		        nIris=-1;
-		    }
+				nLeft=-1;
+				nSpeedX=7;
+			} else if(type== PTZ.RIGHT) {
+				nLeft=-1;
+				nSpeedX=7;
+			} else if(type== PTZ.UP) {
+				nUp=-1;
+				nSpeedY=7;
+			} else if(type== PTZ.DOWN) {
+				nUp=-1;
+				nSpeedY=7;
+			} else if(type== PTZ.ZOOM_IN) {
+				nZoom=-1;
+			} else if(type== PTZ.ZOOM_OUT) {
+				nZoom=-1;
+			} else if(type== PTZ.FOCUS_IN) {
+				nFoucs=-1;
+			} else if(type== PTZ.FOCUS_OUT) {
+				nFoucs=-1;
+			} else if(type== PTZ.IRIS_IN) {
+				nIris=-1;
+			} else if(type== PTZ.IRIS_OUT) {
+				nIris=-1;
+			}
 		} else {
 			if(type== PTZ.LEFT) {
-		        nLeft=2;
-		        nSpeedX=7;
-		    } else if(type== PTZ.RIGHT) {
-		        nLeft=-2;
-		        nSpeedX=7;
-		    } else if(type== PTZ.UP) {
-		        nUp=2;
-		        nSpeedY=7;
-		    } else if(type== PTZ.DOWN) {
-		        nUp=-2;
-		        nSpeedY=7;
-		    } else if(type== PTZ.ZOOM_IN) {
-		        nZoom=2;
-		    } else if(type== PTZ.ZOOM_OUT) {
-		        nZoom=-2;
-		    } else if(type== PTZ.FOCUS_IN) {
-		        nFoucs=2;
-		    } else if(type== PTZ.FOCUS_OUT) {
-		        nFoucs=-2;
-		    } else if(type== PTZ.IRIS_IN) {
-		        nIris=2;
-		    } else if(type== PTZ.IRIS_OUT) {
-		        nIris=-2;
-		    }
+				nLeft=2;
+				nSpeedX=7;
+			} else if(type== PTZ.RIGHT) {
+				nLeft=-2;
+				nSpeedX=7;
+			} else if(type== PTZ.UP) {
+				nUp=2;
+				nSpeedY=7;
+			} else if(type== PTZ.DOWN) {
+				nUp=-2;
+				nSpeedY=7;
+			} else if(type== PTZ.ZOOM_IN) {
+				nZoom=2;
+			} else if(type== PTZ.ZOOM_OUT) {
+				nZoom=-2;
+			} else if(type== PTZ.FOCUS_IN) {
+				nFoucs=2;
+			} else if(type== PTZ.FOCUS_OUT) {
+				nFoucs=-2;
+			} else if(type== PTZ.IRIS_IN) {
+				nIris=2;
+			} else if(type== PTZ.IRIS_OUT) {
+				nIris=-2;
+			}
 		}
 
-	    String s = String.format("%d:%d:%d:%d:%d:%d:%d", nLeft,nUp,nZoom,nFoucs,nIris,nSpeedX,nSpeedY);
-	    Log.i("Command", s);
-	    String pztCmd = new String(Base64.encode(s.getBytes(), Base64.DEFAULT));
-	    Log.i("Command", pztCmd);
-	    sendPztCommand(pztCmd);
+		String s = String.format("%d:%d:%d:%d:%d:%d:%d", nLeft,nUp,nZoom,nFoucs,nIris,nSpeedX,nSpeedY);
+		Log.i("Command", s);
+		String pztCmd = new String(Base64.encode(s.getBytes(), Base64.DEFAULT));
+		Log.i("Command", pztCmd);
+		sendPztCommand(pztCmd);
 
-	    ptzType = type;
+		ptzType = type;
 		if(isStop) {
 			ptzType = PTZ.NONE;
 		}
@@ -475,7 +475,7 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 	}
 
 	class DataDecoder {
-		private boolean isFindKey = false; // 鏄惁鎵惧埌鍏抽敭甯�?
+		private boolean isFindKey = false; // 鏄惁鎵惧埌鍏抽敭甯�?
 		private MediaInfo mediaInfo=null;
 
 		private Codec codec = null;
@@ -495,14 +495,14 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 
 		private ByteBuffer recvBuffer = null;
 
-        public DataDecoder()
-        {
-        //	if( mPixel == null || width*height*3/2 > mPixel.length )
-        	 mPixel = new byte[1920*1080*3/2];
+		public DataDecoder()
+		{
+			//	if( mPixel == null || width*height*3/2 > mPixel.length )
+			mPixel = new byte[1920*1080*3/2];
 
 
 
-        }
+		}
 
 		public void start() {
 			Log.i("mediaplayer","dataDecoder start start");
@@ -572,7 +572,7 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 		{
 			if(decodeThread.isAlive())
 			{
-		    	decodeThread.notify();
+				decodeThread.notify();
 			}
 		}
 
@@ -633,11 +633,11 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 					int baseTime = 1000 / info.getFrameRate();
 					long startTime = System.currentTimeMillis();
 					int[] wah = {0,0};
-			    //  Log.i("mediaplayer","dataDecoder decode begin");
+					//  Log.i("mediaplayer","dataDecoder decode begin");
 
 
-				   iTemp =  decodeVideo(data,data.length,wah,frame.getCodecType());
-			      //Log.i("mediaplayer","dataDecoder decode end");
+					iTemp =  decodeVideo(data,data.length,wah,frame.getCodecType());
+					//Log.i("mediaplayer","dataDecoder decode end");
 
 					long endTime = System.currentTimeMillis();
 					long sleepTime =(baseTime-5) - (endTime-startTime);
@@ -646,7 +646,7 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 					}
 
 					if(iTemp > 0) {
-					//	byte [] tempData = Arrays.copyOf(mPixel, mPixel.length);
+						//	byte [] tempData = Arrays.copyOf(mPixel, mPixel.length);
 
 						frame.setData(mPixel);
 						if(wah[0]!=width || wah[1]!=height) {
@@ -660,7 +660,7 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 
 						try
 						{
-						    videoDecodedQueue.addFrameToQueue(frame);
+							videoDecodedQueue.addFrameToQueue(frame);
 						}
 						catch( UnsupportedOperationException e )
 						{
@@ -700,11 +700,11 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 					sampleRateInHz = mediaInfo.getSampleRate();
 				}
 
-			//	iTemp = decodeAudio(dataBuf);
+				//	iTemp = decodeAudio(dataBuf);
 				if(iTemp > 0) {
 					frame.setData(mAudio);
 //					audioDecodedQueue.addFrameToQueue(frame);
-					//鎾�?
+					//鎾�?
 					if(null == audioPlayer) {
 						audioPlayer = new AudioPlayer(context,channel,encoding,sampleRateInHz);
 						audioPlayer.play();
@@ -729,53 +729,53 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 			return codec.decodeAudio(data,data.length, mAudio);
 		}
 
-		 void saveImage(final int Width,final int Height)
-		 {
+		void saveImage(final int Width,final int Height)
+		{
 
-			     YuvImage image = new YuvImage(this.mPixel, ImageFormat.NV21,Width, Height, null);
+			YuvImage image = new YuvImage(this.mPixel, ImageFormat.NV21,Width, Height, null);
 
-			     if(image!=null){
-			            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			            image.compressToJpeg(new Rect(0, 0, Width, Height), 80, stream);
-			            //Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
-			            Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
+			if(image!=null){
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				image.compressToJpeg(new Rect(0, 0, Width, Height), 80, stream);
+				//Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
+				Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
 
-			            try
-			            {
-			            	 stream.close();
-			            }
-			            catch(IOException e)
-			            {
+				try
+				{
+					stream.close();
+				}
+				catch(IOException e)
+				{
 
-			            }
+				}
 
-			            Log.e("tag", "����ͼƬ");
-			            File f = new File("/sdcard/namecard/", "pic.png");
-			            if (f.exists()) {
-			             f.delete();
-			            }
-			            try {
-			             FileOutputStream out = new FileOutputStream(f);
-			             bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
-			             out.flush();
-			             out.close();
-			             Log.i("tag", "�Ѿ�����");
-			            } catch (FileNotFoundException e) {
-			             // TODO Auto-generated catch block
-			             e.printStackTrace();
-			            } catch (IOException e) {
-			             // TODO Auto-generated catch block
-			             e.printStackTrace();
-			            }
-			              
-			        }  
-		 }
+				Log.e("tag", "����ͼƬ");
+				File f = new File("/sdcard/namecard/", "pic.png");
+				if (f.exists()) {
+					f.delete();
+				}
+				try {
+					FileOutputStream out = new FileOutputStream(f);
+					bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+					out.flush();
+					out.close();
+					Log.i("tag", "�Ѿ�����");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
 	}
-	
+
 	public void startAudio() {
 		isAudioPlaying = true;
 	}
-	
+
 	public void stopAudio() {
 		isAudioPlaying = false;
 		if(null != audioPlayer) {
@@ -783,8 +783,8 @@ public class MediaPlayer extends GLSurfaceView {  // implements Callback
 		}
 		audioPlayer = null;
 	}
-	
 
-	 
-	 
+
+
+
 }

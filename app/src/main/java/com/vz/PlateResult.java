@@ -16,79 +16,79 @@ public class PlateResult {
 
     public byte[] license;
     /**
-     * <³µÅÆºÅÂë
+     * <è½¦ç‰Œå·ç 
      *///GBK
     public byte[] color;
     /**
-     * <³µÅÆÑÕÉ«
+     * <è½¦ç‰Œé¢œè‰²
      */
     public int nColor;
     /**
-     * <³µÅÆÑÕÉ«ÐòºÅ£¬Ïê¼û³µÅÆÑÕÉ«¶¨ÒåLC_X
+     * <è½¦ç‰Œé¢œè‰²åºå·ï¼Œè¯¦è§è½¦ç‰Œé¢œè‰²å®šä¹‰LC_X
      */
     public int nType;
     /**
-     * <³µÅÆÀàÐÍ£¬Ïê¼û³µÅÆÀàÐÍ¶¨ÒåLT_X
+     * <è½¦ç‰Œç±»åž‹ï¼Œè¯¦è§è½¦ç‰Œç±»åž‹å®šä¹‰LT_X
      */
     public int nConfidence;
     /**
-     * <³µÅÆ¿ÉÐÅ¶È
+     * <è½¦ç‰Œå¯ä¿¡åº¦
      */
     public int nBright;
     /**
-     * <ÁÁ¶ÈÆÀ¼Û
+     * <äº®åº¦è¯„ä»·
      */
     public int nDirection;
     /**
-     * <ÔË¶¯·½Ïò£¬Ïê¼ûÔË¶¯·½Ïò¶¨Òå DIRECTION_X
+     * <è¿åŠ¨æ–¹å‘ï¼Œè¯¦è§è¿åŠ¨æ–¹å‘å®šä¹‰ DIRECTION_X
      */
     public THRECT rcLocation;
     /**
-     * <³µÅÆÎ»ÖÃ
+     * <è½¦ç‰Œä½ç½®
      */
     public int nTime;
     /**
-     * <Ê¶±ðËùÓÃÊ±¼ä
+     * <è¯†åˆ«æ‰€ç”¨æ—¶é—´
      */
     public VZ_TIMEVAL tvPTS;
     /**
-     * <Ê¶±ðÊ±¼äµã
+     * <è¯†åˆ«æ—¶é—´ç‚¹
      */
     public int uBitsTrigType;
     /**
-     * <Ç¿ÖÆ´¥·¢½á¹ûµÄÀàÐÍ,¼ûTH_TRIGGER_TYPE_BIT
+     * <å¼ºåˆ¶è§¦å‘ç»“æžœçš„ç±»åž‹,è§TH_TRIGGER_TYPE_BIT
      */
     public char nCarBright;
     /**
-     * <³µµÄÁÁ¶È
+     * <è½¦çš„äº®åº¦
      */
     public char nCarColor;
     /**
-     * <³µµÄÑÕÉ«£¬Ïê¼û³µÁ¾ÑÕÉ«¶¨ÒåLCOLOUR_X
+     * <è½¦çš„é¢œè‰²ï¼Œè¯¦è§è½¦è¾†é¢œè‰²å®šä¹‰LCOLOUR_X
      */
-//	    char reserved0[2];			/**<ÎªÁË¶ÔÆë*/
+//	    char reserved0[2];			/**<ä¸ºäº†å¯¹é½*/
     public int uId;
     /**
-     * <¼ÇÂ¼µÄ±àºÅ
+     * <è®°å½•çš„ç¼–å·
      */
     public VzBDTime struBDTime;
 
     /**
-     * <·Ö½âÊ±¼ä
+     * <åˆ†è§£æ—¶é—´
      */
-    // char reserved[68];			/**<±£Áô*/
+    // char reserved[68];			/**<ä¿ç•™*/
     public static PlateResult createFromData(byte[] data) {
 //	    	   Charset cs = Charset.forName ("GBK");
 //	    	      ByteBuffer bb = ByteBuffer.allocate (data.length);
 //	    	      bb.put (data);
 //	    	        bb.flip ();
 //	    	       CharBuffer cb = cs.decode (bb);
-//	    	       
+//
 //	    	   char [] tempData =    cb.array();
 
         PlateResult pr = new PlateResult();
 //	    	int offset = 0 ;
-//	    	
+//
 //	    	try{
 //	    		pr.license = new String(data,0,16,"GBk");
 //	    	}
@@ -96,7 +96,7 @@ public class PlateResult {
 //	    	{
 //	    		pr.license = "";
 //	    	}
-//	    	
+//
 //	    	offset += 16;
 //	    	try{
 //	    	pr.color = new String(data,offset,8,"GBk");
@@ -105,9 +105,9 @@ public class PlateResult {
 //    	   {
 //    		   pr.license = "";
 //    	   }
-//    	
+//
 //	    	offset += 8;
-//	    	
+//
 //	    	try
 //	    	{
 //	    		pr.nColor =Integer.valueOf( new String(data,offset,4));
@@ -117,8 +117,8 @@ public class PlateResult {
 //	    		pr.nColor = 0;
 //	    	}
 //	    	offset += 4;
-//	    	
-//	    	
+//
+//
 //	    	try
 //	    	{
 //	    		pr.nType =Integer.valueOf( new String(data,offset,4));
@@ -128,7 +128,7 @@ public class PlateResult {
 //	    		pr.nType = 0;
 //	    	}
 //	    	offset += 4;
-//	    	
+//
 //	    	try
 //	    	{
 //	    		pr.nType =Integer.valueOf( new String(data,offset,4));
@@ -139,19 +139,19 @@ public class PlateResult {
 //	    	}
 //	    	offset += 4;
 //	    	offset = 92;
-//	    	 
+//
 //	    	pr. struBDTime = pr.new  VzBDTime();
-//	     
+//
 //	    	pr. struBDTime.bdt_year =  toInt(data,offset,(int)2);
-//	 
+//
 //	    	offset += 1;
-//	    	
+//
 
 
         return pr;
     }
 
-    // ½«byteÊý×ébRefArr×ªÎªÒ»¸öÕûÊý,×Ö½ÚÊý×éµÄµÍÎ»ÊÇÕûÐÍµÄµÍ×Ö½ÚÎ»
+    // å°†byteæ•°ç»„bRefArrè½¬ä¸ºä¸€ä¸ªæ•´æ•°,å­—èŠ‚æ•°ç»„çš„ä½Žä½æ˜¯æ•´åž‹çš„ä½Žå­—èŠ‚ä½
     public static int toInt(byte[] bRefArr, int offset, int length) {
         int iOutcome = 0;
         byte bLoop;

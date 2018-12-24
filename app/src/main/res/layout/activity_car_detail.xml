@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context="com.todayin.cctv.activity.CarDetailActivity">
+
+    <include layout="@layout/layout_tital" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/text_color"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabSelectedTextColor="@color/colorPrimaryDark">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="月租车查询" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="共享车查询" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="白名单查询" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark"></LinearLayout>
+</LinearLayout>

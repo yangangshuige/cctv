@@ -35,19 +35,12 @@ public class DateTimePickerView extends PopupWindow {
 
         mSave.setOnClickListener(itemsOnClick);
         mCancel.setOnClickListener(itemsOnClick);
-        // 设置SelectPicPopupWindow的View
         this.setContentView(mContentView);
-        // 设置SelectPicPopupWindow弹出窗体的宽
         this.setWidth(LayoutParams.MATCH_PARENT);
-        // 设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(LayoutParams.WRAP_CONTENT);
-        // 设置SelectPicPopupWindow弹出窗体可点�?
         this.setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0x00);
         setBackgroundDrawable(dw);
-        // 设置SelectPicPopupWindow弹出窗体动画效果
-        // this.setAnimationStyle(R.style.popupAnimation);
-        // mMenuView添加OnTouchListener监听判断获取触屏位置如果在�?择框外面则销毁弹出框
     }
 
 }

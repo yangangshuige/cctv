@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * ÈÕÆÚÓëÊ±¼ä¸¨ÖúÀà
- * @author Ì·ºº²Å
+ * æ—¥æœŸä¸æ—¶é—´è¾…åŠ©ç±»
+ * @author è°­æ±‰æ‰
  * @date 2012-09-12
  */
 public class DateUtil {
@@ -18,25 +18,25 @@ public class DateUtil {
 	public static final String TYPE_TIME_1		 	= "HH-mm-ss";
 
 	/**
-	 * »ñÈ¡µ±Ç°µÄÈÕÆÚ
-	 * @return ÑùÊ½Îªyyyy-MM-ddµÄÈÕÆÚ×Ö·û´®
+	 * è·å–å½“å‰çš„æ—¥æœŸ
+	 * @return æ ·å¼ä¸ºyyyy-MM-ddçš„æ—¥æœŸå­—ç¬¦ä¸²
 	 */
 	public static final String getNowDate(){
 		return getNowDateAndTime(TYPE_DATE);
 	}
 
 	/**
-	 * »ñÈ¡µ±Ç°µÄÊ±¼ä
-	 * @return ÑùÊ½ÎªHH-mm-ssµÄÊ±¼ä×Ö·û´®
+	 * è·å–å½“å‰çš„æ—¶é—´
+	 * @return æ ·å¼ä¸ºHH-mm-ssçš„æ—¶é—´å­—ç¬¦ä¸²
 	 */
 	public static final String getNowTime() {
 		return getNowDateAndTime(TYPE_TIME);
 	}
 
 	/**
-	 * »ñÈ¡µ±Ç°µÄÈÕÆÚºÍÊ±¼ä
-	 * @param style ÈÕÆÚºÍÊ±¼äµÄÑùÊ½·ç¸ñ
-	 * @return ·µ»Ø¾ßÓĞstyleÑùÊ½¸ñÊ½µÄÈÕÆÚºÍÊ±¼ä×Ö·û´®
+	 * è·å–å½“å‰çš„æ—¥æœŸå’Œæ—¶é—´
+	 * @param style æ—¥æœŸå’Œæ—¶é—´çš„æ ·å¼é£æ ¼
+	 * @return è¿”å›å…·æœ‰styleæ ·å¼æ ¼å¼çš„æ—¥æœŸå’Œæ—¶é—´å­—ç¬¦ä¸²
 	 */
 	public static final String getNowDateAndTime(String style) {
 		Calendar calendar = Calendar.getInstance();
@@ -63,9 +63,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * °ÑÈÕÆÚ×Ö·û´®×ª³ÉCalendarÈÕÆÚÀàĞÍ
-	 * @param dateStr Ê±ÆÚ×Ö·û´®
-	 * @return CalendarÈÕÆÚÀàĞÍ
+	 * æŠŠæ—¥æœŸå­—ç¬¦ä¸²è½¬æˆCalendaræ—¥æœŸç±»å‹
+	 * @param dateStr æ—¶æœŸå­—ç¬¦ä¸²
+	 * @return Calendaræ—¥æœŸç±»å‹
 	 */
 	public static final Calendar string2Calendar(String dateStr) {
 		GregorianCalendar calendar = null;
@@ -79,7 +79,7 @@ public class DateUtil {
 		}
 		return calendar;
 	}
-	
+
 	public static final String string2String(String str) {
 		StringBuilder builder = new StringBuilder();
 		for(int i = 0;i<str.length();i++){
@@ -90,7 +90,7 @@ public class DateUtil {
 		}
 		return builder.toString();
 	}
-	
+
 	public static final String millisecond2String(long millisecond) {
 		Date d = new Date(millisecond);
 		String dStr = "";
@@ -101,18 +101,18 @@ public class DateUtil {
 		}
 		return dStr;
 	}
-	
+
 	public static final String convertTime(int second) {
 		String text = "00:00";
-		
+
 		if(second>=0) {
 			int s = second % 60;
 			int m = (second / 60) % 60;
-			
-			
-			text= String.format("%02d:%02d", m,s);
+
+
+			text=String.format("%02d:%02d", m,s);
 		}
-		
+
 		return text;
 	}
 }

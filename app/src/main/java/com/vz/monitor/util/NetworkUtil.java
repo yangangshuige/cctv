@@ -5,11 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class NetworkUtil {
-	
+
 	/**
-	 * ÍøÂçÊÇ·ñÒÑÁ¬½Ó
+	 * ç½‘ç»œæ˜¯å¦å·²è¿æ¥
 	 * @param context
-	 * @return ÒÑÁ¬½Ó£ºtrue; Î´Á¬½Ó£ºfalse
+	 * @return å·²è¿æ¥ï¼štrue; æœªè¿æ¥ï¼šfalse
 	 */
 	public static final boolean isNetworkConnected(Context context) {
 		NetworkInfo info = getNetworkInfo(context);
@@ -20,9 +20,9 @@ public class NetworkUtil {
 	}
 
 	/**
-	 * WifiÍøÂçÊÇ·ñÒÑÁ¬½Ó
+	 * Wifiç½‘ç»œæ˜¯å¦å·²è¿æ¥
 	 * @param context
-	 * @return ÒÑÁ¬½Ó£ºtrue; Î´Á¬½Ó£ºfalse
+	 * @return å·²è¿æ¥ï¼štrue; æœªè¿æ¥ï¼šfalse
 	 */
 	public static final boolean isWifiConnected(Context context) {
 		NetworkInfo info = getNetworkInfo(context);
@@ -33,9 +33,9 @@ public class NetworkUtil {
 	}
 
 	/**
-	 * MobileÍøÂçÊÇ·ñÒÑÁ¬½Ó
+	 * Mobileç½‘ç»œæ˜¯å¦å·²è¿æ¥
 	 * @param context
-	 * @return ÒÑÁ¬½Ó£ºtrue; Î´Á¬½Ó£ºfalse
+	 * @return å·²è¿æ¥ï¼štrue; æœªè¿æ¥ï¼šfalse
 	 */
 	public static final boolean isMobileConnected(Context context) {
 		NetworkInfo info = getNetworkInfo(context);
@@ -46,9 +46,9 @@ public class NetworkUtil {
 	}
 
 	/**
-	 * »ñµÃÍøÂçĞÅÏ¢
+	 * è·å¾—ç½‘ç»œä¿¡æ¯
 	 * @param context
-	 * @return 
+	 * @return
 	 */
 	private static final NetworkInfo getNetworkInfo(Context context) {
 		ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -57,5 +57,5 @@ public class NetworkUtil {
 		}
 		return null;
 	}
-	
+
 }

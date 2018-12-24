@@ -250,25 +250,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-        //Æô¶¯LOG·şÎñ
-//		  Intent i  = new Intent();
-//        i.setClass(CameraActivity.this, LogService.class);
-//        startService(i);
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-//		Intent i  = new Intent();
-//        i.setClass(CameraActivity.this, LogService.class);
-//        stopService(i);
-    }
 
     @Override
     protected void onPause() {
@@ -314,30 +296,14 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
         ThreadManager.releasePool();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (mPop != null && mPop.isShowing()) {
-            mPop.dismiss();
-            return true;
-        }
-
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            showDailog("ÊÇ·ñÒªÍË³öÒ»Ìå»ú¹¤¾ß?");
-
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
 
     private void showDailog(String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setTitle("È·ÈÏÍË³ö");
+        builder.setTitle("ç¡®è®¤é€€å‡º");
         builder.setMessage(msg);
 //      builder.setCancelable(false);
-        builder.setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("ç¡®å®š", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
 
@@ -364,7 +330,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                 finish();
             }
         });
-        builder.setNegativeButton("È¡Ïû", null);
+        builder.setNegativeButton("å–æ¶ˆ", null);
         builder.create().show();
     }
 
@@ -374,7 +340,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
             DeviceSet ds = this.getDeviceSetFromHandle(handle);
 
             if (ds == null) {
-                Toast.makeText(CameraActivity.this, "³µÅÆ»Øµ÷Êı¾İÊ§°Ü:Î´ÕÒµ½Éè±¸", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CameraActivity.this, "è½¦ç‰Œå›è°ƒæ•°æ®å¤±è´¥:æœªæ‰¾åˆ°è®¾å¤‡", Toast.LENGTH_SHORT).show();
             }
 
             DeviceInfo di = ds.getDeviceInfo();
@@ -399,19 +365,19 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
             dateText += plateResult.struBDTime.bdt_sec;
 
 
-            String plateText = new String(plateResult.license, "GBK");
+            String plateText = new String(plateResult.license, "UTF-8");
 
 
             Log.e("yg", plateText);
 
             if (!m_gb.getplateCallbackInfoTable().addCallbackInfo(di.DeviceName, plateText, dateText, pImgFull, pImgPlateClip)) {
-                Toast.makeText(CameraActivity.this, "Ìí¼Ó³µÅÆ»Øµ÷Êı¾İÊ§°Ü", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CameraActivity.this, "æ·»åŠ è½¦ç‰Œå›è°ƒæ•°æ®å¤±è´¥", Toast.LENGTH_SHORT).show();
             }
 
             Log.i("visizion", "decodeByteArray begin");
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;//Í¼Æ¬¿í¸ß¶¼ÎªÔ­À´µÄ¶ş·ÖÖ®Ò»£¬¼´Í¼Æ¬ÎªÔ­À´µÄËÄ·ÖÖ®Ò»
+            options.inSampleSize = 4;//å›¾ç‰‡å®½é«˜éƒ½ä¸ºåŸæ¥çš„äºŒåˆ†ä¹‹ä¸€ï¼Œå³å›¾ç‰‡ä¸ºåŸæ¥çš„å››åˆ†ä¹‹ä¸€
             options.inInputShareable = true;
             Bitmap bmp = null;
             try {
@@ -442,7 +408,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
 
         } catch (UnsupportedEncodingException e) {
 
-            Toast.makeText(CameraActivity.this, "²»Ö§³ÖµÄ½âÂëÒì³£", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CameraActivity.this, "ä¸æ”¯æŒçš„è§£ç å¼‚å¸¸", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -564,7 +530,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                 }
                 break;
                 default:
-                    Toast.makeText(CameraActivity.this, "Î´ÖªÏûÏ¢", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity.this, "æœªçŸ¥æ¶ˆæ¯", Toast.LENGTH_SHORT).show();
                     break;
             }
 

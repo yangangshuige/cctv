@@ -10,6 +10,7 @@ import com.database.SnapImageTable.SnapImageElement;
 import com.example.vzvision.PlateActivity.MyAdspter;
 import com.example.vzvision.PlateActivity.MyAdspter.Zujian;
 import com.todayin.cctv.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -26,32 +27,32 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.graphics.Typeface;
-import android.graphics.Bitmap;  
-import android.graphics.BitmapFactory;  
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 public class SnapImageActivity extends Activity {
 	private ListView listView_snapImage = null;
-    private MyAdspter  myAdpter = null;
-	
+	private MyAdspter  myAdpter = null;
+
 	private GlobalVariable m_gb = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_snap_image);
-		
-		
+
+
 		listView_snapImage = (ListView)this.findViewById(R.id.listView_snapImage);
-		
+
 		m_gb = (GlobalVariable)getApplicationContext();
-		
-		
-		 List<Map<String, Object>> list=getData();
-		 myAdpter = new MyAdspter(this, list);
-		 listView_snapImage.setAdapter(myAdpter);  
+
+
+		List<Map<String, Object>> list=getData();
+		myAdpter = new MyAdspter(this, list);
+		listView_snapImage.setAdapter(myAdpter);
 	}
 
 	@Override
@@ -72,103 +73,103 @@ public class SnapImageActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	protected List<Map<String, Object>> getData()
+
+	protected  List<Map<String, Object>> getData()
 	{
-		 List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
-	        
-		  
-	        SnapImageTable pci = m_gb.getSnapImageTable();
-	        
-	        if( pci != null)
-	        {
-	        	int rowcount = pci.getRowCount();
-	        	
-	        	SnapImageTable.SnapImageElement ele = pci.new SnapImageElement();
-	        	
-	        	Bitmap bmp;
-	        	
-	        	 for (int i = 0; i < rowcount; i++) {  
-	 	            Map<String, Object> map=new HashMap<String, Object>();
-	 	            
-	 	            
-//	 		        String mstrTitle = "ÎŞÊÓÆµ";
+		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+
+
+		SnapImageTable pci = m_gb.getSnapImageTable();
+
+		if( pci != null)
+		{
+			int rowcount = pci.getRowCount();
+
+			SnapImageTable.SnapImageElement ele = pci.new SnapImageElement();
+
+			Bitmap bmp;
+
+			for (int i = 0; i < rowcount; i++) {
+				Map<String, Object> map=new HashMap<String, Object>();
+
+
+//	 		        String mstrTitle = "æ— è§†é¢‘";
 //	 			    Bitmap bmp = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
 //	 		        Canvas canvasTemp = new Canvas(bmp);
 //	 		        canvasTemp.drawColor(Color.BLACK);
 //	 		        Paint p = new Paint();
-//	 		        String familyName = "ËÎÌå";
+//	 		        String familyName = "å®‹ä½“";
 //	 		        Typeface font = Typeface.create(familyName, Typeface.BOLD);
 //	 		        p.setColor(Color.RED);
 //	 		        p.setTypeface(font);
 //	 		        p.setTextSize(27);
 //	 		        canvasTemp.drawText(mstrTitle, 0, 100, p);
-	 	            
-	 	        //   BitmapFactory.decodeByteArray(data, 0, data.length);  
-	 	            
-	 	            if(pci.get(i, ele))
-	 	            {
-	 	            	try
-	 	            	{
-	 	            		 byte [] realImgData =  Base64.decode(ele.ImageData,  Base64.NO_PADDING);
-	 	            		 
-	 	            		 BitmapFactory.Options options = new BitmapFactory.Options();
-	 	            		 
-	 	            		 if( realImgData.length > 50000)
-	 	            		 {
-	 	            			options.inSampleSize = 4;//Í¼Æ¬¿í¸ß¶¼ÎªÔ­À´µÄ¶ş·ÖÖ®Ò»£¬¼´Í¼Æ¬ÎªÔ­À´µÄËÄ·ÖÖ®Ò» 
-		 	                     options.inInputShareable  = true; 
-	 	            		 }
-	 	            		 else
-	 	            		 {
-	 	            			options.inSampleSize = 1;//Í¼Æ¬¿í¸ß¶¼ÎªÔ­À´µÄ¶ş·ÖÖ®Ò»£¬¼´Í¼Æ¬ÎªÔ­À´µÄËÄ·ÖÖ®Ò» 
-		 	                     options.inInputShareable  = true;
-	 	            		 }
-	 	            		 
-	 	            		 
-	 	 	            	
-	 	 	            	bmp = BitmapFactory.decodeByteArray(realImgData, 0, realImgData.length,options);
-	 	 	            	
-	 	 	            	if( bmp !=null)
-	 	 	            	{
-	 	 	            	  map.put("date", ele.date);  
-	 		 	              map.put("img",bmp);  
-	 	 	            	}
-	 	 	            	 list.add(map); 
-	 	            	}
-	 	            	catch(IllegalArgumentException e)
-	 	            	{
-	 	            		int a;
-	 	                	 a= 0;
-	 	            	}
-	 	                catch(Exception e)
-	 	                {
-	 	                	int a;
-	 	                	 a= 0;
-	 	                }
-	 	            }
-	 	             
-	 	        }  
-	        }
-	        	 
-	       return list;
-	       
+
+				//   BitmapFactory.decodeByteArray(data, 0, data.length);
+
+				if(pci.get(i, ele))
+				{
+					try
+					{
+						byte [] realImgData =  Base64.decode(ele.ImageData,  Base64.NO_PADDING);
+
+						BitmapFactory.Options options = new BitmapFactory.Options();
+
+						if( realImgData.length > 50000)
+						{
+							options.inSampleSize = 4;//å›¾ç‰‡å®½é«˜éƒ½ä¸ºåŸæ¥çš„äºŒåˆ†ä¹‹ä¸€ï¼Œå³å›¾ç‰‡ä¸ºåŸæ¥çš„å››åˆ†ä¹‹ä¸€
+							options.inInputShareable  = true;
+						}
+						else
+						{
+							options.inSampleSize = 1;//å›¾ç‰‡å®½é«˜éƒ½ä¸ºåŸæ¥çš„äºŒåˆ†ä¹‹ä¸€ï¼Œå³å›¾ç‰‡ä¸ºåŸæ¥çš„å››åˆ†ä¹‹ä¸€
+							options.inInputShareable  = true;
+						}
+
+
+
+						bmp = BitmapFactory.decodeByteArray(realImgData, 0, realImgData.length,options);
+
+						if( bmp !=null)
+						{
+							map.put("date", ele.date);
+							map.put("img",bmp);
+						}
+						list.add(map);
+					}
+					catch(IllegalArgumentException e)
+					{
+						int a;
+						a= 0;
+					}
+					catch(Exception e)
+					{
+						int a;
+						a= 0;
+					}
+				}
+
+			}
+		}
+
+		return list;
+
 	}
-	
-	
-	
+
+
+
 	public class MyAdspter extends BaseAdapter {
 
 		private List<Map<String, Object>> data;
 		private LayoutInflater layoutInflater;
 		private Context context;
-		public MyAdspter(Context context, List<Map<String, Object>> data){
+		public MyAdspter(Context context,List<Map<String, Object>> data){
 			this.context=context;
 			this.data=data;
-			this.layoutInflater= LayoutInflater.from(context);
+			this.layoutInflater=LayoutInflater.from(context);
 		}
 		/**
-		 * ×é¼ş¼¯ºÏ£¬¶ÔÓ¦list.xmlÖĞµÄ¿Ø¼ş
+		 * ç»„ä»¶é›†åˆï¼Œå¯¹åº”list.xmlä¸­çš„æ§ä»¶
 		 * @author Administrator
 		 */
 		public final class Zujian{
@@ -180,14 +181,14 @@ public class SnapImageActivity extends Activity {
 			return data.size();
 		}
 		/**
-		 * »ñµÃÄ³Ò»Î»ÖÃµÄÊı¾İ
+		 * è·å¾—æŸä¸€ä½ç½®çš„æ•°æ®
 		 */
 		@Override
 		public Object getItem(int position) {
 			return data.get(position);
 		}
 		/**
-		 * »ñµÃÎ¨Ò»±êÊ¶
+		 * è·å¾—å”¯ä¸€æ ‡è¯†
 		 */
 		@Override
 		public long getItemId(int position) {
@@ -199,26 +200,26 @@ public class SnapImageActivity extends Activity {
 			Zujian zujian=null;
 			if(convertView==null){
 				zujian=new Zujian();
-				//»ñµÃ×é¼ş£¬ÊµÀı»¯×é¼ş
+				//è·å¾—ç»„ä»¶ï¼Œå®ä¾‹åŒ–ç»„ä»¶
 				convertView=layoutInflater.inflate(R.layout.snap_image_item, null);
 				zujian.snapImage=(ImageView)convertView.findViewById(R.id.imageView_snapImage);
 				zujian.dateText=(TextView)convertView.findViewById(R.id.textView_date);
-				 
+
 				convertView.setTag(zujian);
 			}else{
 				zujian=(Zujian)convertView.getTag();
 			}
 			Bitmap t =  (Bitmap)data.get(position).get("img");
-			//°ó¶¨Êı¾İ
+			//ç»‘å®šæ•°æ®
 			zujian.snapImage.setImageBitmap((Bitmap)data.get(position).get("img") );//setBackgroundResource((Integer)data.get(position).get("image"));
 			zujian.dateText.setText((String)data.get(position).get("date"));
-			 
-			
+
+
 			return convertView;
 		}
-		
-		
- 
+
+
+
 
 	}
 }

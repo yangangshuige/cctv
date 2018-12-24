@@ -1,5 +1,5 @@
 package com.vz.monitor.player;
- 
+
 import android.content.Context;
 import android.media.effect.Effect;
 import android.media.effect.EffectContext;
@@ -26,79 +26,80 @@ import javax.microedition.khronos.opengles.GL10;
 import com.example.vzvision.GLToolbox;
 
 
+
 public class FontImage extends GLImage {
 	private int mProgram;
-    private int mTexSamplerHandle;
-    private int mTexCoordHandle;
-    private int mPosCoordHandle;
+	private int mTexSamplerHandle;
+	private int mTexCoordHandle;
+	private int mPosCoordHandle;
 
-    private FloatBuffer mTexVertices;
-    private FloatBuffer mPosVertices;
+	private FloatBuffer mTexVertices;
+	private FloatBuffer mPosVertices;
 
-    private int mViewWidth;
-    private int mViewHeight;
+	private int mViewWidth;
+	private int mViewHeight;
 
-    private int mTexWidth;
-    private int mTexHeight;
-    
-    private Context mContext;
-  //  private final Queue<Runnable> mRunOnDraw;
-    private int[] mTextures = new int[2];
-    int mCurrentEffect;
-    private EffectContext mEffectContext;
-    private Effect mEffect;
-    private int mImageWidth;
-    private int mImageHeight;
-    private boolean initialized = false;
+	private int mTexWidth;
+	private int mTexHeight;
 
-    private static final String VERTEX_SHADER =
-        "attribute vec4 a_position;\n" +
-        "attribute vec2 a_texcoord;\n" +
-        "varying vec2 v_texcoord;\n" +
-        "void main() {\n" +
-        "  gl_Position = a_position;\n" +
-        "  v_texcoord = a_texcoord;\n" +
-        "}\n";
+	private Context mContext;
+	//  private final Queue<Runnable> mRunOnDraw;
+	private int[] mTextures = new int[2];
+	int mCurrentEffect;
+	private EffectContext mEffectContext;
+	private Effect mEffect;
+	private int mImageWidth;
+	private int mImageHeight;
+	private boolean initialized = false;
 
-    private static final String FRAGMENT_SHADER =
-        "precision mediump float;\n" +
-        "uniform sampler2D tex_sampler;\n" +
-        "varying vec2 v_texcoord;\n" +
-        "void main() {\n" +
-        "  gl_FragColor = texture2D(tex_sampler, v_texcoord);\n" +
-        "}\n";
+	private static final String VERTEX_SHADER =
+			"attribute vec4 a_position;\n" +
+					"attribute vec2 a_texcoord;\n" +
+					"varying vec2 v_texcoord;\n" +
+					"void main() {\n" +
+					"  gl_Position = a_position;\n" +
+					"  v_texcoord = a_texcoord;\n" +
+					"}\n";
 
-    private static final float[] TEX_VERTICES = {
-        0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
-    };
+	private static final String FRAGMENT_SHADER =
+			"precision mediump float;\n" +
+					"uniform sampler2D tex_sampler;\n" +
+					"varying vec2 v_texcoord;\n" +
+					"void main() {\n" +
+					"  gl_FragColor = texture2D(tex_sampler, v_texcoord);\n" +
+					"}\n";
 
-    private static final float[] POS_VERTICES = {
-        -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f
-    };
+	private static final float[] TEX_VERTICES = {
+			0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+	};
 
-    private static final int FLOAT_SIZE_BYTES = 4;
-    
+	private static final float[] POS_VERTICES = {
+			-1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f
+	};
+
+	private static final int FLOAT_SIZE_BYTES = 4;
+
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		 // Create program
-        mProgram = super.loadProgram(VERTEX_SHADER, FRAGMENT_SHADER);
+		// Create program
+		mProgram = super.loadProgram(VERTEX_SHADER, FRAGMENT_SHADER);
 
-        // Bind attributes and uniforms
-        mTexSamplerHandle = GLES20.glGetUniformLocation(mProgram,
-                "tex_sampler");
-        mTexCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_texcoord");
-        mPosCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_position");
+		// Bind attributes and uniforms
+		mTexSamplerHandle = GLES20.glGetUniformLocation(mProgram,
+				"tex_sampler");
+		mTexCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_texcoord");
+		mPosCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_position");
 
-        // Setup coordinate buffers
-        mTexVertices = ByteBuffer.allocateDirect(
-                TEX_VERTICES.length * FLOAT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
-        mTexVertices.put(TEX_VERTICES).position(0);
-        mPosVertices = ByteBuffer.allocateDirect(
-                POS_VERTICES.length * FLOAT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
-        mPosVertices.put(POS_VERTICES).position(0);
+		// Setup coordinate buffers
+		mTexVertices = ByteBuffer.allocateDirect(
+				TEX_VERTICES.length * FLOAT_SIZE_BYTES)
+				.order(ByteOrder.nativeOrder()).asFloatBuffer();
+		mTexVertices.put(TEX_VERTICES).position(0);
+		mPosVertices = ByteBuffer.allocateDirect(
+				POS_VERTICES.length * FLOAT_SIZE_BYTES)
+				.order(ByteOrder.nativeOrder()).asFloatBuffer();
+		mPosVertices.put(POS_VERTICES).position(0);
 	}
 
 	@Override
@@ -106,99 +107,99 @@ public class FontImage extends GLImage {
 		// TODO Auto-generated method stub
 		renderTexture(mTextures[0]);
 	}
-	
-	
+
+
 	public void setFont(String text )
 	{
-		   Bitmap bmp = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
-	        Canvas canvasTemp = new Canvas(bmp);
-	        canvasTemp.drawColor(Color.BLACK);
-	        Paint p = new Paint();
-	        String familyName = "ËÎÌå";
-	        Typeface font = Typeface.create(familyName, Typeface.BOLD);
-	        p.setColor(Color.RED);
-	        p.setTypeface(font);
-	        p.setTextSize(27);
-	        canvasTemp.drawText(text, 0, 100, p);
-	        
-	        
-	        GLES20.glGenTextures(2, mTextures , 0);
+		Bitmap bmp = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
+		Canvas canvasTemp = new Canvas(bmp);
+		canvasTemp.drawColor(Color.BLACK);
+		Paint p = new Paint();
+		String familyName = "å®‹ä½“";
+		Typeface font = Typeface.create(familyName, Typeface.BOLD);
+		p.setColor(Color.RED);
+		p.setTypeface(font);
+		p.setTextSize(27);
+		canvasTemp.drawText(text, 0, 100, p);
 
-	        updateTextureSize(bmp.getWidth(), bmp.getHeight());
-	        
-	        mImageWidth = bmp.getWidth();
-	        mImageHeight = bmp.getHeight();
 
-	        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0]);
-	        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
+		GLES20.glGenTextures(2, mTextures , 0);
 
-	        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D,
-	                GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-	        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D,
-	                GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-	        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
-	                GLES20.GL_CLAMP_TO_EDGE);
-	        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
-	                GLES20.GL_CLAMP_TO_EDGE);
+		updateTextureSize(bmp.getWidth(), bmp.getHeight());
+
+		mImageWidth = bmp.getWidth();
+		mImageHeight = bmp.getHeight();
+
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0]);
+		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
+
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D,
+				GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D,
+				GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
+				GLES20.GL_CLAMP_TO_EDGE);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
+				GLES20.GL_CLAMP_TO_EDGE);
 	}
-	  public void updateTextureSize(int texWidth, int texHeight) {
-	        mTexWidth = texWidth;
-	        mTexHeight = texHeight;
-	        computeOutputVertices();
-	    }
+	public void updateTextureSize(int texWidth, int texHeight) {
+		mTexWidth = texWidth;
+		mTexHeight = texHeight;
+		computeOutputVertices();
+	}
 
-	    public void updateViewSize(int viewWidth, int viewHeight) {
-	        mViewWidth = viewWidth;
-	        mViewHeight = viewHeight;
-	        computeOutputVertices();
-	    }
+	public void updateViewSize(int viewWidth, int viewHeight) {
+		mViewWidth = viewWidth;
+		mViewHeight = viewHeight;
+		computeOutputVertices();
+	}
 
-	    public void renderTexture(int texId) {
-	        GLES20.glUseProgram(mProgram);
-	        //GLToolbox.checkGlError("glUseProgram");
+	public void renderTexture(int texId) {
+		GLES20.glUseProgram(mProgram);
+		//GLToolbox.checkGlError("glUseProgram");
 
-	        GLES20.glViewport(0, 0, mViewWidth, mViewHeight);
-	       // GLToolbox.checkGlError("glViewport");
+		GLES20.glViewport(0, 0, mViewWidth, mViewHeight);
+		// GLToolbox.checkGlError("glViewport");
 
-	        GLES20.glDisable(GLES20.GL_BLEND);
+		GLES20.glDisable(GLES20.GL_BLEND);
 
-	        GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false,
-	                0, mTexVertices);
-	        GLES20.glEnableVertexAttribArray(mTexCoordHandle);
-	        GLES20.glVertexAttribPointer(mPosCoordHandle, 2, GLES20.GL_FLOAT, false,
-	                0, mPosVertices);
-	        GLES20.glEnableVertexAttribArray(mPosCoordHandle);
-	       // GLToolbox.checkGlError("vertex attribute setup");
+		GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false,
+				0, mTexVertices);
+		GLES20.glEnableVertexAttribArray(mTexCoordHandle);
+		GLES20.glVertexAttribPointer(mPosCoordHandle, 2, GLES20.GL_FLOAT, false,
+				0, mPosVertices);
+		GLES20.glEnableVertexAttribArray(mPosCoordHandle);
+		// GLToolbox.checkGlError("vertex attribute setup");
 
-	        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-	        GLToolbox.checkGlError("glActiveTexture");
-	        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texId);//°ÑÒÑ¾­´¦ÀíºÃµÄTexture´«µ½GLÉÏÃæ
-	       // GLToolbox.checkGlError("glBindTexture");
-	        GLES20.glUniform1i(mTexSamplerHandle, 0);
+		GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+		GLToolbox.checkGlError("glActiveTexture");
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texId);//æŠŠå·²ç»å¤„ç†å¥½çš„Textureä¼ åˆ°GLä¸Šé¢
+		// GLToolbox.checkGlError("glBindTexture");
+		GLES20.glUniform1i(mTexSamplerHandle, 0);
 
-	        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-	        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
-	    }
-	    private void computeOutputVertices() { //µ÷ÕûAspectRatio ±£Ö¤landscapeºÍportraitµÄÊ±ºòÏÔÊ¾±ÈÀýÏàÍ¬£¬Í¼Æ¬²»»á±»À­Éì
-	        if (mPosVertices != null) {
-	            float imgAspectRatio = mTexWidth / (float)mTexHeight;
-	            float viewAspectRatio = mViewWidth / (float)mViewHeight;
-	            float relativeAspectRatio = viewAspectRatio / imgAspectRatio;
-	            float x0, y0, x1, y1;
-	            if (relativeAspectRatio > 1.0f) {
-	                x0 = -1.0f / relativeAspectRatio;
-	                y0 = -1.0f;
-	                x1 = 1.0f / relativeAspectRatio;
-	                y1 = 1.0f;
-	            } else {
-	                x0 = -1.0f;
-	                y0 = -relativeAspectRatio;
-	                x1 = 1.0f;
-	                y1 = relativeAspectRatio;
-	            }
-	            float[] coords = new float[] { x0, y0, x1, y0, x0, y1, x1, y1 };
-	            mPosVertices.put(coords).position(0);
-	        }
-	    }
+		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
+	}
+	private void computeOutputVertices() { //è°ƒæ•´AspectRatio ä¿è¯landscapeå’Œportraitçš„æ—¶å€™æ˜¾ç¤ºæ¯”ä¾‹ç›¸åŒï¼Œå›¾ç‰‡ä¸ä¼šè¢«æ‹‰ä¼¸
+		if (mPosVertices != null) {
+			float imgAspectRatio = mTexWidth / (float)mTexHeight;
+			float viewAspectRatio = mViewWidth / (float)mViewHeight;
+			float relativeAspectRatio = viewAspectRatio / imgAspectRatio;
+			float x0, y0, x1, y1;
+			if (relativeAspectRatio > 1.0f) {
+				x0 = -1.0f / relativeAspectRatio;
+				y0 = -1.0f;
+				x1 = 1.0f / relativeAspectRatio;
+				y1 = 1.0f;
+			} else {
+				x0 = -1.0f;
+				y0 = -relativeAspectRatio;
+				x1 = 1.0f;
+				y1 = relativeAspectRatio;
+			}
+			float[] coords = new float[] { x0, y0, x1, y0, x0, y1, x1, y1 };
+			mPosVertices.put(coords).position(0);
+		}
+	}
 }

@@ -1,210 +1,210 @@
 package com.vz;
 
- 
+
 
 import android.util.Log;
 
 public class tcpsdk {
-	
-	private static tcpsdk m_tcpsdk = null;
-	
+
+	private static tcpsdk  m_tcpsdk = null;
+
 	private void tcpsdk()
 	{
-		
+
 	}
-	
+
 	public static tcpsdk getInstance()
 	{
 		if(m_tcpsdk == null)
 			m_tcpsdk = new tcpsdk();
 		return m_tcpsdk;
 	}
-	
+
 	/**
-	*  @brief È«¾Ö³õÊ¼»¯
-	*  @return 0±íÊ¾³É¹¦£¬-1±íÊ¾Ê§°Ü
-	*  @note ÔÚËùÓĞ½Ó¿Úµ÷ÓÃÖ®Ç°µ÷ÓÃ
-	*  @ingroup group_global
-	*/
-    public native int   setup();
-    /**
-    *  @brief È«¾ÖÊÍ·Å
-    *  @note ÔÚ³ÌĞò½áÊøÊ±µ÷ÓÃ£¬ÊÍ·ÅSDKµÄ×ÊÔ´
-    *  @ingroup group_global
-    */
-    public native void  cleanup();
-     
-    /**
-    *  @brief ´ò¿ªÒ»¸öÉè±¸
-    *  @param  [IN] ip Éè±¸µÄIPµØÖ·
-    *  @param  [IN] ipLength Éè±¸µÄIPµØÖ·³¤¶È
-    *  @param  [IN] port Éè±¸µÄ¶Ë¿ÚºÅ
-    *  @param  [IN] username ·ÃÎÊÉè±¸ËùĞèÓÃ»§Ãû
-    *  @param  [IN] userpassword ·ÃÎÊÉè±¸ËùĞèÃÜÂë
-    *  @return ·µ»ØÉè±¸µÄ²Ù×÷¾ä±ú£¬µ±´ò¿ªÊ§°ÜÊ±£¬·µ»Ø0
-    *  @ingroup group_device
-    */
-    public native int   open(byte[] ip,int ipLength,int port,byte[] username,int userLength,byte[] userpassword ,int passwordLenth);
-    
-    /**
-    *  @brief ¹Ø±ÕÒ»¸öÉè±¸
-    *  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-    *  @return 0±íÊ¾³É¹¦£¬-1±íÊ¾Ê§°Ü
-    *  @ingroup group_device
-    */
-    public native int   close(int tcphandle);
+	 *  @brief å…¨å±€åˆå§‹åŒ–
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œ-1è¡¨ç¤ºå¤±è´¥
+	 *  @note åœ¨æ‰€æœ‰æ¥å£è°ƒç”¨ä¹‹å‰è°ƒç”¨
+	 *  @ingroup group_global
+	 */
+	public native int   setup();
+	/**
+	 *  @brief å…¨å±€é‡Šæ”¾
+	 *  @note åœ¨ç¨‹åºç»“æŸæ—¶è°ƒç”¨ï¼Œé‡Šæ”¾SDKçš„èµ„æº
+	 *  @ingroup group_global
+	 */
+	public native void  cleanup();
 
-	 	/**
-	*  @brief ÉèÖÃIOÊä³ö
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] uChnId IOÊä³öµÄÍ¨µÀºÅ£¬´Ó0¿ªÊ¼
-	*  @param  [IN] nOutput  ½«ÒªÉèÖÃµÄIOÊä³öµÄ×´Ì¬£¬0±íÊ¾¼ÌµçÆ÷¿ªÂ·£¬1±íÊ¾¼ÌµçÆ÷±ÕÂ·
-	*  @return 0±íÊ¾³É¹¦£¬-1±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native  int  setIoOutput(int handle, short uChnId, int nOutput);
+	/**
+	 *  @brief æ‰“å¼€ä¸€ä¸ªè®¾å¤‡
+	 *  @param  [IN] ip è®¾å¤‡çš„IPåœ°å€
+	 *  @param  [IN] ipLength è®¾å¤‡çš„IPåœ°å€é•¿åº¦
+	 *  @param  [IN] port è®¾å¤‡çš„ç«¯å£å·
+	 *  @param  [IN] username è®¿é—®è®¾å¤‡æ‰€éœ€ç”¨æˆ·å
+	 *  @param  [IN] userpassword è®¿é—®è®¾å¤‡æ‰€éœ€å¯†ç 
+	 *  @return è¿”å›è®¾å¤‡çš„æ“ä½œå¥æŸ„ï¼Œå½“æ‰“å¼€å¤±è´¥æ—¶ï¼Œè¿”å›0
+	 *  @ingroup group_device
+	 */
+	public native int   open(byte[] ip,int ipLength,int port,byte[] username,int userLength,byte[] userpassword ,int passwordLenth);
 
-    
-   public native  int   getIoOutput(int  handle,  int  uChnId , int[] nOutput);
+	/**
+	 *  @brief å…³é—­ä¸€ä¸ªè®¾å¤‡
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œ-1è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int   close(int tcphandle);
 
-   	/**
-	*  @brief ÉèÖÃIOÊä³ö£¬²¢×Ô¶¯¸´Î»
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] uChnId IOÊä³öµÄÍ¨µÀºÅ£¬´Ó0¿ªÊ¼
-	*  @param  [IN] nDuration ÑÓÊ±Ê±¼ä£¬È¡Öµ·¶Î§[500, 5000]ºÁÃë
-	*  @return 0±íÊ¾³É¹¦£¬-1±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native  int  setIoOutputAuto(int handle, short uChnId, int nDuration);
-   
-   /**
-	*  @brief »ñÈ¡Á¬½Ó×´Ì¬
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @return true±íÊ¾Á¬½ÓÖĞ£¬false±íÊ¾Î´Á¬½Ó
-	*  @note   ÓÃ»§¿ÉÒÔÖÜÆÚµ÷ÓÃ¸Ãº¯ÊıÀ´Ö÷¶¯²éÑ¯Éè±¸ÊÇ·ñ¶ÏÏß£¬ÒÔ¼°¶ÏÏßºóÊÇ·ñ»Ö¸´Á¬½Ó
-	*  @ingroup group_device
-	*/
-   public native  boolean  isConnected(int handle);
-   
-   /**
-	*  @brief ÉèÖÃÍÑ»ú½á¹ûµÄ»Øµ÷º¯Êı
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] onDataReceiver Ê¶±ğ½á¹û»Øµ÷º¯Êı£¬Èç¹ûÎªNULL£¬Ôò±íÊ¾¹Ø±Õ¸Ã»Øµ÷º¯ÊıµÄ¹¦ÄÜ
-	*  @param  [IN] bEnableImage Ö¸¶¨Ê¶±ğ½á¹ûµÄ»Øµ÷ÊÇ·ñĞèÒª°üº¬½ØÍ¼ĞÅÏ¢£º1ÎªĞèÒª£¬0Îª²»ĞèÒª
-	*  @return 0±íÊ¾³É¹¦£¬-1±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int setPlateInfoCallBack( int handle,  OnDataReceiver  onDataReceiver ,int bEnableImage);
- //  public native int setPlateInfoCallBack( OnDataReceiver  onDataReceiver );
-   
-   /**
-	*  @brief ·¢ËÍÈí¼ş´¥·¢ĞÅºÅ£¬Ç¿ÖÆ´¦Àíµ±Ç°Ê±¿ÌµÄÊı¾İ²¢Êä³ö½á¹û
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @return 0±íÊ¾³É¹¦£¬-1±íÊ¾Ê§°Ü
-	*  @note   ³µÅÆÊ¶±ğ½á¹ûÍ¨¹ı»Øµ÷º¯ÊıµÄ·½Ê½·µ»Ø£¬Èç¹ûµ±Ç°ÊÓÆµ»­ÃæÖĞÎŞ³µÅÆ£¬Ôò»Øµ÷º¯Êı²»»á±»µ÷ÓÃ
-	*  @ingroup group_device
-	*/
-   public native int forceTrigger(int handle);
-   
-   /**
-	*  @brief ¿ªÆôÍ¸Ã÷Í¨µÀ
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] nSerialPort Ö¸¶¨Ê¹ÓÃÉè±¸µÄ´®¿ÚĞòºÅ£º0±íÊ¾µÚÒ»¸ö´®¿Ú£¬1±íÊ¾µÚ¶ş¸ö´®¿Ú
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int serialStart(int handle, int nSerialPort);
+	/**
+	 *  @brief è®¾ç½®IOè¾“å‡º
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] uChnId IOè¾“å‡ºçš„é€šé“å·ï¼Œä»0å¼€å§‹
+	 *  @param  [IN] nOutput  å°†è¦è®¾ç½®çš„IOè¾“å‡ºçš„çŠ¶æ€ï¼Œ0è¡¨ç¤ºç»§ç”µå™¨å¼€è·¯ï¼Œ1è¡¨ç¤ºç»§ç”µå™¨é—­è·¯
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œ-1è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native  int  setIoOutput(int handle, short uChnId, int nOutput);
 
-    /**
-	*  @brief Í¸Ã÷Í¨µÀ·¢ËÍÊı¾İ
-	*  @param [IN] nSerialHandle ÓÉserialStartº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param [IN] pData ½«Òª´«ÊäµÄÊı¾İ¿éµÄÊ×µØÖ·
-	*  @param [IN] uSizeData ½«Òª´«ÊäµÄÊı¾İ¿éµÄ×Ö½ÚÊı
-	*  @return 0±íÊ¾³É¹¦£¬ÆäËûÖµ±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int  serialSend(int handle, int nSerialPort, byte[] pData, long uSizeData);
 
-    /**
-	*  @brief Í¸Ã÷Í¨µÀÍ£Ö¹·¢ËÍÊı¾İ
-	*  @param [IN] nSerialHandle ÓÉserialStartº¯Êı»ñµÃµÄ¾ä±ú
-	*  @return 0±íÊ¾³É¹¦£¬ÆäËûÖµ±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int serialStop(int handle);
+	public native  int   getIoOutput(int  handle,  int  uChnId , int[] nOutput);
 
-      /**
-	*  @brief ¿ªÆôÍ¸Ã÷Í¨µÀ
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] imgBuffer Í¼Æ¬»º³åÇø
-	*  @param  [IN] imgBufferMaxLength Í¼Æ¬»º³åÇø³¤¶È
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int  getSnapImageData(int handle, byte[] imgBuffer, int imgBufferMaxLength);
+	/**
+	 *  @brief è®¾ç½®IOè¾“å‡ºï¼Œå¹¶è‡ªåŠ¨å¤ä½
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] uChnId IOè¾“å‡ºçš„é€šé“å·ï¼Œä»0å¼€å§‹
+	 *  @param  [IN] nDuration å»¶æ—¶æ—¶é—´ï¼Œå–å€¼èŒƒå›´[500, 5000]æ¯«ç§’
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œ-1è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native  int  setIoOutputAuto(int handle, short uChnId, int nDuration);
 
-       /**
-	*  @brief »ñÈ¡RTSPµØÖ·
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] url »º³åÇø
-	*  @param  [IN] urlMaxLength »º³åÇø³¤¶È
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int  getRtspUrl(int handle,  byte[] url, int urlMaxLength);
+	/**
+	 *  @brief è·å–è¿æ¥çŠ¶æ€
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @return trueè¡¨ç¤ºè¿æ¥ä¸­ï¼Œfalseè¡¨ç¤ºæœªè¿æ¥
+	 *  @note   ç”¨æˆ·å¯ä»¥å‘¨æœŸè°ƒç”¨è¯¥å‡½æ•°æ¥ä¸»åŠ¨æŸ¥è¯¢è®¾å¤‡æ˜¯å¦æ–­çº¿ï¼Œä»¥åŠæ–­çº¿åæ˜¯å¦æ¢å¤è¿æ¥
+	 *  @ingroup group_device
+	 */
+	public native  boolean  isConnected(int handle);
 
-       /**
-	*  @brief ²¥·ÅÓïÒô
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] voice ÓïÒôÊı¾İ
-	*  @param  [IN] interval ÓïÒôÎÄ¼şµÄ²¥·Å¼ä¸ô(0-5000£©
-	*  @param  [IN] volume ÉùÒô´óĞ¡(0-100)
-	*  @param  [IN] male  ÉùÒôÀàĞÍ(ÄĞÉù0£¬Å®Éú1)
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int playVoice( int handle, byte[] voice, int interval, int volume, int male);
-   
-       /**
-	*  @brief ÉèÖÃ°×Ãûµ¥»Øµ÷
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] recevier »Øµ÷
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int setWlistInfoCallBack(int handle,onWlistReceiver recevier);
+	/**
+	 *  @brief è®¾ç½®è„±æœºç»“æœçš„å›è°ƒå‡½æ•°
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] onDataReceiver è¯†åˆ«ç»“æœå›è°ƒå‡½æ•°ï¼Œå¦‚æœä¸ºNULLï¼Œåˆ™è¡¨ç¤ºå…³é—­è¯¥å›è°ƒå‡½æ•°çš„åŠŸèƒ½
+	 *  @param  [IN] bEnableImage æŒ‡å®šè¯†åˆ«ç»“æœçš„å›è°ƒæ˜¯å¦éœ€è¦åŒ…å«æˆªå›¾ä¿¡æ¯ï¼š1ä¸ºéœ€è¦ï¼Œ0ä¸ºä¸éœ€è¦
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œ-1è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int setPlateInfoCallBack( int handle,  OnDataReceiver  onDataReceiver ,int bEnableImage);
+	//  public native int setPlateInfoCallBack( OnDataReceiver  onDataReceiver );
 
-     /**
-	*  @brief µ¼Èë°×Ãûµ¥
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] wllist °×Ãûµ¥
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int  importWlistVehicle(int handle,WlistVehicle wllist);
+	/**
+	 *  @brief å‘é€è½¯ä»¶è§¦å‘ä¿¡å·ï¼Œå¼ºåˆ¶å¤„ç†å½“å‰æ—¶åˆ»çš„æ•°æ®å¹¶è¾“å‡ºç»“æœ
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œ-1è¡¨ç¤ºå¤±è´¥
+	 *  @note   è½¦ç‰Œè¯†åˆ«ç»“æœé€šè¿‡å›è°ƒå‡½æ•°çš„æ–¹å¼è¿”å›ï¼Œå¦‚æœå½“å‰è§†é¢‘ç”»é¢ä¸­æ— è½¦ç‰Œï¼Œåˆ™å›è°ƒå‡½æ•°ä¸ä¼šè¢«è°ƒç”¨
+	 *  @ingroup group_device
+	 */
+	public native int forceTrigger(int handle);
 
-     /**
-	*  @brief É¾³ı°×Ãûµ¥
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] plateCode ³µÅÆºÅ
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int  deleteWlistVehicle(int handle,byte[] plateCode);
+	/**
+	 *  @brief å¼€å¯é€æ˜é€šé“
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] nSerialPort æŒ‡å®šä½¿ç”¨è®¾å¤‡çš„ä¸²å£åºå·ï¼š0è¡¨ç¤ºç¬¬ä¸€ä¸ªä¸²å£ï¼Œ1è¡¨ç¤ºç¬¬äºŒä¸ªä¸²å£
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int serialStart(int handle, int nSerialPort);
 
-     /**
-	*  @brief ²éÑ¯°×Ãûµ¥
-	*  @param  [IN] handle ÓÉopenº¯Êı»ñµÃµÄ¾ä±ú
-	*  @param  [IN] plateCode ³µÅÆºÅ
-	*  @return ·µ»ØÍ¸Ã÷Í¨µÀ¾ä±ú£¬0±íÊ¾Ê§°Ü
-	*  @ingroup group_device
-	*/
-   public native int  queryWlistVehicle(int handle,byte[] plateCode);
-   
+	/**
+	 *  @brief é€æ˜é€šé“å‘é€æ•°æ®
+	 *  @param [IN] nSerialHandle ç”±serialStartå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param [IN] pData å°†è¦ä¼ è¾“çš„æ•°æ®å—çš„é¦–åœ°å€
+	 *  @param [IN] uSizeData å°†è¦ä¼ è¾“çš„æ•°æ®å—çš„å­—èŠ‚æ•°
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œå…¶ä»–å€¼è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int  serialSend(int handle, int nSerialPort, byte[] pData, long uSizeData);
+
+	/**
+	 *  @brief é€æ˜é€šé“åœæ­¢å‘é€æ•°æ®
+	 *  @param [IN] nSerialHandle ç”±serialStartå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @return 0è¡¨ç¤ºæˆåŠŸï¼Œå…¶ä»–å€¼è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int serialStop(int handle);
+
+	/**
+	 *  @brief å¼€å¯é€æ˜é€šé“
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] imgBuffer å›¾ç‰‡ç¼“å†²åŒº
+	 *  @param  [IN] imgBufferMaxLength å›¾ç‰‡ç¼“å†²åŒºé•¿åº¦
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int  getSnapImageData(int handle, byte[] imgBuffer, int imgBufferMaxLength);
+
+	/**
+	 *  @brief è·å–RTSPåœ°å€
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] url ç¼“å†²åŒº
+	 *  @param  [IN] urlMaxLength ç¼“å†²åŒºé•¿åº¦
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int  getRtspUrl(int handle,  byte[] url, int urlMaxLength);
+
+	/**
+	 *  @brief æ’­æ”¾è¯­éŸ³
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] voice è¯­éŸ³æ•°æ®
+	 *  @param  [IN] interval è¯­éŸ³æ–‡ä»¶çš„æ’­æ”¾é—´éš”(0-5000ï¼‰
+	 *  @param  [IN] volume å£°éŸ³å¤§å°(0-100)
+	 *  @param  [IN] male  å£°éŸ³ç±»å‹(ç”·å£°0ï¼Œå¥³ç”Ÿ1)
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int playVoice( int handle, byte[] voice, int interval, int volume, int male);
+
+	/**
+	 *  @brief è®¾ç½®ç™½åå•å›è°ƒ
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] recevier å›è°ƒ
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int setWlistInfoCallBack(int handle,onWlistReceiver recevier);
+
+	/**
+	 *  @brief å¯¼å…¥ç™½åå•
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] wllist ç™½åå•
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int  importWlistVehicle(int handle,WlistVehicle wllist);
+
+	/**
+	 *  @brief åˆ é™¤ç™½åå•
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] plateCode è½¦ç‰Œå·
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int  deleteWlistVehicle(int handle,byte[] plateCode);
+
+	/**
+	 *  @brief æŸ¥è¯¢ç™½åå•
+	 *  @param  [IN] handle ç”±openå‡½æ•°è·å¾—çš„å¥æŸ„
+	 *  @param  [IN] plateCode è½¦ç‰Œå·
+	 *  @return è¿”å›é€æ˜é€šé“å¥æŸ„ï¼Œ0è¡¨ç¤ºå¤±è´¥
+	 *  @ingroup group_device
+	 */
+	public native int  queryWlistVehicle(int handle,byte[] plateCode);
+
 	public interface OnDataReceiver {
-		
-		void onDataReceive(int handle, PlateResult plateResult, int uNumPlates, int eResultType,
-                           byte[] pImgFull, int nFullSize, byte[] pImgPlateClip, int nClipSize);
+
+		void onDataReceive(int handle,PlateResult plateResult,int uNumPlates,int eResultType,
+						   byte[] pImgFull,int nFullSize, byte[] pImgPlateClip,int nClipSize  );
 //		void onDataReceive(int handle,byte[] szPlateData,int plateLength,int plateConfidence,int plateType,byte[] bdTimeData,int timeLength,
 //				byte[] pImgFull,int nFullSize, byte[] pImgPlateClip,int nClipSize);
 
@@ -212,18 +212,18 @@ public class tcpsdk {
 	}
 
 	public interface onWlistReceiver {
-		void onWlistReceive(int handle, WlistVehicle wlist);
+		void onWlistReceive(int handle, WlistVehicle wlist  );
 	}
-    static {
-    	try {
-    		//System.loadLibrary("log");
-    		System.loadLibrary("vztcpsdk_dynamic");
-            System.loadLibrary("tcpsdk");
-    	}
-    	catch(UnsatisfiedLinkError e) {
+	static {
+		try {
+			//System.loadLibrary("log");
+			System.loadLibrary("vztcpsdk_dynamic");
+			System.loadLibrary("tcpsdk");
+		}
+		catch(UnsatisfiedLinkError e) {
 			// fatal error, we can't load some our libs
 			Log.d("tcpsdk", "Couldn't load lib: " + " - " + e.getMessage());
-			
+
 		}
-    }
+	}
 }

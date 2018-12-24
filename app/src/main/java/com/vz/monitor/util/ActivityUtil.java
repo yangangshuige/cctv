@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class ActivityUtil {
-	
+
 	/**
-	 * ¸÷¸öActivityÖ®¼äµÄÎŞ²ÎÊıµ÷×ª
+	 * å„ä¸ªActivityä¹‹é—´çš„æ— å‚æ•°è°ƒè½¬
 	 *
 	 * @param activity
 	 * @param clazz
@@ -18,11 +18,11 @@ public class ActivityUtil {
 	}
 
 	/**
-	 * ¸÷¸öActivityÖ®¼äµÄĞ¯´ø²ÎÊıµ÷×ª
+	 * å„ä¸ªActivityä¹‹é—´çš„æºå¸¦å‚æ•°è°ƒè½¬
 	 *
 	 * @param activity
 	 * @param clazz
-	 * @param bundle ËùĞ¯´øµÄ²ÎÊı
+	 * @param bundle æ‰€æºå¸¦çš„å‚æ•°
 	 */
 	public static final void invokeWithArgs(Activity activity, Class<?> clazz, Bundle bundle) {
 		Intent intent = new Intent(activity, clazz);

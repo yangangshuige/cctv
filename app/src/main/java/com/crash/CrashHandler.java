@@ -1,201 +1,201 @@
-package com.crash;  
-  
-import java.io.File;  
-import java.io.FileOutputStream;  
-import java.io.PrintWriter;  
-import java.io.StringWriter;  
-import java.io.Writer;  
+package com.crash;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.io.IOException;
-import java.lang.Thread.UncaughtExceptionHandler;  
-import java.lang.reflect.Field;  
-import java.text.DateFormat;  
-import java.text.SimpleDateFormat;  
-import java.util.Date;  
-import java.util.HashMap;  
-import java.util.Map;  
-  
-import android.content.Context;  
-import android.content.pm.PackageInfo;  
-import android.content.pm.PackageManager;  
-import android.content.pm.PackageManager.NameNotFoundException;  
-import android.os.Build;  
-import android.os.Environment;  
-import android.os.Looper;  
-import android.util.Log;  
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
-/** 
- * UncaughtException´¦ÀíÀà,µ±³ÌĞò·¢ÉúUncaughtÒì³£µÄÊ±ºò,ÓĞ¸ÃÀàÀ´½Ó¹Ü³ÌĞò,²¢¼ÇÂ¼·¢ËÍ´íÎó±¨¸æ. 
- *  
- * @author user 
- *  
- */  
+/**
+ * UncaughtExceptionå¤„ç†ç±»,å½“ç¨‹åºå‘ç”ŸUncaughtå¼‚å¸¸çš„æ—¶å€™,æœ‰è¯¥ç±»æ¥æ¥ç®¡ç¨‹åº,å¹¶è®°å½•å‘é€é”™è¯¯æŠ¥å‘Š.
+ *
+ * @author user
+ *
+ */
 public class CrashHandler implements UncaughtExceptionHandler {
-      
+
     public static final String TAG = "CrashHandler";
-      
-    //ÏµÍ³Ä¬ÈÏµÄUncaughtException´¦ÀíÀà   
+
+    //ç³»ç»Ÿé»˜è®¤çš„UncaughtExceptionå¤„ç†ç±»
     private Thread.UncaughtExceptionHandler mDefaultHandler;
-    //CrashHandlerÊµÀı  
+    //CrashHandlerå®ä¾‹
     private static CrashHandler INSTANCE = new CrashHandler();
-    //³ÌĞòµÄContext¶ÔÏó  
+    //ç¨‹åºçš„Contextå¯¹è±¡
     private Context mContext;
-    //ÓÃÀ´´æ´¢Éè±¸ĞÅÏ¢ºÍÒì³£ĞÅÏ¢  
+    //ç”¨æ¥å­˜å‚¨è®¾å¤‡ä¿¡æ¯å’Œå¼‚å¸¸ä¿¡æ¯
     private Map<String, String> infos = new HashMap<String, String>();
-  
-    //ÓÃÓÚ¸ñÊ½»¯ÈÕÆÚ,×÷ÎªÈÕÖ¾ÎÄ¼şÃûµÄÒ»²¿·Ö  
+
+    //ç”¨äºæ ¼å¼åŒ–æ—¥æœŸ,ä½œä¸ºæ—¥å¿—æ–‡ä»¶åçš„ä¸€éƒ¨åˆ†
     private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-  
-    /** ±£Ö¤Ö»ÓĞÒ»¸öCrashHandlerÊµÀı */  
-    private CrashHandler() {  
-    }  
-  
-    /** »ñÈ¡CrashHandlerÊµÀı ,µ¥ÀıÄ£Ê½ */  
+
+    /** ä¿è¯åªæœ‰ä¸€ä¸ªCrashHandlerå®ä¾‹ */
+    private CrashHandler() {
+    }
+
+    /** è·å–CrashHandlerå®ä¾‹ ,å•ä¾‹æ¨¡å¼ */
     public static CrashHandler getInstance() {
-        return INSTANCE;  
-    }  
-  
-    /** 
-     * ³õÊ¼»¯ 
-     *  
-     * @param context 
-     */  
+        return INSTANCE;
+    }
+
+    /**
+     * åˆå§‹åŒ–
+     *
+     * @param context
+     */
     public void init(Context context) {
-        mContext = context;  
-        //»ñÈ¡ÏµÍ³Ä¬ÈÏµÄUncaughtException´¦ÀíÆ÷  
+        mContext = context;
+        //è·å–ç³»ç»Ÿé»˜è®¤çš„UncaughtExceptionå¤„ç†å™¨
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        //ÉèÖÃ¸ÃCrashHandlerÎª³ÌĞòµÄÄ¬ÈÏ´¦ÀíÆ÷  
+        //è®¾ç½®è¯¥CrashHandlerä¸ºç¨‹åºçš„é»˜è®¤å¤„ç†å™¨
         Thread.setDefaultUncaughtExceptionHandler(this);
-    }  
-  
-    /** 
-     * µ±UncaughtException·¢ÉúÊ±»á×ªÈë¸Ãº¯ÊıÀ´´¦Àí 
-     */  
+    }
+
+    /**
+     * å½“UncaughtExceptionå‘ç”Ÿæ—¶ä¼šè½¬å…¥è¯¥å‡½æ•°æ¥å¤„ç†
+     */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        if (!handleException(ex) && mDefaultHandler != null) {  
-            //Èç¹ûÓÃ»§Ã»ÓĞ´¦ÀíÔòÈÃÏµÍ³Ä¬ÈÏµÄÒì³£´¦ÀíÆ÷À´´¦Àí  
-            mDefaultHandler.uncaughtException(thread, ex);  
-        } else {  
-            try {  
+        if (!handleException(ex) && mDefaultHandler != null) {
+            //å¦‚æœç”¨æˆ·æ²¡æœ‰å¤„ç†åˆ™è®©ç³»ç»Ÿé»˜è®¤çš„å¼‚å¸¸å¤„ç†å™¨æ¥å¤„ç†
+            mDefaultHandler.uncaughtException(thread, ex);
+        } else {
+            try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 Log.e(TAG, "error : ", e);
-            }  
-            //ÍË³ö³ÌĞò  
-            android.os.Process.killProcess(android.os.Process.myPid());  
+            }
+            //é€€å‡ºç¨‹åº
+            android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
-        }  
-    }  
-  
-    /** 
-     * ×Ô¶¨Òå´íÎó´¦Àí,ÊÕ¼¯´íÎóĞÅÏ¢ ·¢ËÍ´íÎó±¨¸æµÈ²Ù×÷¾ùÔÚ´ËÍê³É. 
-     *  
-     * @param ex 
-     * @return true:Èç¹û´¦ÀíÁË¸ÃÒì³£ĞÅÏ¢;·ñÔò·µ»Øfalse. 
-     */  
+        }
+    }
+
+    /**
+     * è‡ªå®šä¹‰é”™è¯¯å¤„ç†,æ”¶é›†é”™è¯¯ä¿¡æ¯ å‘é€é”™è¯¯æŠ¥å‘Šç­‰æ“ä½œå‡åœ¨æ­¤å®Œæˆ.
+     *
+     * @param ex
+     * @return true:å¦‚æœå¤„ç†äº†è¯¥å¼‚å¸¸ä¿¡æ¯;å¦åˆ™è¿”å›false.
+     */
     private boolean handleException(Throwable ex) {
-        if (ex == null) {  
-            return false;  
-        }  
-        //Ê¹ÓÃToastÀ´ÏÔÊ¾Òì³£ĞÅÏ¢  
+        if (ex == null) {
+            return false;
+        }
+        //ä½¿ç”¨Toastæ¥æ˜¾ç¤ºå¼‚å¸¸ä¿¡æ¯
         new Thread() {
             @Override
-            public void run() {  
+            public void run() {
                 Looper.prepare();
-                Toast.makeText(mContext, "ºÜ±§Ç¸,³ÌĞò³öÏÖÒì³£,¼´½«ÍË³ö.", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "å¾ˆæŠ±æ­‰,ç¨‹åºå‡ºç°å¼‚å¸¸,å³å°†é€€å‡º.", Toast.LENGTH_LONG).show();
                 Looper.loop();
-            }  
-        }.start();  
-        //ÊÕ¼¯Éè±¸²ÎÊıĞÅÏ¢   
-        collectDeviceInfo(mContext);  
-        //±£´æÈÕÖ¾ÎÄ¼ş   
-        saveCrashInfo2File(ex);  
-        return true;  
-    }  
-      
-    /** 
-     * ÊÕ¼¯Éè±¸²ÎÊıĞÅÏ¢ 
-     * @param ctx 
-     */  
+            }
+        }.start();
+        //æ”¶é›†è®¾å¤‡å‚æ•°ä¿¡æ¯
+        collectDeviceInfo(mContext);
+        //ä¿å­˜æ—¥å¿—æ–‡ä»¶
+        saveCrashInfo2File(ex);
+        return true;
+    }
+
+    /**
+     * æ”¶é›†è®¾å¤‡å‚æ•°ä¿¡æ¯
+     * @param ctx
+     */
     public void collectDeviceInfo(Context ctx) {
-        try {  
+        try {
             PackageManager pm = ctx.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
-            if (pi != null) {  
+            if (pi != null) {
                 String versionName = pi.versionName == null ? "null" : pi.versionName;
                 String versionCode = pi.versionCode + "";
-                infos.put("versionName", versionName);  
-                infos.put("versionCode", versionCode);  
-            }  
+                infos.put("versionName", versionName);
+                infos.put("versionCode", versionCode);
+            }
         } catch (NameNotFoundException e) {
             Log.e(TAG, "an error occured when collect package info", e);
-        }  
+        }
         Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
-            try {  
-                field.setAccessible(true);  
-                infos.put(field.getName(), field.get(null).toString());  
+            try {
+                field.setAccessible(true);
+                infos.put(field.getName(), field.get(null).toString());
                 Log.d(TAG, field.getName() + " : " + field.get(null));
             } catch (Exception e) {
                 Log.e(TAG, "an error occured when collect crash info", e);
-            }  
-        }  
-    }  
-  
-    /** 
-     * ±£´æ´íÎóĞÅÏ¢µ½ÎÄ¼şÖĞ 
-     *  
-     * @param ex 
-     * @return  ·µ»ØÎÄ¼şÃû³Æ,±ãÓÚ½«ÎÄ¼ş´«ËÍµ½·şÎñÆ÷ 
-     */  
+            }
+        }
+    }
+
+    /**
+     * ä¿å­˜é”™è¯¯ä¿¡æ¯åˆ°æ–‡ä»¶ä¸­
+     *
+     * @param ex
+     * @return  è¿”å›æ–‡ä»¶åç§°,ä¾¿äºå°†æ–‡ä»¶ä¼ é€åˆ°æœåŠ¡å™¨
+     */
     private String saveCrashInfo2File(Throwable ex) {
-          
+
         StringBuffer sb = new StringBuffer();
         for (Map.Entry<String, String> entry : infos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\n");  
-        }  
-          
+            sb.append(key + "=" + value + "\n");
+        }
+
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
-        ex.printStackTrace(printWriter);  
+        ex.printStackTrace(printWriter);
         Throwable cause = ex.getCause();
-        while (cause != null) {  
-            cause.printStackTrace(printWriter);  
-            cause = cause.getCause();  
-        }  
-        printWriter.close();  
+        while (cause != null) {
+            cause.printStackTrace(printWriter);
+            cause = cause.getCause();
+        }
+        printWriter.close();
         String result = writer.toString();
-        sb.append(result);  
-        try {  
+        sb.append(result);
+        try {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
             String fileName = "crash-" + time + "-" + timestamp + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String path = "/sdcard/crash/";
                 File dir = new File(path);
-                if (!dir.exists()) {  
-                    dir.mkdirs();  
-                }  
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
                 FileOutputStream fos = new FileOutputStream(path + fileName);
                 try
                 {
-                	fos.write(sb.toString().getBytes());  
-                    fos.close();  
+                    fos.write(sb.toString().getBytes());
+                    fos.close();
                 }
                 catch(IOException e)
                 {
-                	 Log.e(TAG, "an error occured while writing file...", e);
+                    Log.e(TAG, "an error occured while writing file...", e);
                 }
-            }  
-            return fileName;  
+            }
+            return fileName;
         } catch (Exception e) {
             Log.e(TAG, "an error occured while writing file...", e);
-        }  
-        return null;  
-    }  
+        }
+        return null;
+    }
 }  
 
  

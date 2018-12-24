@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.base.library.R;
 import com.base.library.activity.BaseContract;
 import com.base.library.activity.IBase;
@@ -16,6 +17,7 @@ import com.base.library.utils.DialogHelper;
 import com.base.library.widget.loadstatus.MultiStateView;
 import com.base.library.widget.loadstatus.SimpleMultiStateView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -32,20 +34,20 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
     @Nullable
     protected T1 mPresenter;
 
-//    @Nullable
+    //    @Nullable
 //    @BindView(R.id.simpleMultiStateView)
     SimpleMultiStateView mSimpleMultiStateView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mRootView != null) {
-            ViewGroup parent = (ViewGroup) mRootView.getParent();
-            if (parent != null) {
-                parent.removeView(mRootView);
-            }
-        } else {
+//        if (mRootView != null) {
+//            ViewGroup parent = (ViewGroup) mRootView.getParent();
+//            if (parent != null) {
+//                parent.removeView(mRootView);
+//            }
+//        } else {
             mRootView = createView(inflater, container, savedInstanceState);
-        }
+//        }
 
         mContext = mRootView.getContext();
         mLoadingDialog = DialogHelper.getLoadingDialog(getActivity());
@@ -55,7 +57,7 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getContentLayout(), container, false);
-        mSimpleMultiStateView=view.findViewById(R.id.simpleMultiStateView);
+        mSimpleMultiStateView = view.findViewById(R.id.simpleMultiStateView);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -161,7 +163,7 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
     }
 
     protected void showTost(String toast) {
-        Toast.makeText(this.getContext(),toast,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), toast, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -172,7 +174,12 @@ public abstract class BaseFragment<T1 extends BaseContract.BasePresenter> extend
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
+        if (unbinder != null) {
+            try {
+                unbinder.unbind();
+            } catch (Exception e) {
+            }
+        }
         if (mPresenter != null) {
             mPresenter.detachView();
         }

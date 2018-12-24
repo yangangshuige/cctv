@@ -6,15 +6,16 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import com.todayin.cctv.R;
 import android.content.res.TypedArray;
+
+import com.todayin.cctv.R;
 
 /**
  * @className: CellLayout
- * @description: ¸øViewPagerÃ¿Ò»Ò³Ê¹ÓÃµÄGridLayout, ¾ù·ÖÆÁÄ» Ä¬ÈÏÊÇ3ĞĞ3ÁĞ ¿ÉÒÔÉèÖÃĞĞ¾à,
- * ²»ÄÜÔÚScrollViewÖĞÊ¹ÓÃ
+ * @description: ç»™ViewPageræ¯ä¸€é¡µä½¿ç”¨çš„GridLayout, å‡åˆ†å±å¹• é»˜è®¤æ˜¯3è¡Œ3åˆ— å¯ä»¥è®¾ç½®è¡Œè·,
+ * ä¸èƒ½åœ¨ScrollViewä¸­ä½¿ç”¨
  * @author: gaoshuai
- * @date: 2015Äê9ÔÂ25ÈÕ ÉÏÎç10:46:55
+ * @date: 2015å¹´9æœˆ25æ—¥ ä¸Šåˆ10:46:55
  */
 public class CellLayout extends ViewGroup {
     private int lineNum = 1;
@@ -65,7 +66,7 @@ public class CellLayout extends ViewGroup {
 //        if (widthMode != MeasureSpec.EXACTLY) {
 //            throw new IllegalStateException("CellLayout can only be used in EXACTLY mode.");
 //        }
-//         
+//
 //        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 //        if (heightMode != MeasureSpec.EXACTLY) {
 //            throw new IllegalStateException("CellLayout can only be used in EXACTLY mode.");
@@ -178,7 +179,7 @@ public class CellLayout extends ViewGroup {
         this.columnNum = columnNum;
     }
 
-    //num´Ó1¿ªÊ¼
+    //numä»1å¼€å§‹
     public boolean ZoomIn(int num) {
         if (ZoomInNum > 0)
             return false;

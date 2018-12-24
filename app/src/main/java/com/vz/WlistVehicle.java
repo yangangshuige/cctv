@@ -1,26 +1,68 @@
 package com.vz;
 
 public class WlistVehicle {
-	public  long	uVehicleID = 0;										/**<³µÁ¾ÔÚÊý¾Ý¿âµÄID*/
-	public    byte[]		strPlateID ;			/**<³µÅÆ×Ö·û´®*/
-	public    long	uCustomerID= 0;									/**<¿Í»§ÔÚÊý¾Ý¿âµÄID£¬ÓëVZ_LPR_WLIST_CUSTOMER::uCustomerID¶ÔÓ¦*/
-	public    long	bEnable= 0;										/**<¸Ã¼ÇÂ¼ÓÐÐ§±ê¼Ç*/
-	public    long	bEnableTMEnable= 0;								/**<ÊÇ·ñ¿ªÆôÉúÐ§Ê±¼ä*/
-	public    long	bEnableTMOverdule= 0;								/**<ÊÇ·ñ¿ªÆô¹ýÆÚÊ±¼ä*/
-	public   VzDateTime		struTMEnable;									/**<¸Ã¼ÇÂ¼ÉúÐ§Ê±¼ä*/
-	public VzDateTime		struTMOverdule;									/**<¸Ã¼ÇÂ¼¹ýÆÚÊ±¼ä*/
-	public long	bUsingTimeSeg;									/**<ÊÇ·ñÊ¹ÓÃÖÜÆÚÊ±¼ä¶Î*/
-	    // VZ_TM_PERIOD struTimeSeg;								/**<ÖÜÆÚÊ±¼ä¶ÎÐÅÏ¢*/
-	public long	   bAlarm= 0;						 	/**<ÊÇ·ñ´¥·¢±¨¾¯£¨ºÚÃûµ¥¼ÇÂ¼£©*/
-	public int			iColor= 0;											/**<³µÁ¾ÑÕÉ«*/
-	public int			iPlateType= 0;										/**<³µÅÆÀàÐÍ*/
-	public byte[]		strCode;			/**<³µÁ¾±àÂë*/
-	public byte[]		strComment;	/**<³µÁ¾±àÂë*/
-	
-	public WlistVehicle()
-	{
-		struTMEnable = new VzDateTime();
-		
-		struTMOverdule = new VzDateTime();
-	}
+    public long uVehicleID = 0;
+    /**
+     * <è½¦è¾†åœ¨æ•°æ®åº“çš„ID
+     */
+    public byte[] strPlateID;
+    /**
+     * <è½¦ç‰Œå­—ç¬¦ä¸²
+     */
+    public long uCustomerID = 0;
+    /**
+     * <å®¢æˆ·åœ¨æ•°æ®åº“çš„IDï¼Œä¸ŽVZ_LPR_WLIST_CUSTOMER::uCustomerIDå¯¹åº”
+     */
+    public long bEnable = 0;
+    /**
+     * <è¯¥è®°å½•æœ‰æ•ˆæ ‡è®°
+     */
+    public long bEnableTMEnable = 0;
+    /**
+     * <æ˜¯å¦å¼€å¯ç”Ÿæ•ˆæ—¶é—´
+     */
+    public long bEnableTMOverdule = 0;
+    /**
+     * <æ˜¯å¦å¼€å¯è¿‡æœŸæ—¶é—´
+     */
+    public VzDateTime struTMEnable;
+    /**
+     * <è¯¥è®°å½•ç”Ÿæ•ˆæ—¶é—´
+     */
+    public VzDateTime struTMOverdule;
+    /**
+     * <è¯¥è®°å½•è¿‡æœŸæ—¶é—´
+     */
+    public long bUsingTimeSeg;
+    /**
+     * <æ˜¯å¦ä½¿ç”¨å‘¨æœŸæ—¶é—´æ®µ
+     */
+    // VZ_TM_PERIOD struTimeSeg;								/**<å‘¨æœŸæ—¶é—´æ®µä¿¡æ¯*/
+    public long bAlarm = 0;
+    /**
+     * <æ˜¯å¦è§¦å‘æŠ¥è­¦ï¼ˆé»‘åå•è®°å½•ï¼‰
+     */
+    public int iColor = 0;
+    /**
+     * <è½¦è¾†é¢œè‰²
+     */
+    public int iPlateType = 0;
+    /**
+     * <è½¦ç‰Œç±»åž‹
+     */
+    public byte[] strCode;
+    /**
+     * <è½¦è¾†ç¼–ç 
+     */
+    public byte[] strComment;
+
+    /**
+     * <è½¦è¾†ç¼–ç 
+     */
+
+    public WlistVehicle() {
+        struTMEnable = new VzDateTime();
+
+        struTMOverdule = new VzDateTime();
+    }
 }

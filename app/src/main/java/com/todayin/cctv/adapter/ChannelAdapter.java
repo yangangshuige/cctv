@@ -13,13 +13,12 @@ import java.util.List;
  * Created by yg on 2018/12/18.
  */
 
-public class HomeAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public HomeAdapter(@Nullable List<String> data) {
-        super(R.layout.item_home, data);
+public class ChannelAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    public ChannelAdapter(@Nullable List<String> data) {
+        super(R.layout.item_channel, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv_item, item);
     }
 }

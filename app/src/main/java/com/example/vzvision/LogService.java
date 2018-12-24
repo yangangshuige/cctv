@@ -1,170 +1,170 @@
 package com.example.vzvision;
 
-import java.io.BufferedReader;  
-import java.io.File;  
-import java.io.FileInputStream;  
-import java.io.FileOutputStream;  
-import java.io.IOException;  
-import java.io.InputStream;  
-import java.io.InputStreamReader;  
-import java.io.OutputStreamWriter;  
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.FileNotFoundException;
-import java.text.ParseException;  
-import java.text.SimpleDateFormat;  
-import java.util.ArrayList;  
-import java.util.Arrays;  
-import java.util.Calendar;  
-import java.util.Comparator;  
-import java.util.Date;  
-import java.util.List;  
-  
-import android.app.AlarmManager;  
-import android.app.PendingIntent;  
-import android.app.Service;  
-import android.content.BroadcastReceiver;  
-import android.content.Context;  
-import android.content.Intent;  
-import android.content.IntentFilter;  
-import android.os.Environment;  
-import android.os.IBinder;  
-import android.os.PowerManager;  
-import android.os.PowerManager.WakeLock;  
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Environment;
+import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
-/** 
- * ÈÕÖ¾·şÎñ£¬ÈÕÖ¾Ä¬ÈÏ»á´æ´¢ÔÚSDcarÀïÈç¹ûÃ»ÓĞSDcard»á´æ´¢ÔÚÄÚ´æÖĞµÄ°²×°Ä¿Â¼ÏÂÃæ¡£ 1.±¾·şÎñÄ¬ÈÏÔÚSDcardÖĞÃ¿ÌìÉú³ÉÒ»¸öÈÕÖ¾ÎÄ¼ş, 
- * 2.Èç¹ûÓĞSDCardµÄ»°»á½«Ö®Ç°ÄÚ´æÖĞµÄÎÄ¼ş¿½±´µ½SDCardÖĞ 3.Èç¹ûÃ»ÓĞSDCard£¬ÔÚ°²×°Ä¿Â¼ÏÂÖ»±£´æµ±Ç°ÔÚĞ´ÈÕÖ¾ 
- * 4.SDcardµÄ×°ÔØĞ¶ÔØ¶¯×÷»áÔÚ²½Öè2,3ÖĞÇĞ»» 5.SDcardÖĞµÄÈÕÖ¾ÎÄ¼şÖ»±£´æ7Ìì 
- *  
- * @author Administrator 
- *  
- */  
+/**
+ * æ—¥å¿—æœåŠ¡ï¼Œæ—¥å¿—é»˜è®¤ä¼šå­˜å‚¨åœ¨SDcaré‡Œå¦‚æœæ²¡æœ‰SDcardä¼šå­˜å‚¨åœ¨å†…å­˜ä¸­çš„å®‰è£…ç›®å½•ä¸‹é¢ã€‚ 1.æœ¬æœåŠ¡é»˜è®¤åœ¨SDcardä¸­æ¯å¤©ç”Ÿæˆä¸€ä¸ªæ—¥å¿—æ–‡ä»¶,
+ * 2.å¦‚æœæœ‰SDCardçš„è¯ä¼šå°†ä¹‹å‰å†…å­˜ä¸­çš„æ–‡ä»¶æ‹·è´åˆ°SDCardä¸­ 3.å¦‚æœæ²¡æœ‰SDCardï¼Œåœ¨å®‰è£…ç›®å½•ä¸‹åªä¿å­˜å½“å‰åœ¨å†™æ—¥å¿—
+ * 4.SDcardçš„è£…è½½å¸è½½åŠ¨ä½œä¼šåœ¨æ­¥éª¤2,3ä¸­åˆ‡æ¢ 5.SDcardä¸­çš„æ—¥å¿—æ–‡ä»¶åªä¿å­˜7å¤©
+ *
+ * @author Administrator
+ *
+ */
 public class LogService extends Service {
     private static final String TAG = "LogService";
-  
-    private static final int MEMORY_LOG_FILE_MAX_SIZE = 10 * 1024 * 1024; // ÄÚ´æÖĞÈÕÖ¾ÎÄ¼ş×î´óÖµ£¬10M  
-    private static final int MEMORY_LOG_FILE_MONITOR_INTERVAL = 10 * 60 * 1000; // ÄÚ´æÖĞµÄÈÕÖ¾ÎÄ¼ş´óĞ¡¼à¿ØÊ±¼ä¼ä¸ô£¬10·ÖÖÓ  
-    private static final int SDCARD_LOG_FILE_SAVE_DAYS = 7; // sd¿¨ÖĞÈÕÖ¾ÎÄ¼şµÄ×î¶à±£´æÌìÊı  
-  
-    private String LOG_PATH_MEMORY_DIR; // ÈÕÖ¾ÎÄ¼şÔÚÄÚ´æÖĞµÄÂ·¾¶(ÈÕÖ¾ÎÄ¼şÔÚ°²×°Ä¿Â¼ÖĞµÄÂ·¾¶)
-    private String LOG_PATH_SDCARD_DIR; // ÈÕÖ¾ÎÄ¼şÔÚsdcardÖĞµÄÂ·¾¶
+
+    private static final int MEMORY_LOG_FILE_MAX_SIZE = 10 * 1024 * 1024; // å†…å­˜ä¸­æ—¥å¿—æ–‡ä»¶æœ€å¤§å€¼ï¼Œ10M
+    private static final int MEMORY_LOG_FILE_MONITOR_INTERVAL = 10 * 60 * 1000; // å†…å­˜ä¸­çš„æ—¥å¿—æ–‡ä»¶å¤§å°ç›‘æ§æ—¶é—´é—´éš”ï¼Œ10åˆ†é’Ÿ
+    private static final int SDCARD_LOG_FILE_SAVE_DAYS = 7; // sdå¡ä¸­æ—¥å¿—æ–‡ä»¶çš„æœ€å¤šä¿å­˜å¤©æ•°
+
+    private String LOG_PATH_MEMORY_DIR; // æ—¥å¿—æ–‡ä»¶åœ¨å†…å­˜ä¸­çš„è·¯å¾„(æ—¥å¿—æ–‡ä»¶åœ¨å®‰è£…ç›®å½•ä¸­çš„è·¯å¾„)
+    private String LOG_PATH_SDCARD_DIR; // æ—¥å¿—æ–‡ä»¶åœ¨sdcardä¸­çš„è·¯å¾„
     @SuppressWarnings("unused")
-    private String LOG_SERVICE_LOG_PATH; // ±¾·şÎñ²úÉúµÄÈÕÖ¾£¬¼ÇÂ¼ÈÕÖ¾·şÎñ¿ªÆôÊ§°ÜĞÅÏ¢
-  
-    private final int SDCARD_TYPE = 0; // µ±Ç°µÄÈÕÖ¾¼ÇÂ¼ÀàĞÍÎª´æ´¢ÔÚSD¿¨ÏÂÃæ  
-    private final int MEMORY_TYPE = 1; // µ±Ç°µÄÈÕÖ¾¼ÇÂ¼ÀàĞÍÎª´æ´¢ÔÚÄÚ´æÖĞ  
-    private int CURR_LOG_TYPE = SDCARD_TYPE; // µ±Ç°µÄÈÕÖ¾¼ÇÂ¼ÀàĞÍ  
-  
-    private String CURR_INSTALL_LOG_NAME; // Èç¹ûµ±Ç°µÄÈÕÖ¾Ğ´ÔÚÄÚ´æÖĞ£¬¼ÇÂ¼µ±Ç°µÄÈÕÖ¾ÎÄ¼şÃû³Æ
-  
-    private String logServiceLogName = "Log.log";// ±¾·şÎñÊä³öµÄÈÕÖ¾ÎÄ¼şÃû³Æ
+    private String LOG_SERVICE_LOG_PATH; // æœ¬æœåŠ¡äº§ç”Ÿçš„æ—¥å¿—ï¼Œè®°å½•æ—¥å¿—æœåŠ¡å¼€å¯å¤±è´¥ä¿¡æ¯
+
+    private final int SDCARD_TYPE = 0; // å½“å‰çš„æ—¥å¿—è®°å½•ç±»å‹ä¸ºå­˜å‚¨åœ¨SDå¡ä¸‹é¢
+    private final int MEMORY_TYPE = 1; // å½“å‰çš„æ—¥å¿—è®°å½•ç±»å‹ä¸ºå­˜å‚¨åœ¨å†…å­˜ä¸­
+    private int CURR_LOG_TYPE = SDCARD_TYPE; // å½“å‰çš„æ—¥å¿—è®°å½•ç±»å‹
+
+    private String CURR_INSTALL_LOG_NAME; // å¦‚æœå½“å‰çš„æ—¥å¿—å†™åœ¨å†…å­˜ä¸­ï¼Œè®°å½•å½“å‰çš„æ—¥å¿—æ–‡ä»¶åç§°
+
+    private String logServiceLogName = "Log.log";// æœ¬æœåŠ¡è¾“å‡ºçš„æ—¥å¿—æ–‡ä»¶åç§°
     private SimpleDateFormat myLogSdf = new SimpleDateFormat(
-            "yyyy-MM-dd HH:mm:ss");  
+            "yyyy-MM-dd HH:mm:ss");
     private OutputStreamWriter writer;
-  
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HHmmss");// ÈÕÖ¾Ãû³Æ¸ñÊ½
-  
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HHmmss");// æ—¥å¿—åç§°æ ¼å¼
+
     private Process process;
-  
+
     private WakeLock wakeLock;
-  
-    private SDStateMonitorReceiver sdStateReceiver; // SDcard×´Ì¬¼à²â  
-    private LogTaskReceiver logTaskReceiver;  
-  
-    /* 
-     * ÊÇ·ñÕıÔÚ¼à²âÈÕÖ¾ÎÄ¼ş´óĞ¡£» Èç¹ûµ±Ç°ÈÕÖ¾¼ÇÂ¼ÔÚSDcardÖĞÔòÎªfalse Èç¹ûµ±Ç°ÈÕÖ¾¼ÇÂ¼ÔÚÄÚ´æÖĞÔòÎªtrue 
-     */  
-    private boolean logSizeMoniting = false;  
-  
-    private static String MONITOR_LOG_SIZE_ACTION = "MONITOR_LOG_SIZE"; // ÈÕÖ¾ÎÄ¼ş¼à²âaction
-    private static String SWITCH_LOG_FILE_ACTION = "SWITCH_LOG_FILE_ACTION"; // ÇĞ»»ÈÕÖ¾ÎÄ¼şaction
-  
+
+    private SDStateMonitorReceiver sdStateReceiver; // SDcardçŠ¶æ€ç›‘æµ‹
+    private LogTaskReceiver logTaskReceiver;
+
+    /*
+     * æ˜¯å¦æ­£åœ¨ç›‘æµ‹æ—¥å¿—æ–‡ä»¶å¤§å°ï¼› å¦‚æœå½“å‰æ—¥å¿—è®°å½•åœ¨SDcardä¸­åˆ™ä¸ºfalse å¦‚æœå½“å‰æ—¥å¿—è®°å½•åœ¨å†…å­˜ä¸­åˆ™ä¸ºtrue
+     */
+    private boolean logSizeMoniting = false;
+
+    private static String MONITOR_LOG_SIZE_ACTION = "MONITOR_LOG_SIZE"; // æ—¥å¿—æ–‡ä»¶ç›‘æµ‹action
+    private static String SWITCH_LOG_FILE_ACTION = "SWITCH_LOG_FILE_ACTION"; // åˆ‡æ¢æ—¥å¿—æ–‡ä»¶action
+
     @Override
     public IBinder onBind(Intent intent)
-    {  
-        return null;  
-    }  
-  
+    {
+        return null;
+    }
+
     @Override
-    public void onCreate()  
-    {  
-        super.onCreate();  
-        init();  
-        register();  
-        deploySwitchLogFileTask();  
-        new LogCollectorThread().start();  
-    }  
-  
-    private void init()  
-    {  
+    public void onCreate()
+    {
+        super.onCreate();
+        init();
+        register();
+        deploySwitchLogFileTask();
+        new LogCollectorThread().start();
+    }
+
+    private void init()
+    {
         LOG_PATH_MEMORY_DIR = getFilesDir().getAbsolutePath() + File.separator
-                + "log";  
+                + "log";
         LOG_SERVICE_LOG_PATH = LOG_PATH_MEMORY_DIR + File.separator
-                + logServiceLogName;  
+                + logServiceLogName;
         LOG_PATH_SDCARD_DIR = Environment.getExternalStorageDirectory()
-                .getAbsolutePath()  
+                .getAbsolutePath()
                 + File.separator
-                + "MyApp"  
+                + "MyApp"
                 + File.separator
-                + "log";  
-        createLogDir();  
-  
-        /* *******************************************************/ 
-          try {
-        	  writer = new OutputStreamWriter(new FileOutputStream(
-              LOG_SERVICE_LOG_PATH, true)); 
-          } 
-          catch (FileNotFoundException e)
-          { 
-             Log.e(TAG, e.getMessage(), e);
-          } 
-         /** *****************************************************  */  
+                + "log";
+        createLogDir();
+
+        /* *******************************************************/
+        try {
+            writer = new OutputStreamWriter(new FileOutputStream(
+                    LOG_SERVICE_LOG_PATH, true));
+        }
+        catch (FileNotFoundException e)
+        {
+            Log.e(TAG, e.getMessage(), e);
+        }
+        /** *****************************************************  */
         PowerManager pm = (PowerManager) getApplicationContext()
                 .getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-  
-        CURR_LOG_TYPE = getCurrLogType();  
+
+        CURR_LOG_TYPE = getCurrLogType();
         Log.i(TAG, "LogService onCreate");
-    }  
-  
-    private void register()  
-    {  
+    }
+
+    private void register()
+    {
         IntentFilter sdCarMonitorFilter = new IntentFilter();
         sdCarMonitorFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
         sdCarMonitorFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-        sdCarMonitorFilter.addDataScheme("file");  
-        sdStateReceiver = new SDStateMonitorReceiver();  
-        registerReceiver(sdStateReceiver, sdCarMonitorFilter);  
-  
+        sdCarMonitorFilter.addDataScheme("file");
+        sdStateReceiver = new SDStateMonitorReceiver();
+        registerReceiver(sdStateReceiver, sdCarMonitorFilter);
+
         IntentFilter logTaskFilter = new IntentFilter();
-        logTaskFilter.addAction(MONITOR_LOG_SIZE_ACTION);  
-        logTaskFilter.addAction(SWITCH_LOG_FILE_ACTION);  
-        logTaskReceiver = new LogTaskReceiver();  
-        registerReceiver(logTaskReceiver, logTaskFilter);  
-    }  
-  
-    /** 
-     * »ñÈ¡µ±Ç°Ó¦´æ´¢ÔÚÄÚ´æÖĞ»¹ÊÇ´æ´¢ÔÚSDCardÖĞ 
-     *  
-     * @return 
-     */  
-    public int getCurrLogType()  
-    {  
+        logTaskFilter.addAction(MONITOR_LOG_SIZE_ACTION);
+        logTaskFilter.addAction(SWITCH_LOG_FILE_ACTION);
+        logTaskReceiver = new LogTaskReceiver();
+        registerReceiver(logTaskReceiver, logTaskFilter);
+    }
+
+    /**
+     * è·å–å½“å‰åº”å­˜å‚¨åœ¨å†…å­˜ä¸­è¿˜æ˜¯å­˜å‚¨åœ¨SDCardä¸­
+     *
+     * @return
+     */
+    public int getCurrLogType()
+    {
         if (!Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED))
-        {  
-            return MEMORY_TYPE;  
-        } else  
-        {  
-            return SDCARD_TYPE;  
-        }  
-    }  
-  
-    /** 
-     * ²¿ÊğÈÕÖ¾ÇĞ»»ÈÎÎñ£¬Ã¿ÌìÁè³¿ÇĞ»»ÈÕÖ¾ÎÄ¼ş 
-     */  
-    private void deploySwitchLogFileTask()  
-    {  
+        {
+            return MEMORY_TYPE;
+        } else
+        {
+            return SDCARD_TYPE;
+        }
+    }
+
+    /**
+     * éƒ¨ç½²æ—¥å¿—åˆ‡æ¢ä»»åŠ¡ï¼Œæ¯å¤©å‡Œæ™¨åˆ‡æ¢æ—¥å¿—æ–‡ä»¶
+     */
+    private void deploySwitchLogFileTask()
+    {
         Intent intent = new Intent(SWITCH_LOG_FILE_ACTION);
         PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
         Calendar calendar = Calendar.getInstance();
@@ -172,773 +172,773 @@ public class LogService extends Service {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-  
-        // ²¿ÊğÈÎÎñ  
+
+        // éƒ¨ç½²ä»»åŠ¡
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, sender);
-        recordLogServiceLog("deployNextTask succ,next task time is:"  
-                + myLogSdf.format(calendar.getTime()));  
-    }  
-  
-    /** 
-     * ÈÕÖ¾ÊÕ¼¯ 1.Çå³ıÈÕÖ¾»º´æ 2.É±ËÀÓ¦ÓÃ³ÌĞòÒÑ¿ªÆôµÄLogcat½ø³Ì·ÀÖ¹¶à¸ö½ø³ÌĞ´ÈëÒ»¸öÈÕÖ¾ÎÄ¼ş 3.¿ªÆôÈÕÖ¾ÊÕ¼¯½ø³Ì 4.´¦ÀíÈÕÖ¾ÎÄ¼ş ÒÆ¶¯ 
-     * OR É¾³ı 
-     */  
+        recordLogServiceLog("deployNextTask succ,next task time is:"
+                + myLogSdf.format(calendar.getTime()));
+    }
+
+    /**
+     * æ—¥å¿—æ”¶é›† 1.æ¸…é™¤æ—¥å¿—ç¼“å­˜ 2.æ€æ­»åº”ç”¨ç¨‹åºå·²å¼€å¯çš„Logcatè¿›ç¨‹é˜²æ­¢å¤šä¸ªè¿›ç¨‹å†™å…¥ä¸€ä¸ªæ—¥å¿—æ–‡ä»¶ 3.å¼€å¯æ—¥å¿—æ”¶é›†è¿›ç¨‹ 4.å¤„ç†æ—¥å¿—æ–‡ä»¶ ç§»åŠ¨
+     * OR åˆ é™¤
+     */
     class LogCollectorThread extends Thread {
-  
-        public LogCollectorThread() {  
-            super("LogCollectorThread");  
+
+        public LogCollectorThread() {
+            super("LogCollectorThread");
             Log.d(TAG, "LogCollectorThread is create");
-        }  
-  
+        }
+
         @Override
-        public void run()  
-        {  
-            try  
-            {  
-                wakeLock.acquire(); // »½ĞÑÊÖ»ú  
-  
-                clearLogCache();  
-  
+        public void run()
+        {
+            try
+            {
+                wakeLock.acquire(); // å”¤é†’æ‰‹æœº
+
+                clearLogCache();
+
                 List<String> orgProcessList = getAllProcess();
                 List<ProcessInfo> processInfoList = getProcessInfoList(orgProcessList);
-                killLogcatProc(processInfoList);  
-  
-                createLogCollector();  
-  
-                Thread.sleep(1000);// ĞİÃß£¬´´½¨ÎÄ¼ş£¬È»ºó´¦ÀíÎÄ¼ş£¬²»È»¸ÃÎÄ¼ş»¹Ã»´´½¨£¬»áÓ°ÏìÎÄ¼şÉ¾³ı
-  
-                handleLog();  
-  
-                wakeLock.release(); // ÊÍ·Å  
+                killLogcatProc(processInfoList);
+
+                createLogCollector();
+
+                Thread.sleep(1000);// ä¼‘çœ ï¼Œåˆ›å»ºæ–‡ä»¶ï¼Œç„¶åå¤„ç†æ–‡ä»¶ï¼Œä¸ç„¶è¯¥æ–‡ä»¶è¿˜æ²¡åˆ›å»ºï¼Œä¼šå½±å“æ–‡ä»¶åˆ é™¤
+
+                handleLog();
+
+                wakeLock.release(); // é‡Šæ”¾
             } catch (Exception e)
-            {  
-                e.printStackTrace();  
+            {
+                e.printStackTrace();
                 recordLogServiceLog(Log.getStackTraceString(e));
-            }  
-        }  
-    }  
-  
-    /** 
-     * Ã¿´Î¼ÇÂ¼ÈÕÖ¾Ö®Ç°ÏÈÇå³ıÈÕÖ¾µÄ»º´æ, ²»È»»áÔÚÁ½¸öÈÕÖ¾ÎÄ¼şÖĞ¼ÇÂ¼ÖØ¸´µÄÈÕÖ¾ 
-     */  
-    private void clearLogCache()  
-    {  
+            }
+        }
+    }
+
+    /**
+     * æ¯æ¬¡è®°å½•æ—¥å¿—ä¹‹å‰å…ˆæ¸…é™¤æ—¥å¿—çš„ç¼“å­˜, ä¸ç„¶ä¼šåœ¨ä¸¤ä¸ªæ—¥å¿—æ–‡ä»¶ä¸­è®°å½•é‡å¤çš„æ—¥å¿—
+     */
+    private void clearLogCache()
+    {
         Process proc = null;
         List<String> commandList = new ArrayList<String>();
-        commandList.add("logcat");  
-        commandList.add("-c");  
-        try  
-        {  
+        commandList.add("logcat");
+        commandList.add("-c");
+        try
+        {
             proc = Runtime.getRuntime().exec(
                     commandList.toArray(new String[commandList.size()]));
-            StreamConsumer errorGobbler = new StreamConsumer(  
-                    proc.getErrorStream());  
-  
-            StreamConsumer outputGobbler = new StreamConsumer(  
-                    proc.getInputStream());  
-  
-            errorGobbler.start();  
-            outputGobbler.start();  
-            if (proc.waitFor() != 0)  
-            {  
+            StreamConsumer errorGobbler = new StreamConsumer(
+                    proc.getErrorStream());
+
+            StreamConsumer outputGobbler = new StreamConsumer(
+                    proc.getInputStream());
+
+            errorGobbler.start();
+            outputGobbler.start();
+            if (proc.waitFor() != 0)
+            {
                 Log.e(TAG, " clearLogCache proc.waitFor() != 0");
-                recordLogServiceLog("clearLogCache clearLogCache proc.waitFor() != 0");  
-            }  
+                recordLogServiceLog("clearLogCache clearLogCache proc.waitFor() != 0");
+            }
         } catch (Exception e)
-        {  
+        {
             Log.e(TAG, "clearLogCache failed", e);
-            recordLogServiceLog("clearLogCache failed");  
-        } finally  
-        {  
-            try  
-            {  
-                proc.destroy();  
+            recordLogServiceLog("clearLogCache failed");
+        } finally
+        {
+            try
+            {
+                proc.destroy();
             } catch (Exception e)
-            {  
+            {
                 Log.e(TAG, "clearLogCache failed", e);
-                recordLogServiceLog("clearLogCache failed");  
-            }  
-        }  
-    }  
-  
-    /** 
-     * ¹Ø±ÕÓÉ±¾³ÌĞò¿ªÆôµÄlogcat½ø³Ì£º ¸ù¾İÓÃ»§Ãû³ÆÉ±ËÀ½ø³Ì(Èç¹ûÊÇ±¾³ÌĞò½ø³Ì¿ªÆôµÄLogcatÊÕ¼¯½ø³ÌÄÇÃ´Á½ÕßµÄUSERÒ»ÖÂ) 
-     * Èç¹û²»¹Ø±Õ»áÓĞ¶à¸ö½ø³Ì¶ÁÈ¡logcatÈÕÖ¾»º´æĞÅÏ¢Ğ´ÈëÈÕÖ¾ÎÄ¼ş 
-     *  
-     * @param allProcList 
-     * @return 
-     */  
+                recordLogServiceLog("clearLogCache failed");
+            }
+        }
+    }
+
+    /**
+     * å…³é—­ç”±æœ¬ç¨‹åºå¼€å¯çš„logcatè¿›ç¨‹ï¼š æ ¹æ®ç”¨æˆ·åç§°æ€æ­»è¿›ç¨‹(å¦‚æœæ˜¯æœ¬ç¨‹åºè¿›ç¨‹å¼€å¯çš„Logcatæ”¶é›†è¿›ç¨‹é‚£ä¹ˆä¸¤è€…çš„USERä¸€è‡´)
+     * å¦‚æœä¸å…³é—­ä¼šæœ‰å¤šä¸ªè¿›ç¨‹è¯»å–logcatæ—¥å¿—ç¼“å­˜ä¿¡æ¯å†™å…¥æ—¥å¿—æ–‡ä»¶
+     *
+     * @param allProcList
+     * @return
+     */
     private void killLogcatProc(List<ProcessInfo> allProcList)
-    {  
-        if (process != null)  
-        {  
-            process.destroy();  
-        }  
+    {
+        if (process != null)
+        {
+            process.destroy();
+        }
         String packName = this.getPackageName();
         String myUser = getAppUser(packName, allProcList);
-        /* 
-         * recordLogServiceLog("app user is:"+myUser); 
-         * recordLogServiceLog("========================"); for (ProcessInfo 
-         * processInfo : allProcList) { 
-         * recordLogServiceLog(processInfo.toString()); } 
-         * recordLogServiceLog("========================"); 
-         */  
-        for (ProcessInfo processInfo : allProcList)  
-        {  
-            if (processInfo.name.toLowerCase().equals("logcat")  
-                    && processInfo.user.equals(myUser))  
-            {  
+        /*
+         * recordLogServiceLog("app user is:"+myUser);
+         * recordLogServiceLog("========================"); for (ProcessInfo
+         * processInfo : allProcList) {
+         * recordLogServiceLog(processInfo.toString()); }
+         * recordLogServiceLog("========================");
+         */
+        for (ProcessInfo processInfo : allProcList)
+        {
+            if (processInfo.name.toLowerCase().equals("logcat")
+                    && processInfo.user.equals(myUser))
+            {
                 android.os.Process.killProcess(Integer
-                        .parseInt(processInfo.pid));  
-                // recordLogServiceLog("kill another logcat process success,the process info is:"  
-                // + processInfo);  
-            }  
-        }  
-    }  
-  
-    /** 
-     * »ñÈ¡±¾³ÌĞòµÄÓÃ»§Ãû³Æ 
-     *  
-     * @param packName 
-     * @param allProcList 
-     * @return 
-     */  
+                        .parseInt(processInfo.pid));
+                // recordLogServiceLog("kill another logcat process success,the process info is:"
+                // + processInfo);
+            }
+        }
+    }
+
+    /**
+     * è·å–æœ¬ç¨‹åºçš„ç”¨æˆ·åç§°
+     *
+     * @param packName
+     * @param allProcList
+     * @return
+     */
     private String getAppUser(String packName, List<ProcessInfo> allProcList)
-    {  
-        for (ProcessInfo processInfo : allProcList)  
-        {  
-            if (processInfo.name.equals(packName))  
-            {  
-                return processInfo.user;  
-            }  
-        }  
-        return null;  
-    }  
-  
-    /** 
-     * ¸ù¾İpsÃüÁîµÃµ½µÄÄÚÈİ»ñÈ¡PID£¬User£¬nameµÈĞÅÏ¢ 
-     *  
-     * @param orgProcessList 
-     * @return 
-     */  
+    {
+        for (ProcessInfo processInfo : allProcList)
+        {
+            if (processInfo.name.equals(packName))
+            {
+                return processInfo.user;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * æ ¹æ®pså‘½ä»¤å¾—åˆ°çš„å†…å®¹è·å–PIDï¼ŒUserï¼Œnameç­‰ä¿¡æ¯
+     *
+     * @param orgProcessList
+     * @return
+     */
     private List<ProcessInfo> getProcessInfoList(List<String> orgProcessList)
-    {  
+    {
         List<ProcessInfo> procInfoList = new ArrayList<ProcessInfo>();
-        for (int i = 1; i < orgProcessList.size(); i++)  
-        {  
+        for (int i = 1; i < orgProcessList.size(); i++)
+        {
             String processInfo = orgProcessList.get(i);
             String[] proStr = processInfo.split(" ");
-            // USER PID PPID VSIZE RSS WCHAN PC NAME  
-            // root 1 0 416 300 c00d4b28 0000cd5c S /init  
+            // USER PID PPID VSIZE RSS WCHAN PC NAME
+            // root 1 0 416 300 c00d4b28 0000cd5c S /init
             List<String> orgInfo = new ArrayList<String>();
             for (String str : proStr)
-            {  
-                if (!"".equals(str))  
-                {  
-                    orgInfo.add(str);  
-                }  
-            }  
-            if (orgInfo.size() == 9)  
-            {  
-                ProcessInfo pInfo = new ProcessInfo();  
-                pInfo.user = orgInfo.get(0);  
-                pInfo.pid = orgInfo.get(1);  
-                pInfo.ppid = orgInfo.get(2);  
-                pInfo.name = orgInfo.get(8);  
-                procInfoList.add(pInfo);  
-            }  
-        }  
-        return procInfoList;  
-    }  
-  
-    /** 
-     * ÔËĞĞPSÃüÁîµÃµ½½ø³ÌĞÅÏ¢ 
-     *  
-     * @return USER PID PPID VSIZE RSS WCHAN PC NAME root 1 0 416 300 c00d4b28 
-     *         0000cd5c S /init 
-     */  
+            {
+                if (!"".equals(str))
+                {
+                    orgInfo.add(str);
+                }
+            }
+            if (orgInfo.size() == 9)
+            {
+                ProcessInfo pInfo = new ProcessInfo();
+                pInfo.user = orgInfo.get(0);
+                pInfo.pid = orgInfo.get(1);
+                pInfo.ppid = orgInfo.get(2);
+                pInfo.name = orgInfo.get(8);
+                procInfoList.add(pInfo);
+            }
+        }
+        return procInfoList;
+    }
+
+    /**
+     * è¿è¡ŒPSå‘½ä»¤å¾—åˆ°è¿›ç¨‹ä¿¡æ¯
+     *
+     * @return USER PID PPID VSIZE RSS WCHAN PC NAME root 1 0 416 300 c00d4b28
+     *         0000cd5c S /init
+     */
     private List<String> getAllProcess()
-    {  
+    {
         List<String> orgProcList = new ArrayList<String>();
         Process proc = null;
-        try  
-        {  
+        try
+        {
             proc = Runtime.getRuntime().exec("ps");
-            StreamConsumer errorConsumer = new StreamConsumer(  
-                    proc.getErrorStream());  
-  
-            StreamConsumer outputConsumer = new StreamConsumer(  
-                    proc.getInputStream(), orgProcList);  
-  
-            errorConsumer.start();  
-            outputConsumer.start();  
-            if (proc.waitFor() != 0)  
-            {  
+            StreamConsumer errorConsumer = new StreamConsumer(
+                    proc.getErrorStream());
+
+            StreamConsumer outputConsumer = new StreamConsumer(
+                    proc.getInputStream(), orgProcList);
+
+            errorConsumer.start();
+            outputConsumer.start();
+            if (proc.waitFor() != 0)
+            {
                 Log.e(TAG, "getAllProcess proc.waitFor() != 0");
-                recordLogServiceLog("getAllProcess proc.waitFor() != 0");  
-            }  
+                recordLogServiceLog("getAllProcess proc.waitFor() != 0");
+            }
         } catch (Exception e)
-        {  
+        {
             Log.e(TAG, "getAllProcess failed", e);
-            recordLogServiceLog("getAllProcess failed");  
-        } finally  
-        {  
-            try  
-            {  
-                proc.destroy();  
+            recordLogServiceLog("getAllProcess failed");
+        } finally
+        {
+            try
+            {
+                proc.destroy();
             } catch (Exception e)
-            {  
+            {
                 Log.e(TAG, "getAllProcess failed", e);
-                recordLogServiceLog("getAllProcess failed");  
-            }  
-        }  
-        return orgProcList;  
-    }  
-  
-    /** 
-     * ¿ªÊ¼ÊÕ¼¯ÈÕÖ¾ĞÅÏ¢ 
-     */  
-    public void createLogCollector()  
-    {  
-        String logFileName = sdf.format(new Date()) + ".log";// ÈÕÖ¾ÎÄ¼şÃû³Æ
+                recordLogServiceLog("getAllProcess failed");
+            }
+        }
+        return orgProcList;
+    }
+
+    /**
+     * å¼€å§‹æ”¶é›†æ—¥å¿—ä¿¡æ¯
+     */
+    public void createLogCollector()
+    {
+        String logFileName = sdf.format(new Date()) + ".log";// æ—¥å¿—æ–‡ä»¶åç§°
         List<String> commandList = new ArrayList<String>();
-        commandList.add("logcat");  
-        commandList.add("-f");  
-        // commandList.add(LOG_PATH_INSTALL_DIR + File.separator + logFileName);  
-        commandList.add(getLogPath());  
-        commandList.add("-v");  
-        commandList.add("time");  
-        commandList.add("*:I");  
-  
-        // commandList.add("*:E");// ¹ıÂËËùÓĞµÄ´íÎóĞÅÏ¢  
-  
-        // ¹ıÂËÖ¸¶¨TAGµÄĞÅÏ¢  
-        // commandList.add("MyAPP:V");  
-        // commandList.add("*:S");  
-        try  
-        {  
+        commandList.add("logcat");
+        commandList.add("-f");
+        // commandList.add(LOG_PATH_INSTALL_DIR + File.separator + logFileName);
+        commandList.add(getLogPath());
+        commandList.add("-v");
+        commandList.add("time");
+        commandList.add("*:I");
+
+        // commandList.add("*:E");// è¿‡æ»¤æ‰€æœ‰çš„é”™è¯¯ä¿¡æ¯
+
+        // è¿‡æ»¤æŒ‡å®šTAGçš„ä¿¡æ¯
+        // commandList.add("MyAPP:V");
+        // commandList.add("*:S");
+        try
+        {
             process = Runtime.getRuntime().exec(
                     commandList.toArray(new String[commandList.size()]));
-            recordLogServiceLog("start collecting the log,and log name is:"  
-                    + logFileName);  
-            // process.waitFor();  
+            recordLogServiceLog("start collecting the log,and log name is:"
+                    + logFileName);
+            // process.waitFor();
         } catch (Exception e)
-        {  
+        {
             Log.e(TAG, "CollectorThread == >" + e.getMessage(), e);
-            recordLogServiceLog("CollectorThread == >" + e.getMessage());  
-        }  
-    }  
-  
-    /** 
-     * ¸ù¾İµ±Ç°µÄ´æ´¢Î»ÖÃµÃµ½ÈÕÖ¾µÄ¾ø¶Ô´æ´¢Â·¾¶ 
-     *  
-     * @return 
-     */  
+            recordLogServiceLog("CollectorThread == >" + e.getMessage());
+        }
+    }
+
+    /**
+     * æ ¹æ®å½“å‰çš„å­˜å‚¨ä½ç½®å¾—åˆ°æ—¥å¿—çš„ç»å¯¹å­˜å‚¨è·¯å¾„
+     *
+     * @return
+     */
     public String getLogPath()
-    {  
-        createLogDir();  
-        String logFileName = sdf.format(new Date()) + ".log";// ÈÕÖ¾ÎÄ¼şÃû³Æ
-        if (CURR_LOG_TYPE == MEMORY_TYPE)  
-        {  
-            CURR_INSTALL_LOG_NAME = logFileName;  
+    {
+        createLogDir();
+        String logFileName = sdf.format(new Date()) + ".log";// æ—¥å¿—æ–‡ä»¶åç§°
+        if (CURR_LOG_TYPE == MEMORY_TYPE)
+        {
+            CURR_INSTALL_LOG_NAME = logFileName;
             Log.d(TAG, "Log stored in memory, the path is:"
                     + LOG_PATH_MEMORY_DIR + File.separator + logFileName);
             return LOG_PATH_MEMORY_DIR + File.separator + logFileName;
-        } else  
-        {  
-            CURR_INSTALL_LOG_NAME = null;  
+        } else
+        {
+            CURR_INSTALL_LOG_NAME = null;
             Log.d(TAG, "Log stored in SDcard, the path is:"
                     + LOG_PATH_SDCARD_DIR + File.separator + logFileName);
             return LOG_PATH_SDCARD_DIR + File.separator + logFileName;
-        }  
-    }  
-  
-    /** 
-     * ´¦ÀíÈÕÖ¾ÎÄ¼ş 1.Èç¹ûÈÕÖ¾ÎÄ¼ş´æ´¢Î»ÖÃÇĞ»»µ½ÄÚ´æÖĞ£¬É¾³ı³ıÁËÕıÔÚĞ´µÄÈÕÖ¾ÎÄ¼ş ²¢ÇÒ²¿ÊğÈÕÖ¾´óĞ¡¼à¿ØÈÎÎñ£¬¿ØÖÆÈÕÖ¾´óĞ¡²»³¬¹ı¹æ¶¨Öµ 
-     * 2.Èç¹ûÈÕÖ¾ÎÄ¼ş´æ´¢Î»ÖÃÇĞ»»µ½SDCardÖĞ£¬É¾³ı7ÌìÖ®Ç°µÄÈÕÖ¾£¬ÒÆ ¶¯ËùÓĞ´æ´¢ÔÚÄÚ´æÖĞµÄÈÕÖ¾µ½SDCardÖĞ£¬²¢½«Ö®Ç°²¿ÊğµÄÈÕÖ¾´óĞ¡ ¼à¿ØÈ¡Ïû 
-     */  
-    public void handleLog()  
-    {  
-        if (CURR_LOG_TYPE == MEMORY_TYPE)  
-        {  
-            deployLogSizeMonitorTask();  
-            deleteMemoryExpiredLog();  
-        } else  
-        {  
-            moveLogfile();  
-            cancelLogSizeMonitorTask();  
-            deleteSDcardExpiredLog();  
-        }  
-    }  
-  
-    /** 
-     * ²¿ÊğÈÕÖ¾´óĞ¡¼à¿ØÈÎÎñ 
-     */  
-    private void deployLogSizeMonitorTask()  
-    {  
-        if (logSizeMoniting)  
-        { // Èç¹ûµ±Ç°ÕıÔÚ¼à¿Ø×Å£¬Ôò²»ĞèÒª¼ÌĞø²¿Êğ  
-            return;  
-        }  
-        logSizeMoniting = true;  
+        }
+    }
+
+    /**
+     * å¤„ç†æ—¥å¿—æ–‡ä»¶ 1.å¦‚æœæ—¥å¿—æ–‡ä»¶å­˜å‚¨ä½ç½®åˆ‡æ¢åˆ°å†…å­˜ä¸­ï¼Œåˆ é™¤é™¤äº†æ­£åœ¨å†™çš„æ—¥å¿—æ–‡ä»¶ å¹¶ä¸”éƒ¨ç½²æ—¥å¿—å¤§å°ç›‘æ§ä»»åŠ¡ï¼Œæ§åˆ¶æ—¥å¿—å¤§å°ä¸è¶…è¿‡è§„å®šå€¼
+     * 2.å¦‚æœæ—¥å¿—æ–‡ä»¶å­˜å‚¨ä½ç½®åˆ‡æ¢åˆ°SDCardä¸­ï¼Œåˆ é™¤7å¤©ä¹‹å‰çš„æ—¥å¿—ï¼Œç§» åŠ¨æ‰€æœ‰å­˜å‚¨åœ¨å†…å­˜ä¸­çš„æ—¥å¿—åˆ°SDCardä¸­ï¼Œå¹¶å°†ä¹‹å‰éƒ¨ç½²çš„æ—¥å¿—å¤§å° ç›‘æ§å–æ¶ˆ
+     */
+    public void handleLog()
+    {
+        if (CURR_LOG_TYPE == MEMORY_TYPE)
+        {
+            deployLogSizeMonitorTask();
+            deleteMemoryExpiredLog();
+        } else
+        {
+            moveLogfile();
+            cancelLogSizeMonitorTask();
+            deleteSDcardExpiredLog();
+        }
+    }
+
+    /**
+     * éƒ¨ç½²æ—¥å¿—å¤§å°ç›‘æ§ä»»åŠ¡
+     */
+    private void deployLogSizeMonitorTask()
+    {
+        if (logSizeMoniting)
+        { // å¦‚æœå½“å‰æ­£åœ¨ç›‘æ§ç€ï¼Œåˆ™ä¸éœ€è¦ç»§ç»­éƒ¨ç½²
+            return;
+        }
+        logSizeMoniting = true;
         Intent intent = new Intent(MONITOR_LOG_SIZE_ACTION);
         PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
-                MEMORY_LOG_FILE_MONITOR_INTERVAL, sender);  
+                MEMORY_LOG_FILE_MONITOR_INTERVAL, sender);
         Log.d(TAG, "deployLogSizeMonitorTask() succ !");
-        // recordLogServiceLog("deployLogSizeMonitorTask() succ ,start time is "  
-        // + calendar.getTime().toLocaleString());  
-    }  
-  
-    /** 
-     * È¡Ïû²¿ÊğÈÕÖ¾´óĞ¡¼à¿ØÈÎÎñ 
-     */  
-    private void cancelLogSizeMonitorTask()  
-    {  
-        logSizeMoniting = false;  
+        // recordLogServiceLog("deployLogSizeMonitorTask() succ ,start time is "
+        // + calendar.getTime().toLocaleString());
+    }
+
+    /**
+     * å–æ¶ˆéƒ¨ç½²æ—¥å¿—å¤§å°ç›‘æ§ä»»åŠ¡
+     */
+    private void cancelLogSizeMonitorTask()
+    {
+        logSizeMoniting = false;
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(MONITOR_LOG_SIZE_ACTION);
         PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
-        am.cancel(sender);  
-  
+        am.cancel(sender);
+
         Log.d(TAG, "canelLogSizeMonitorTask() succ");
-    }  
-  
-    /** 
-     * ¼ì²éÈÕÖ¾ÎÄ¼ş´óĞ¡ÊÇ·ñ³¬¹ıÁË¹æ¶¨´óĞ¡ Èç¹û³¬¹ıÁËÖØĞÂ¿ªÆôÒ»¸öÈÕÖ¾ÊÕ¼¯½ø³Ì 
-     */  
-    private void checkLogSize()  
-    {  
-        if (CURR_INSTALL_LOG_NAME != null && !"".equals(CURR_INSTALL_LOG_NAME))  
-        {  
+    }
+
+    /**
+     * æ£€æŸ¥æ—¥å¿—æ–‡ä»¶å¤§å°æ˜¯å¦è¶…è¿‡äº†è§„å®šå¤§å° å¦‚æœè¶…è¿‡äº†é‡æ–°å¼€å¯ä¸€ä¸ªæ—¥å¿—æ”¶é›†è¿›ç¨‹
+     */
+    private void checkLogSize()
+    {
+        if (CURR_INSTALL_LOG_NAME != null && !"".equals(CURR_INSTALL_LOG_NAME))
+        {
             String path = LOG_PATH_MEMORY_DIR + File.separator
-                    + CURR_INSTALL_LOG_NAME;  
+                    + CURR_INSTALL_LOG_NAME;
             File file = new File(path);
-            if (!file.exists())  
-            {  
-                return;  
-            }  
+            if (!file.exists())
+            {
+                return;
+            }
             Log.d(TAG, "checkLog() ==> The size of the log is too big?");
-            if (file.length() >= MEMORY_LOG_FILE_MAX_SIZE)  
-            {  
+            if (file.length() >= MEMORY_LOG_FILE_MAX_SIZE)
+            {
                 Log.d(TAG, "The log's size is too big!");
-                new LogCollectorThread().start();  
-            }  
-        }  
-    }  
-  
-    /** 
-     * ´´½¨ÈÕÖ¾Ä¿Â¼ 
-     */  
-    private void createLogDir()  
-    {  
+                new LogCollectorThread().start();
+            }
+        }
+    }
+
+    /**
+     * åˆ›å»ºæ—¥å¿—ç›®å½•
+     */
+    private void createLogDir()
+    {
         File file = new File(LOG_PATH_MEMORY_DIR);
-        boolean mkOk;  
-        if (!file.isDirectory())  
-        {  
-            mkOk = file.mkdirs();  
-            if (!mkOk)  
-            {  
-                mkOk = file.mkdirs();  
-            }  
-        }  
-  
-        /* ************************************ 
-         * file = new File(LOG_SERVICE_LOG_PATH); if (!file.exists()) { try { 
-         * mkOk = file.createNewFile(); if (!mkOk) { file.createNewFile(); } } 
-         * catch (IOException e) { Log.e(TAG, e.getMessage(), e); } } 
-         * *********************************** 
-         */  
-  
+        boolean mkOk;
+        if (!file.isDirectory())
+        {
+            mkOk = file.mkdirs();
+            if (!mkOk)
+            {
+                mkOk = file.mkdirs();
+            }
+        }
+
+        /* ************************************
+         * file = new File(LOG_SERVICE_LOG_PATH); if (!file.exists()) { try {
+         * mkOk = file.createNewFile(); if (!mkOk) { file.createNewFile(); } }
+         * catch (IOException e) { Log.e(TAG, e.getMessage(), e); } }
+         * ***********************************
+         */
+
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED))
-        {  
+        {
             file = new File(LOG_PATH_SDCARD_DIR);
-            if (!file.isDirectory())  
-            {  
-                mkOk = file.mkdirs();  
-                if (!mkOk)  
-                {  
-                    recordLogServiceLog("move file failed,dir is not created succ");  
-                    return;  
-                }  
-            }  
-        }  
-    }  
-  
-    /** 
-     * ½«ÈÕÖ¾ÎÄ¼ş×ªÒÆµ½SD¿¨ÏÂÃæ 
-     */  
-    private void moveLogfile()  
-    {  
+            if (!file.isDirectory())
+            {
+                mkOk = file.mkdirs();
+                if (!mkOk)
+                {
+                    recordLogServiceLog("move file failed,dir is not created succ");
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * å°†æ—¥å¿—æ–‡ä»¶è½¬ç§»åˆ°SDå¡ä¸‹é¢
+     */
+    private void moveLogfile()
+    {
         if (!Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED))
-        {  
-            // recordLogServiceLog("move file failed, sd card does not mount");  
-            return;  
-        }  
+        {
+            // recordLogServiceLog("move file failed, sd card does not mount");
+            return;
+        }
         File file = new File(LOG_PATH_SDCARD_DIR);
-        if (!file.isDirectory())  
-        {  
-            boolean mkOk = file.mkdirs();  
-            if (!mkOk)  
-            {  
-                // recordLogServiceLog("move file failed,dir is not created succ");  
-                return;  
-            }  
-        }  
-  
+        if (!file.isDirectory())
+        {
+            boolean mkOk = file.mkdirs();
+            if (!mkOk)
+            {
+                // recordLogServiceLog("move file failed,dir is not created succ");
+                return;
+            }
+        }
+
         file = new File(LOG_PATH_MEMORY_DIR);
-        if (file.isDirectory())  
-        {  
+        if (file.isDirectory())
+        {
             File[] allFiles = file.listFiles();
             for (File logFile : allFiles)
-            {  
+            {
                 String fileName = logFile.getName();
-                if (logServiceLogName.equals(fileName))  
-                {  
-                    continue;  
-                }  
-                // String createDateInfo =  
-                // getFileNameWithoutExtension(fileName);  
+                if (logServiceLogName.equals(fileName))
+                {
+                    continue;
+                }
+                // String createDateInfo =
+                // getFileNameWithoutExtension(fileName);
                 boolean isSucc = copy(logFile, new File(LOG_PATH_SDCARD_DIR
                         + File.separator + fileName));
-                if (isSucc)  
-                {  
-                    logFile.delete();  
-                    // recordLogServiceLog("move file success,log name is:"+fileName);  
-                }  
-            }  
-        }  
-    }  
-  
-    /** 
-     * É¾³ıÄÚ´æÏÂ¹ıÆÚµÄÈÕÖ¾ 
-     */  
-    private void deleteSDcardExpiredLog()  
-    {  
+                if (isSucc)
+                {
+                    logFile.delete();
+                    // recordLogServiceLog("move file success,log name is:"+fileName);
+                }
+            }
+        }
+    }
+
+    /**
+     * åˆ é™¤å†…å­˜ä¸‹è¿‡æœŸçš„æ—¥å¿—
+     */
+    private void deleteSDcardExpiredLog()
+    {
         File file = new File(LOG_PATH_SDCARD_DIR);
-        if (file.isDirectory())  
-        {  
+        if (file.isDirectory())
+        {
             File[] allFiles = file.listFiles();
             for (File logFile : allFiles)
-            {  
+            {
                 String fileName = logFile.getName();
-                if (logServiceLogName.equals(fileName))  
-                {  
-                    continue;  
-                }  
+                if (logServiceLogName.equals(fileName))
+                {
+                    continue;
+                }
                 String createDateInfo = getFileNameWithoutExtension(fileName);
-                if (canDeleteSDLog(createDateInfo))  
-                {  
-                    logFile.delete();  
+                if (canDeleteSDLog(createDateInfo))
+                {
+                    logFile.delete();
                     Log.d(TAG, "delete expired log success,the log path is:"
-                            + logFile.getAbsolutePath());  
-  
-                }  
-            }  
-        }  
-    }  
-  
-    /** 
-     * ÅĞ¶ÏsdcardÉÏµÄÈÕÖ¾ÎÄ¼şÊÇ·ñ¿ÉÒÔÉ¾³ı 
-     *  
-     * @param createDateStr 
-     * @return 
-     */  
+                            + logFile.getAbsolutePath());
+
+                }
+            }
+        }
+    }
+
+    /**
+     * åˆ¤æ–­sdcardä¸Šçš„æ—¥å¿—æ–‡ä»¶æ˜¯å¦å¯ä»¥åˆ é™¤
+     *
+     * @param createDateStr
+     * @return
+     */
     public boolean canDeleteSDLog(String createDateStr)
-    {  
-        boolean canDel = false;  
+    {
+        boolean canDel = false;
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -1 * SDCARD_LOG_FILE_SAVE_DAYS);// É¾³ı7ÌìÖ®Ç°ÈÕÖ¾
+        calendar.add(Calendar.DAY_OF_MONTH, -1 * SDCARD_LOG_FILE_SAVE_DAYS);// åˆ é™¤7å¤©ä¹‹å‰æ—¥å¿—
         Date expiredDate = calendar.getTime();
-        try  
-        {  
+        try
+        {
             Date createDate = sdf.parse(createDateStr);
-            canDel = createDate.before(expiredDate);  
+            canDel = createDate.before(expiredDate);
         } catch (ParseException e)
-        {  
+        {
             Log.e(TAG, e.getMessage(), e);
-            canDel = false;  
-        }  
-        return canDel;  
-    }  
-  
-    /** 
-     * É¾³ıÄÚ´æÖĞµÄ¹ıÆÚÈÕÖ¾£¬É¾³ı¹æÔò£º ³ıÁËµ±Ç°µÄÈÕÖ¾ºÍÀëµ±Ç°Ê±¼ä×î½üµÄÈÕÖ¾±£´æÆäËûµÄ¶¼É¾³ı 
-     */  
-    private void deleteMemoryExpiredLog()  
-    {  
+            canDel = false;
+        }
+        return canDel;
+    }
+
+    /**
+     * åˆ é™¤å†…å­˜ä¸­çš„è¿‡æœŸæ—¥å¿—ï¼Œåˆ é™¤è§„åˆ™ï¼š é™¤äº†å½“å‰çš„æ—¥å¿—å’Œç¦»å½“å‰æ—¶é—´æœ€è¿‘çš„æ—¥å¿—ä¿å­˜å…¶ä»–çš„éƒ½åˆ é™¤
+     */
+    private void deleteMemoryExpiredLog()
+    {
         File file = new File(LOG_PATH_MEMORY_DIR);
-        if (file.isDirectory())  
-        {  
+        if (file.isDirectory())
+        {
             File[] allFiles = file.listFiles();
             Arrays.sort(allFiles, new FileComparator());
-            for (int i = 0; i < allFiles.length - 2; i++)  
-            { // "-2"±£´æ×î½üµÄÁ½¸öÈÕÖ¾ÎÄ¼ş  
+            for (int i = 0; i < allFiles.length - 2; i++)
+            { // "-2"ä¿å­˜æœ€è¿‘çš„ä¸¤ä¸ªæ—¥å¿—æ–‡ä»¶
                 File _file = allFiles[i];
-                if (logServiceLogName.equals(_file.getName())  
-                        || _file.getName().equals(CURR_INSTALL_LOG_NAME))  
-                {  
-                    continue;  
-                }  
-                _file.delete();  
+                if (logServiceLogName.equals(_file.getName())
+                        || _file.getName().equals(CURR_INSTALL_LOG_NAME))
+                {
+                    continue;
+                }
+                _file.delete();
                 Log.d(TAG, "delete expired log success,the log path is:"
-                        + _file.getAbsolutePath());  
-            }  
-        }  
-    }  
-  
-    /** 
-     * ¿½±´ÎÄ¼ş 
-     *  
-     * @param source 
-     * @param target 
-     * @return 
-     */  
+                        + _file.getAbsolutePath());
+            }
+        }
+    }
+
+    /**
+     * æ‹·è´æ–‡ä»¶
+     *
+     * @param source
+     * @param target
+     * @return
+     */
     private boolean copy(File source, File target)
-    {  
+    {
         FileInputStream in = null;
         FileOutputStream out = null;
-        try  
-        {  
-            if (!target.exists())  
-            {  
-                boolean createSucc = target.createNewFile();  
-                if (!createSucc)  
-                {  
-                    return false;  
-                }  
-            }  
+        try
+        {
+            if (!target.exists())
+            {
+                boolean createSucc = target.createNewFile();
+                if (!createSucc)
+                {
+                    return false;
+                }
+            }
             in = new FileInputStream(source);
             out = new FileOutputStream(target);
-            byte[] buffer = new byte[8 * 1024];  
-            int count;  
-            while ((count = in.read(buffer)) != -1)  
-            {  
-                out.write(buffer, 0, count);  
-            }  
-            return true;  
+            byte[] buffer = new byte[8 * 1024];
+            int count;
+            while ((count = in.read(buffer)) != -1)
+            {
+                out.write(buffer, 0, count);
+            }
+            return true;
         } catch (Exception e)
-        {  
-            e.printStackTrace();  
+        {
+            e.printStackTrace();
             Log.e(TAG, e.getMessage(), e);
-            recordLogServiceLog("copy file fail");  
-            return false;  
-        } finally  
-        {  
-            try  
-            {  
-                if (in != null)  
-                {  
-                    in.close();  
-                }  
-                if (out != null)  
-                {  
-                    out.close();  
-                }  
+            recordLogServiceLog("copy file fail");
+            return false;
+        } finally
+        {
+            try
+            {
+                if (in != null)
+                {
+                    in.close();
+                }
+                if (out != null)
+                {
+                    out.close();
+                }
             } catch (IOException e)
-            {  
-                e.printStackTrace();  
+            {
+                e.printStackTrace();
                 Log.e(TAG, e.getMessage(), e);
-                recordLogServiceLog("copy file fail");  
-                return false;  
-            }  
-        }  
-  
-    }  
-  
-    /** 
-     * ¼ÇÂ¼ÈÕÖ¾·şÎñµÄ»ù±¾ĞÅÏ¢ ·ÀÖ¹ÈÕÖ¾·şÎñÓĞ´í£¬ÔÚLogCatÈÕÖ¾ÖĞÎŞ·¨²éÕÒ ´ËÈÕÖ¾Ãû³ÆÎªLog.log 
-     *  
-     * @param msg 
-     */  
+                recordLogServiceLog("copy file fail");
+                return false;
+            }
+        }
+
+    }
+
+    /**
+     * è®°å½•æ—¥å¿—æœåŠ¡çš„åŸºæœ¬ä¿¡æ¯ é˜²æ­¢æ—¥å¿—æœåŠ¡æœ‰é”™ï¼Œåœ¨LogCatæ—¥å¿—ä¸­æ— æ³•æŸ¥æ‰¾ æ­¤æ—¥å¿—åç§°ä¸ºLog.log
+     *
+     * @param msg
+     */
     private void recordLogServiceLog(String msg)
-    {  
-        if (writer != null)  
-        {  
-            try  
-            {  
+    {
+        if (writer != null)
+        {
+            try
+            {
                 Date time = new Date();
-                writer.write(myLogSdf.format(time) + " : " + msg);  
-                writer.write("\n");  
-                writer.flush();  
+                writer.write(myLogSdf.format(time) + " : " + msg);
+                writer.write("\n");
+                writer.flush();
             } catch (IOException e)
-            {  
-                e.printStackTrace();  
+            {
+                e.printStackTrace();
                 Log.e(TAG, e.getMessage(), e);
-            }  
-        }  
-    }  
-  
-    /** 
-     * È¥³ıÎÄ¼şµÄÀ©Õ¹ÀàĞÍ£¨.log£© 
-     *  
-     * @param fileName 
-     * @return 
-     */  
+            }
+        }
+    }
+
+    /**
+     * å»é™¤æ–‡ä»¶çš„æ‰©å±•ç±»å‹ï¼ˆ.logï¼‰
+     *
+     * @param fileName
+     * @return
+     */
     private String getFileNameWithoutExtension(String fileName)
-    {  
-        return fileName.substring(0, fileName.indexOf("."));  
-    }  
-  
-    class ProcessInfo {  
+    {
+        return fileName.substring(0, fileName.indexOf("."));
+    }
+
+    class ProcessInfo {
         public String user;
         public String pid;
         public String ppid;
         public String name;
-  
+
         @Override
         public String toString()
-        {  
+        {
             String str = "user=" + user + " pid=" + pid + " ppid=" + ppid
-                    + " name=" + name;  
-            return str;  
-        }  
-    }  
-  
+                    + " name=" + name;
+            return str;
+        }
+    }
+
     class StreamConsumer extends Thread {
         InputStream is;
         List<String> list;
-  
+
         StreamConsumer(InputStream is) {
-            this.is = is;  
-        }  
-  
+            this.is = is;
+        }
+
         StreamConsumer(InputStream is, List<String> list) {
-            this.is = is;  
-            this.list = list;  
-        }  
-  
-        public void run()  
-        {  
-            try  
-            {  
+            this.is = is;
+            this.list = list;
+        }
+
+        public void run()
+        {
+            try
+            {
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(isr);
                 String line = null;
-                while ((line = br.readLine()) != null)  
-                {  
-                    if (list != null)  
-                    {  
-                        list.add(line);  
-                    }  
-                }  
+                while ((line = br.readLine()) != null)
+                {
+                    if (list != null)
+                    {
+                        list.add(line);
+                    }
+                }
             } catch (IOException ioe)
-            {  
-                ioe.printStackTrace();  
-            }  
-        }  
-    }  
-  
-    /** 
-     * ¼à¿ØSD¿¨×´Ì¬ 
-     *  
-     * @author Administrator 
-     *  
-     */  
+            {
+                ioe.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * ç›‘æ§SDå¡çŠ¶æ€
+     *
+     * @author Administrator
+     *
+     */
     class SDStateMonitorReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent)
-        {  
-  
+        {
+
             if (Intent.ACTION_MEDIA_UNMOUNTED.equals(intent.getAction()))
-            { // ´æ´¢¿¨±»Ğ¶ÔØ  
-                if (CURR_LOG_TYPE == SDCARD_TYPE)  
-                {  
+            { // å­˜å‚¨å¡è¢«å¸è½½
+                if (CURR_LOG_TYPE == SDCARD_TYPE)
+                {
                     Log.d(TAG, "SDcar is UNMOUNTED");
-                    CURR_LOG_TYPE = MEMORY_TYPE;  
-                    new LogCollectorThread().start();  
-                }  
-            } else  
-            { // ´æ´¢¿¨±»¹ÒÔØ  
-                if (CURR_LOG_TYPE == MEMORY_TYPE)  
-                {  
+                    CURR_LOG_TYPE = MEMORY_TYPE;
+                    new LogCollectorThread().start();
+                }
+            } else
+            { // å­˜å‚¨å¡è¢«æŒ‚è½½
+                if (CURR_LOG_TYPE == MEMORY_TYPE)
+                {
                     Log.d(TAG, "SDcar is MOUNTED");
-                    CURR_LOG_TYPE = SDCARD_TYPE;  
-                    new LogCollectorThread().start();  
-  
-                }  
-            }  
-        }  
-    }  
-  
-    /** 
-     * ÈÕÖ¾ÈÎÎñ½ÓÊÕ ÇĞ»»ÈÕÖ¾£¬¼à¿ØÈÕÖ¾´óĞ¡ 
-     *  
-     * @author Administrator 
-     *  
-     */  
+                    CURR_LOG_TYPE = SDCARD_TYPE;
+                    new LogCollectorThread().start();
+
+                }
+            }
+        }
+    }
+
+    /**
+     * æ—¥å¿—ä»»åŠ¡æ¥æ”¶ åˆ‡æ¢æ—¥å¿—ï¼Œç›‘æ§æ—¥å¿—å¤§å°
+     *
+     * @author Administrator
+     *
+     */
     class LogTaskReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent)
-        {  
+        {
             String action = intent.getAction();
-            if (SWITCH_LOG_FILE_ACTION.equals(action))  
-            {  
-                new LogCollectorThread().start();  
-            } else if (MONITOR_LOG_SIZE_ACTION.equals(action))  
-            {  
-                checkLogSize();  
-            }  
-        }  
-    }  
-  
+            if (SWITCH_LOG_FILE_ACTION.equals(action))
+            {
+                new LogCollectorThread().start();
+            } else if (MONITOR_LOG_SIZE_ACTION.equals(action))
+            {
+                checkLogSize();
+            }
+        }
+    }
+
     class FileComparator implements Comparator<File> {
         public int compare(File file1, File file2)
-        {  
-            if (logServiceLogName.equals(file1.getName()))  
-            {  
-                return -1;  
-            } else if (logServiceLogName.equals(file2.getName()))  
-            {  
-                return 1;  
-            }  
-  
+        {
+            if (logServiceLogName.equals(file1.getName()))
+            {
+                return -1;
+            } else if (logServiceLogName.equals(file2.getName()))
+            {
+                return 1;
+            }
+
             String createInfo1 = getFileNameWithoutExtension(file1.getName());
             String createInfo2 = getFileNameWithoutExtension(file2.getName());
-  
-            try  
-            {  
+
+            try
+            {
                 Date create1 = sdf.parse(createInfo1);
                 Date create2 = sdf.parse(createInfo2);
-                if (create1.before(create2))  
-                {  
-                    return -1;  
-                } else  
-                {  
-                    return 1;  
-                }  
+                if (create1.before(create2))
+                {
+                    return -1;
+                } else
+                {
+                    return 1;
+                }
             } catch (ParseException e)
-            {  
-                return 0;  
-            }  
-        }  
-    }  
-  
+            {
+                return 0;
+            }
+        }
+    }
+
     @Override
-    public void onDestroy()  
-    {  
-        super.onDestroy();  
-        recordLogServiceLog("LogService onDestroy");  
-        if (writer != null)  
-        {  
-            try  
-            {  
-                writer.close();  
+    public void onDestroy()
+    {
+        super.onDestroy();
+        recordLogServiceLog("LogService onDestroy");
+        if (writer != null)
+        {
+            try
+            {
+                writer.close();
             } catch (IOException e)
-            {  
-                e.printStackTrace();  
-            }  
-        }  
-        if (process != null)  
-        {  
-            process.destroy();  
-        }  
-  
-        unregisterReceiver(sdStateReceiver);  
-        unregisterReceiver(logTaskReceiver);  
-    }  
-  
+            {
+                e.printStackTrace();
+            }
+        }
+        if (process != null)
+        {
+            process.destroy();
+        }
+
+        unregisterReceiver(sdStateReceiver);
+        unregisterReceiver(logTaskReceiver);
+    }
+
 }  

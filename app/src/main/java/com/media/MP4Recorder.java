@@ -3,26 +3,26 @@ package com.media;
 public class MP4Recorder {
 	public static final int TYPE_VIDEO = 0;
 	public static final int TYPE_AUDIO = 1;
-	
+
 	/**
-	 * ¿ªÆôÂ¼ÖÆÆ÷
-	 * @param strFileName Â¼ÖÆ±£´æµÄÎÄ¼şÃû
-	 * @return ¿ªÆô½á¹û,³É¹¦£ºtrue£»Ê§°Ü£ºfalse
+	 * å¼€å¯å½•åˆ¶å™¨
+	 * @param strFileName å½•åˆ¶ä¿å­˜çš„æ–‡ä»¶å
+	 * @return å¼€å¯ç»“æœ,æˆåŠŸï¼štrueï¼›å¤±è´¥ï¼šfalse
 	 */
 	public native boolean startRecorder(String strFileName);
 	/**
-	 * Í£Ö¹Â¼ÖÆÆ÷
+	 * åœæ­¢å½•åˆ¶å™¨
 	 */
 	public native void stopRecorder();
 	/**
-	 * Ìí¼ÓÒôÊÓÆµÊı¾İ
-	 * @param data ÒôÊÓÆµÊı¾İ
-	 * @param length Êı¾İ³¤¶È
-	 * @param type Êı¾İÀàĞÍ£ºTYPE_VIDEO£ºÊÓÆµ£»TYPE_AUDIO£ºÒôÆµ
+	 * æ·»åŠ éŸ³è§†é¢‘æ•°æ®
+	 * @param data éŸ³è§†é¢‘æ•°æ®
+	 * @param length æ•°æ®é•¿åº¦
+	 * @param type æ•°æ®ç±»å‹ï¼šTYPE_VIDEOï¼šè§†é¢‘ï¼›TYPE_AUDIOï¼šéŸ³é¢‘
 	 * @return
 	 */
 	public native boolean addSample(byte[] data,int length,int type);
-	
+
 	static {
 		System.loadLibrary("MP4Recorder");
 	}

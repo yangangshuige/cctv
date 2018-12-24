@@ -2,16 +2,16 @@ package com.media;
 
 public class MediaConverter {
 	/**
-	 * °ÑYUV420SP×ª»¯³ÉRGB565
-	 * @param yuv YUV420SPÃ½ÌåÊı¾İ
-	 * @param rgb RGB565Ã½ÌåÊı¾İ
-	 * @param width ×ª»¯ºóµÄRGB565Êı¾İµÄ¿í¶È
-	 * @param height ×ª»¯ºóµÄRGB565Êı¾İµÄ¿í¶È
-	 * @return ×ª»¯½á¹û£¬1£º³É¹¦£»0£ºÊ§°Ü
+	 * æŠŠYUV420SPè½¬åŒ–æˆRGB565
+	 * @param yuv YUV420SPåª’ä½“æ•°æ®
+	 * @param rgb RGB565åª’ä½“æ•°æ®
+	 * @param width è½¬åŒ–åçš„RGB565æ•°æ®çš„å®½åº¦
+	 * @param height è½¬åŒ–åçš„RGB565æ•°æ®çš„å®½åº¦
+	 * @return è½¬åŒ–ç»“æœï¼Œ1ï¼šæˆåŠŸï¼›0ï¼šå¤±è´¥
 	 */
 	public native int YUV420SP2RGB565(byte[] yuv, byte[] rgb, int width, int height);
-	
-	
+
+
 	static {
 		System.loadLibrary("MediaConverter");
 	}

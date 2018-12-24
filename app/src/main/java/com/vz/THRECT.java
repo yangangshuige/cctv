@@ -1,8 +1,8 @@
 package com.vz;
 
 public class THRECT {
-	  public int left;	/**<×ó*/
-	   public  int top;	/**<ÉÏ*/
-	   public int right;	/**<ÓÒ*/
-	   public int bottom;	/**<ÏÂ*/
+	public int left;	/**<å·¦*/
+	public  int top;	/**<ä¸Š*/
+	public int right;	/**<å³*/
+	public int bottom;	/**<ä¸‹*/
 }

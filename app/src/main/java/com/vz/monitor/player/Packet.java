@@ -3,13 +3,13 @@ package com.vz.monitor.player;
 import java.util.Vector;
 
 /**
- * Êı¾İ??
- * ÊµÊ±ÊÓÆµÁ÷ÖĞ¿ÉÒÔ·Ö³ÉÈô¸É¸öPacket??
+ * æ•°æ®ï¿½?
+ * å®æ—¶è§†é¢‘æµä¸­å¯ä»¥åˆ†æˆè‹¥å¹²ä¸ªPacketï¿½?
  * @author Administrator
  */
 public class Packet {
-	private int amount; //Êı¾İ°üµÄÊıÁ¿
-	private Vector<Integer> positionList;	//Ã¿¸öÊı¾İ°üµÄÆğÊ¼Î»ÖÃµÄÁĞ??
+	private int amount; //æ•°æ®åŒ…çš„æ•°é‡
+	private Vector<Integer> positionList;	//æ¯ä¸ªæ•°æ®åŒ…çš„èµ·å§‹ä½ç½®çš„åˆ—ï¿½?
 
 	public int getAmount() {
 		return amount;

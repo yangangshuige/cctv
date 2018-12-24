@@ -2,10 +2,10 @@ package com.vz.monitor.util;
 
 public class NumberUtil {
 	/**
-	 * 4×Ö½ÚÊı×é×ª³ÉÕûĞÍ
+	 * 4å­—èŠ‚æ•°ç»„è½¬æˆæ•´å‹
 	 *
-	 * @param b ×ª»»µÄ×Ö½ÚÊı×é
-	 * @return ÕûĞÍ
+	 * @param b è½¬æ¢çš„å­—èŠ‚æ•°ç»„
+	 * @return æ•´å‹
 	 */
 	public static final int byte2Int(byte b[]) {
 		if(null == b || b.length < 4) {
@@ -16,9 +16,9 @@ public class NumberUtil {
 	}
 
 	/**
-	 * Ğ¡¶Ë×Ö½ÚĞòµÄ4×Ö½ÚÊı×é×ª³ÉÕûĞÍÖµ
-	 * @param b Ğ¡¶Ë×Ö½ÚĞòµÄ4×Ö½ÚÊı×é
-	 * @return ÕûĞÍÖµ
+	 * å°ç«¯å­—èŠ‚åºçš„4å­—èŠ‚æ•°ç»„è½¬æˆæ•´å‹å€¼
+	 * @param b å°ç«¯å­—èŠ‚åºçš„4å­—èŠ‚æ•°ç»„
+	 * @return æ•´å‹å€¼
 	 */
 	public static final int leByte2Int(byte[] b) {
 		if(null == b || b.length < 4) {
@@ -29,10 +29,10 @@ public class NumberUtil {
 	}
 
 	/**
-	 * °ÑÕûĞÍ×ª³É4×Ö½ÚÊı×é
+	 * æŠŠæ•´å‹è½¬æˆ4å­—èŠ‚æ•°ç»„
 	 *
-	 * @param intValue ×ª»»µÄÕûĞÍÊı
-	 * @return 4×Ö½ÚÊı×é
+	 * @param intValue è½¬æ¢çš„æ•´å‹æ•°
+	 * @return 4å­—èŠ‚æ•°ç»„
 	 */
 	public static final byte[] int2Byte(int intValue) {
 		byte[] b = new byte[4];
@@ -43,9 +43,9 @@ public class NumberUtil {
 	}
 
 	/**
-	 * °ÑÕûĞÍÖµ×ª³ÉĞ¡¶Ë×Ö½ÚĞò(little-endian)µÄ4×Ö½ÚÊı×é
-	 * @param value ÕûĞÍÖµ
-	 * @return ×ª»»ºóµÄ4×Ö½ÚÊı×é
+	 * æŠŠæ•´å‹å€¼è½¬æˆå°ç«¯å­—èŠ‚åº(little-endian)çš„4å­—èŠ‚æ•°ç»„
+	 * @param value æ•´å‹å€¼
+	 * @return è½¬æ¢åçš„4å­—èŠ‚æ•°ç»„
 	 */
 	public static final byte[] int2LeByte(int value) {
 		byte[] b = new byte[4];
@@ -56,9 +56,9 @@ public class NumberUtil {
 	}
 
 	/**
-	 * ±£ÁôÒ»Î»Ğ¡Êı
+	 * ä¿ç•™ä¸€ä½å°æ•°
 	 * @param num
-	 * @return ×ª»»ºóµÄ×Ö·û´®¸ñÊ½
+	 * @return è½¬æ¢åçš„å­—ç¬¦ä¸²æ ¼å¼
 	 */
 	public static final String limitOneDecimal(float num) {
 		java.text.DecimalFormat df = new java.text.DecimalFormat("#.0");

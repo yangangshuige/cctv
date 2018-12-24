@@ -26,18 +26,18 @@ public class DataService implements OnDataReceiver {
 	private RTSP rtsp;
 	private MP4Recorder mp4Recorder;
 	private String ip;
-//	private String url = "rtsp://182.92.79.136:8554/slamtv60.264";
+	//	private String url = "rtsp://182.92.79.136:8554/slamtv60.264";
 //	private String url = "rtsp://VisionZenith:147258369@192.168.1.100:8557/h264";
 //	private String url  = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
 //	private String url = "rtsp://192.168.3.30:8557/h264";
 //	private String url = "rtsp://admin:12345@192.168.3.79:554/Streaming/Channels/1?transportmode=unicast&profile=Profile_1";
-	private boolean isReceive = false; //鏄惁鎺ユ敹鏁版�?
-	private boolean isRecording = false; //鏄惁姝ｅ湪褰曞�?
+	private boolean isReceive = false; //鏄惁鎺ユ敹鏁版�?
+	private boolean isRecording = false; //鏄惁姝ｅ湪褰曞�?
 
 	private long lastTime = System.currentTimeMillis();
 
 	/**
-	 * 鐢ㄤ簬璁＄畻鐮佹祦閫熺巼鐨勪笁涓彉閲忥�?.鐮佺�?2.寮�鏃堕棿 3.鎺ユ敹鏁版嵁鎬婚暱搴�?
+	 * 鐢ㄤ簬璁＄畻鐮佹祦閫熺巼鐨勪笁涓彉閲忥�?.鐮佺�?2.寮�鏃堕棿 3.鎺ユ敹鏁版嵁鎬婚暱搴�?
 	 */
 	private float dataRate = 0.0f;
 	private long startTime = 0L;
@@ -70,8 +70,8 @@ public class DataService implements OnDataReceiver {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			default:
-				break;
+				default:
+					break;
 			}
 		}
 	};
@@ -85,7 +85,7 @@ public class DataService implements OnDataReceiver {
 			handle = rtsp.startPlay(ip,8557);
 
 			if(  handle == -1 )
-              return false;
+				return false;
 			rtsp.setOnDataReceiver(handle,this);
 
 
@@ -103,7 +103,7 @@ public class DataService implements OnDataReceiver {
 		isReceive=false;
 		if(null != rtsp) {
 			if(  handle == -1 )
-	              return;
+				return;
 			rtsp.stopPlay(handle);
 			//rtsp = null;
 		}
@@ -141,7 +141,7 @@ public class DataService implements OnDataReceiver {
 		try {
 			int size = frameQueue.size();
 			if(size > 60) {
-			//	if(frame.isKey())
+				//	if(frame.isKey())
 				{
 					//frameQueue.getFrameFromQueue();
 					//frameQueue.clear();
@@ -172,10 +172,10 @@ public class DataService implements OnDataReceiver {
 			if(!file.exists())
 			{
 				try{
-                       boolean b = file.createNewFile();
-              }catch(Exception e){
-                       e.printStackTrace();
-              }
+					boolean b = file.createNewFile();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 			fos = new FileOutputStream(file,true);
 			fos.write(str.getBytes());
@@ -187,7 +187,7 @@ public class DataService implements OnDataReceiver {
 		}finally{
 			try {
 				if(null!=fos)
-				fos.close();
+					fos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -196,7 +196,7 @@ public class DataService implements OnDataReceiver {
 
 	@Override
 	public void onDataReceive(byte[] data, int length, int width, int height, int fps,int codectype) {
-	//Log.i( "onDataReceive","start:"+String.valueOf(data.length)+" :codectype:"+codectype);
+		//Log.i( "onDataReceive","start:"+String.valueOf(data.length)+" :codectype:"+codectype);
 
 
 //		  try
@@ -223,7 +223,7 @@ public class DataService implements OnDataReceiver {
 			byte keyNum = data[4];
 
 			if(keyNum >=5 && keyNum <= 8)
-			   frame.setKey(true);
+				frame.setKey(true);
 			else
 				frame.setKey(false);
 //			if(length >= 5) {
@@ -234,18 +234,18 @@ public class DataService implements OnDataReceiver {
 //			}
 			//byte [] tempData = Arrays.copyOf(data, data.length);
 
-		//	if( ( recvData == null ) || recvData.length < length )
-		//	{
+			//	if( ( recvData == null ) || recvData.length < length )
+			//	{
 			//	byte [] tempData = new byte[length];
 
 			//}
-		//	System.arraycopy(data, 0, tempData, 0, length);
+			//	System.arraycopy(data, 0, tempData, 0, length);
 
 			frame.setType(Frame.TYPE_VIDEO);
 			frame.setData(data);
 			frame.setLength(length);
-	//		frame.setTimestamp(timestamp);
-	//		frame.setDate(date);
+			//		frame.setTimestamp(timestamp);
+			//		frame.setDate(date);
 			frame.setDataRate(dataRate);
 
 			MediaInfo mediaInfo = new MediaInfo();
@@ -255,15 +255,15 @@ public class DataService implements OnDataReceiver {
 			frame.setMediaInfo(mediaInfo);
 
 			if(codectype == 1 )
-			   frame.setCodecType(Codec.CODEC_H264);
+				frame.setCodecType(Codec.CODEC_H264);
 			else
-			   frame.setCodecType(Codec.CODEC_JPEG);
+				frame.setCodecType(Codec.CODEC_JPEG);
 
-		//	frameQueue.addFrameToQueue(innerFrame);
+			//	frameQueue.addFrameToQueue(innerFrame);
 			addToFrameQueue(frame);
 		}
 
-	//	Log.i("onDataReceive", "onDataReceive end");
+		//	Log.i("onDataReceive", "onDataReceive end");
 	}
 
 	private class CheckDataThread extends Thread {
@@ -284,7 +284,7 @@ public class DataService implements OnDataReceiver {
 	}
 
 	/**
-	 * 璁＄畻鐮佹祦閫熺�?
+	 * 璁＄畻鐮佹祦閫熺�?
 	 * @param length 鏁版嵁闀垮害
 	 */
 	private void countDataRate(int length) {

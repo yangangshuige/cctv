@@ -10,7 +10,9 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.util.Log;
+
 import com.todayin.cctv.R;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -21,7 +23,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class TextureRenderer implements GLSurfaceView.Renderer{
-	private int mProgram;
+    private int mProgram;
     private int mTexSamplerHandle;
     private int mTexCoordHandle;
     private int mPosCoordHandle;
@@ -34,7 +36,7 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
 
     private int mTexWidth;
     private int mTexHeight;
-    
+
     private Context mContext;
     private final Queue<Runnable> mRunOnDraw;
     private int[] mTextures = new int[2];
@@ -46,32 +48,32 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
     private boolean initialized = false;
 
     private static final String VERTEX_SHADER =
-        "attribute vec4 a_position;\n" +
-        "attribute vec2 a_texcoord;\n" +
-        "varying vec2 v_texcoord;\n" +
-        "void main() {\n" +
-        "  gl_Position = a_position;\n" +
-        "  v_texcoord = a_texcoord;\n" +
-        "}\n";
+            "attribute vec4 a_position;\n" +
+                    "attribute vec2 a_texcoord;\n" +
+                    "varying vec2 v_texcoord;\n" +
+                    "void main() {\n" +
+                    "  gl_Position = a_position;\n" +
+                    "  v_texcoord = a_texcoord;\n" +
+                    "}\n";
 
     private static final String FRAGMENT_SHADER =
-        "precision mediump float;\n" +
-        "uniform sampler2D tex_sampler;\n" +
-        "varying vec2 v_texcoord;\n" +
-        "void main() {\n" +
-        "  gl_FragColor = texture2D(tex_sampler, v_texcoord);\n" +
-        "}\n";
+            "precision mediump float;\n" +
+                    "uniform sampler2D tex_sampler;\n" +
+                    "varying vec2 v_texcoord;\n" +
+                    "void main() {\n" +
+                    "  gl_FragColor = texture2D(tex_sampler, v_texcoord);\n" +
+                    "}\n";
 
     private static final float[] TEX_VERTICES = {
-        0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+            0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
     };
 
     private static final float[] POS_VERTICES = {
-        -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f
+            -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f
     };
 
     private static final int FLOAT_SIZE_BYTES = 4;
-    
+
     public TextureRenderer() {
         // TODO Auto-generated constructor stub
         mRunOnDraw = new LinkedList<Runnable>();
@@ -134,7 +136,7 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLToolbox.checkGlError("glActiveTexture");
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texId);//∞—“—æ≠¥¶¿Ì∫√µƒTexture¥´µΩGL…œ√Ê
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texId);//ÊääÂ∑≤ÁªèÂ§ÑÁêÜÂ•ΩÁöÑTexture‰º†Âà∞GL‰∏äÈù¢
         GLToolbox.checkGlError("glBindTexture");
         GLES20.glUniform1i(mTexSamplerHandle, 0);
 
@@ -143,7 +145,7 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
     }
 
-    private void computeOutputVertices() { //µ˜’˚AspectRatio ±£÷§landscape∫Õportraitµƒ ±∫Úœ‘ æ±»¿˝œ‡Õ¨£¨Õº∆¨≤ªª·±ª¿≠…Ï
+    private void computeOutputVertices() { //Ë∞ÉÊï¥AspectRatio ‰øùËØÅlandscapeÂíåportraitÁöÑÊó∂ÂÄôÊòæÁ§∫ÊØî‰æãÁõ∏ÂêåÔºåÂõæÁâá‰∏ç‰ºöË¢´Êãâ‰º∏
         if (mPosVertices != null) {
             float imgAspectRatio = mTexWidth / (float)mTexHeight;
             float viewAspectRatio = mViewWidth / (float)mViewHeight;
@@ -164,7 +166,7 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
             mPosVertices.put(coords).position(0);
         }
     }
-    
+
     private void initEffect() {
         EffectFactory effectFactory = mEffectContext.getFactory();
         if (mEffect != null) {
@@ -175,132 +177,132 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
          */
         switch (mCurrentEffect) {
 
-        case R.id.none:
-            break;
+            case R.id.none:
+                break;
 
-        case R.id.autofix:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_AUTOFIX);
-            mEffect.setParameter("scale", 0.5f);
-            break;
+            case R.id.autofix:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_AUTOFIX);
+                mEffect.setParameter("scale", 0.5f);
+                break;
 
-        case R.id.bw:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_BLACKWHITE);
-            mEffect.setParameter("black", .1f);
-            mEffect.setParameter("white", .7f);
-            break;
+            case R.id.bw:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_BLACKWHITE);
+                mEffect.setParameter("black", .1f);
+                mEffect.setParameter("white", .7f);
+                break;
 
-        case R.id.brightness:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_BRIGHTNESS);
-            mEffect.setParameter("brightness", 2.0f);
-            break;
+            case R.id.brightness:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_BRIGHTNESS);
+                mEffect.setParameter("brightness", 2.0f);
+                break;
 
-        case R.id.contrast:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_CONTRAST);
-            mEffect.setParameter("contrast", 1.4f);
-            break;
+            case R.id.contrast:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_CONTRAST);
+                mEffect.setParameter("contrast", 1.4f);
+                break;
 
-        case R.id.crossprocess:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_CROSSPROCESS);
-            break;
+            case R.id.crossprocess:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_CROSSPROCESS);
+                break;
 
-        case R.id.documentary:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_DOCUMENTARY);
-            break;
+            case R.id.documentary:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_DOCUMENTARY);
+                break;
 
-        case R.id.duotone:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_DUOTONE);
-            mEffect.setParameter("first_color", Color.YELLOW);
-            mEffect.setParameter("second_color", Color.DKGRAY);
-            break;
+            case R.id.duotone:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_DUOTONE);
+                mEffect.setParameter("first_color", Color.YELLOW);
+                mEffect.setParameter("second_color", Color.DKGRAY);
+                break;
 
-        case R.id.filllight:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FILLLIGHT);
-            mEffect.setParameter("strength", .8f);
-            break;
+            case R.id.filllight:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FILLLIGHT);
+                mEffect.setParameter("strength", .8f);
+                break;
 
-        case R.id.fisheye:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FISHEYE);
-            mEffect.setParameter("scale", .5f);
-            break;
+            case R.id.fisheye:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FISHEYE);
+                mEffect.setParameter("scale", .5f);
+                break;
 
-        case R.id.flipvert:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FLIP);
-            mEffect.setParameter("vertical", true);
-            break;
+            case R.id.flipvert:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FLIP);
+                mEffect.setParameter("vertical", true);
+                break;
 
-        case R.id.fliphor:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FLIP);
-            mEffect.setParameter("horizontal", true);
-            break;
+            case R.id.fliphor:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_FLIP);
+                mEffect.setParameter("horizontal", true);
+                break;
 
-        case R.id.grain:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAIN);
-            mEffect.setParameter("strength", 1.0f);
-            break;
+            case R.id.grain:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAIN);
+                mEffect.setParameter("strength", 1.0f);
+                break;
 
-        case R.id.grayscale:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAYSCALE);
-            break;
+            case R.id.grayscale:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_GRAYSCALE);
+                break;
 
-        case R.id.lomoish:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_LOMOISH);
-            break;
+            case R.id.lomoish:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_LOMOISH);
+                break;
 
-        case R.id.negative:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_NEGATIVE);
-            break;
+            case R.id.negative:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_NEGATIVE);
+                break;
 
-        case R.id.posterize:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_POSTERIZE);
-            break;
+            case R.id.posterize:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_POSTERIZE);
+                break;
 
-        case R.id.rotate:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_ROTATE);
-            mEffect.setParameter("angle", 180);
-            break;
+            case R.id.rotate:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_ROTATE);
+                mEffect.setParameter("angle", 180);
+                break;
 
-        case R.id.saturate:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SATURATE);
-            mEffect.setParameter("scale", .5f);
-            break;
+            case R.id.saturate:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SATURATE);
+                mEffect.setParameter("scale", .5f);
+                break;
 
-        case R.id.sepia:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SEPIA);
-            break;
+            case R.id.sepia:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SEPIA);
+                break;
 
-        case R.id.sharpen:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SHARPEN);
-            break;
+            case R.id.sharpen:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_SHARPEN);
+                break;
 
-        case R.id.temperature:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_TEMPERATURE);
-            mEffect.setParameter("scale", .9f);
-            break;
+            case R.id.temperature:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_TEMPERATURE);
+                mEffect.setParameter("scale", .9f);
+                break;
 
-        case R.id.tint:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_TINT);
-            mEffect.setParameter("tint", Color.MAGENTA);
-            break;
+            case R.id.tint:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_TINT);
+                mEffect.setParameter("tint", Color.MAGENTA);
+                break;
 
-        case R.id.vignette:
-            mEffect = effectFactory.createEffect(EffectFactory.EFFECT_VIGNETTE);
-            mEffect.setParameter("scale", .5f);
-            break;
+            case R.id.vignette:
+                mEffect = effectFactory.createEffect(EffectFactory.EFFECT_VIGNETTE);
+                mEffect.setParameter("scale", .5f);
+                break;
 
-        default:
-            break;
+            default:
+                break;
 
         }
     }
-    
+
     public void setCurrentEffect(int effect) {
         mCurrentEffect = effect;
     }
 
-    
+
     public void setImageBitmap(final Bitmap bmp){
         runOnDraw(new Runnable() {
-            
+
             @Override
             public void run() {
                 // TODO Auto-generated method stub
@@ -308,12 +310,12 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
             }
         });
     }
-    
+
     private void loadTexture(Bitmap bmp){
         GLES20.glGenTextures(2, mTextures , 0);
 
         updateTextureSize(bmp.getWidth(), bmp.getHeight());
-        
+
         mImageWidth = bmp.getWidth();
         mImageHeight = bmp.getHeight();
 
@@ -322,12 +324,12 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
 
         GLToolbox.initTexParams();
     }
-    
+
     private void applyEffect() {
         if(mEffect == null){
             Log.i("info","apply Effect null mEffect");
         }
-        
+
         mEffect.apply(mTextures[0], mImageWidth, mImageHeight, mTextures[1]);
     }
 
@@ -347,14 +349,14 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
             mEffectContext = EffectContext.createWithCurrentGlContext();
             initialized = true;
         }
-        
+
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
         synchronized (mRunOnDraw) {
             while (!mRunOnDraw.isEmpty()) {
                 mRunOnDraw.poll().run();
             }
         }
-        
+
         if (mCurrentEffect != R.id.none) {
             initEffect();
             applyEffect();
@@ -371,13 +373,13 @@ public class TextureRenderer implements GLSurfaceView.Renderer{
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
     protected void runOnDraw(final Runnable runnable) {
         synchronized (mRunOnDraw) {
             mRunOnDraw.add(runnable);
         }
     }
-	
+
 }

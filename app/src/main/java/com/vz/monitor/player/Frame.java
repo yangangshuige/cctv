@@ -1,27 +1,27 @@
 package com.vz.monitor.player;
 
 /**
- * Ö¡ĞÅÏ¢
+ * å¸§ä¿¡æ¯
  *
- * @author Ì·ºº²Å
+ * @author è°­æ±‰æ‰
  * @date 2012-6-28
  */
 public class Frame {
 	public static final int TYPE_VIDEO = 1;
 	public static final int TYPE_AUDIO = 2;
 
-	private int type = TYPE_VIDEO; // Ö¡ÀàĞÍ£ºÊÓÆµÖ¡/ÒôÆµÖ¡
+	private int type = TYPE_VIDEO; // å¸§ç±»å‹ï¼šè§†é¢‘å¸§/éŸ³é¢‘å¸§
 
-	private byte[] data; // Ö¡Êı¾İ
-	private int length; // Ö¡³¤¶È
-	private int timestamp; // Ö¡µÄÊ±¼ä´Á
-	private boolean isKey = false; // ÊÇ·ñ¹Ø¼üÖ¡
-	private int date;		//Ö¡Ê±¼ä(Ãë)
+	private byte[] data; // å¸§æ•°æ®
+	private int length; // å¸§é•¿åº¦
+	private int timestamp; // å¸§çš„æ—¶é—´æˆ³
+	private boolean isKey = false; // æ˜¯å¦å…³é”®å¸§
+	private int date;		//å¸§æ—¶é—´(ç§’)
 
-	private float dataRate;	//ÂëÂÊ£¬kbps
-	
+	private float dataRate;	//ç ç‡ï¼Œkbps
+
 	private MediaInfo mediaInfo;
-	
+
 	private int codecType = Codec.CODEC_H264;
 
 	public int getType() {
@@ -63,7 +63,7 @@ public class Frame {
 	public void setKey(boolean isKey) {
 		this.isKey = isKey;
 	}
-	
+
 	public int getDate() {
 		return date;
 	}

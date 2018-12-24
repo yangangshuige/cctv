@@ -10,14 +10,14 @@ import android.media.AudioTrack;
 import android.media.MediaPlayer;
 
 /**
- * ÒôÆµ²¥·ÅÆ÷Àà
- * @author Ì·ºº??
+ * éŸ³é¢‘æ’­æ”¾å™¨ç±»
+ * @author è°­æ±‰ï¿½?
  * @date 2012-8-3
  */
 public class AudioPlayer {
-	private int sampleRateInHz = 8000; //²ÉÑùËÙÂÊ
-	private int channelConfig = AudioFormat.CHANNEL_OUT_MONO; //µ¥Éù??
-	private int audioEncoding = AudioFormat.ENCODING_PCM_16BIT; //²ÉÑùÉî¶È
+	private int sampleRateInHz = 8000; //é‡‡æ ·é€Ÿç‡
+	private int channelConfig = AudioFormat.CHANNEL_OUT_MONO; //å•å£°ï¿½?
+	private int audioEncoding = AudioFormat.ENCODING_PCM_16BIT; //é‡‡æ ·æ·±åº¦
 	private int streamType = AudioManager.STREAM_MUSIC;
 	private int mode = AudioTrack.MODE_STREAM;
 
@@ -42,7 +42,7 @@ public class AudioPlayer {
 		this.context = context;
 	}
 
-	public AudioPlayer(Context context, int channel, int encoding, int sampleRateInHz) {
+	public AudioPlayer(Context context,int channel, int encoding,int sampleRateInHz) {
 		this.context = context;
 		this.channelConfig = channel;
 		this.audioEncoding = encoding;
@@ -50,8 +50,8 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * ÉèÖÃÒôÆµÊı¾İ
-	 * @param data ÒôÆµÊı¾İ
+	 * è®¾ç½®éŸ³é¢‘æ•°æ®
+	 * @param data éŸ³é¢‘æ•°æ®
 	 */
 	public synchronized void addAudioData(byte[] audioData) {
 //		if(null != audioData) {
@@ -61,8 +61,8 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * »ñÈ¡ÒôÆµÊı¾İÁĞ±íµÄÍ·Î»ÖÃÊı¾İ
-	 * @return Èç¹ûÓĞÒôÆµÊı¾İ£¬¾Í·µ»ØÒôÆµÊı¾İ£¬·ñÔò·µ»Ø³¤¶È??µÄÊı??
+	 * è·å–éŸ³é¢‘æ•°æ®åˆ—è¡¨çš„å¤´ä½ç½®æ•°æ®
+	 * @return å¦‚æœæœ‰éŸ³é¢‘æ•°æ®ï¼Œå°±è¿”å›éŸ³é¢‘æ•°æ®ï¼Œå¦åˆ™è¿”å›é•¿åº¦ï¿½?çš„æ•°ï¿½?
 	 */
 	private synchronized byte[] getAudioData() {
 		if(audioDataLists.size() > 0) {
@@ -73,34 +73,34 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Çå¿ÕÒôÆµÊı¾İ
+	 * æ¸…ç©ºéŸ³é¢‘æ•°æ®
 	 */
 	private void clearAudioData() {
 		audioDataLists.clear();
 	}
 
 	/**
-	 * ³õÊ¼??
+	 * åˆå§‹ï¿½?
 	 */
 	private void initAudioTrack() {
 		int bufferSizeInBytes = AudioTrack.getMinBufferSize(sampleRateInHz, channelConfig, audioEncoding);
-	    mAudioTrack = new AudioTrack(streamType, sampleRateInHz, channelConfig, audioEncoding, bufferSizeInBytes, mode);
-	    mAudioTrack.setStereoVolume(volume, volume);
+		mAudioTrack = new AudioTrack(streamType, sampleRateInHz, channelConfig, audioEncoding, bufferSizeInBytes, mode);
+		mAudioTrack.setStereoVolume(volume, volume);
 	}
 
 	/**
-	 * ²¥·ÅÉùÒô
+	 * æ’­æ”¾å£°éŸ³
 	 */
 	public void play() {
 		initAudioTrack();
-	    isAudioPlaying = true;
-	    mAudioTrack.play();
+		isAudioPlaying = true;
+		mAudioTrack.play();
 //	    AudioPlayThread audioPlayThread = new AudioPlayThread();
 //	    audioPlayThread.start();
 	}
 
 	/**
-	 * Í£Ö¹ÉùÒô
+	 * åœæ­¢å£°éŸ³
 	 */
 	public void stop() {
 		isAudioPlaying = false;
@@ -113,7 +113,7 @@ public class AudioPlayer {
 	}
 
 //	/**
-//	 * ²¥·Å¾¯±¨ÉùÒô
+//	 * æ’­æ”¾è­¦æŠ¥å£°éŸ³
 //	 */
 //	public void playAlarm() {
 //		mediaPlayer = MediaPlayer.create(context, com.huanyi.monitor.R.raw.alarm);
@@ -124,7 +124,7 @@ public class AudioPlayer {
 //	}
 //
 //	/**
-//	 * Í£Ö¹¾¯±¨ÉùÒô
+//	 * åœæ­¢è­¦æŠ¥å£°éŸ³
 //	 */
 //	public void stopAlarm() {
 //		isAlarmPlaying = false;
@@ -136,13 +136,13 @@ public class AudioPlayer {
 //	}
 
 	/**
-	 * ÒôÆµ²¥·ÅµÄÏß³ÌÀà
+	 * éŸ³é¢‘æ’­æ”¾çš„çº¿ç¨‹ç±»
 	 * @author Administrator
 	 */
 	private class AudioPlayThread extends Thread {
 		@Override
 		public void run() {
-			playing(); 
+			playing();
 		}
 
 		private void playing() {
@@ -156,7 +156,7 @@ public class AudioPlayer {
 					} catch (InterruptedException e) {
 					}
 				}
-				
+
 			}
 		}
 	}

@@ -13,38 +13,38 @@ public class CircleQueue {
 	private int         queueSize= 20;
 	private int         readPos = 0;
 	private int         writePos = 0;
-	   
+
 	public CircleQueue()
 	{
-		 reserveSize(queueSize);
+		reserveSize(queueSize);
 	}
-	
-	 public void reserveSize(int reserveSize)
-	 {
-		 if(reserveSize<0)
-		 {
-			 queue.clear();
-			 return;
-		 }
-		 
-		 while (queue.size() > reserveSize )
-		 {
-			 queue.remove(queue.size() -1);
-		 }
-		 
-		 while (queue.size() < reserveSize )
-		 {
-			 queue.add(new Frame());
-		 }
-		 
-		 readPos = 0;
-		 writePos = 0;
-	 }
-	
+
+	public void reserveSize(int reserveSize)
+	{
+		if(reserveSize<0)
+		{
+			queue.clear();
+			return;
+		}
+
+		while (queue.size() > reserveSize )
+		{
+			queue.remove(queue.size() -1);
+		}
+
+		while (queue.size() < reserveSize )
+		{
+			queue.add(new Frame());
+		}
+
+		readPos = 0;
+		writePos = 0;
+	}
+
 	/**
 	 * 向队列的尾部添加数据
 	 *
-	 * @param frame 帧数�?
+	 * @param frame 帧数?
 	 * @throws Exception
 	 */
 	public synchronized void addFrameToQueue(Frame frame) //throws Exception
@@ -57,7 +57,7 @@ public class CircleQueue {
 
 		Frame tempFrame = queue.get(writePos);
 
-	//	tempFrame.copy(frame);
+		//	tempFrame.copy(frame);
 
 		writePos++;
 
@@ -68,38 +68,38 @@ public class CircleQueue {
 	}
 
 	/**
-	 * 从队列的头部取出�?��数据
-	 * @return 帧数�?
+	 * 从队列的头部取出数据
+	 * @return 帧数?
 	 */
 	public synchronized boolean getFrameFromQueue(Frame frame)// throws Exception
 	{
-	    if(readPos == writePos || queue.size() == 0)
-	    {
-	    	//frame = null;
-	    	return false;
-	    }
+		if(readPos == writePos || queue.size() == 0)
+		{
+			//frame = null;
+			return false;
+		}
 
-        Frame tempFrame = queue.get(readPos);
+		Frame tempFrame = queue.get(readPos);
 
-       // frame.copy(tempFrame);
+		// frame.copy(tempFrame);
 
-        readPos++;
+		readPos++;
 
-     	if(readPos >= queue.size() )
-     	{
-     		readPos = 0;
-     	}
+		if(readPos >= queue.size() )
+		{
+			readPos = 0;
+		}
 
-     	return true;
+		return true;
 	}
 
 	/**
 	 * 清空队列
 	 */
 	public synchronized void clear() {
-		 
+
 	}
-	
+
 	public synchronized int size() {
 		return queue.size();
 	}
