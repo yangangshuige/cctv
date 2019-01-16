@@ -1,39 +1,34 @@
 package com.example.vzvision;
 
-import com.device.*;
-import com.database.*;
-
-import java.io.UnsupportedEncodingException;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.KeyEvent;
-import android.graphics.*;
-import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.TextView;
-
-import java.util.Map;
-import java.util.HashMap;
-
+import com.database.DeviceInfoTable;
+import com.database.SnapImageTable;
+import com.database.plateCallbackInfoTable;
+import com.database.plateHelper;
+import com.device.DeviceInfo;
+import com.device.DeviceSet;
+import com.device.VedioSetVeiw;
 import com.todayin.cctv.R;
 import com.todayin.cctv.utils.ThreadManager;
 import com.vz.PlateResult;
 import com.vz.tcpsdk;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, View.OnClickListener {
+public class CameraActivity1 extends Activity implements tcpsdk.OnDataReceiver, View.OnClickListener {
 
     public static final int StopVedio = 0x20001;
     public static final int StartVedio = 0x20002;
@@ -50,12 +45,10 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
     public static final String UserNameLabel = "UserName";
     public static final String UserPasswordLabel = "UserPassowrd";
     private DisplayMetrics dm;
-    private SlideMenu slideMenu;
     private int selectId;
     private GlobalVariable m_gb = null;
     private CellLayout celllayout;
     private Map<Integer, DeviceSet> vedioGroup;
-    private BussionPopWindow mPop = null;
     private DeviceInfoTable m_DeviceInfoTable = null;
     private boolean m_zoomInFlag = false;
 
@@ -65,9 +58,9 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
 
         System.out.print(" System.out.print(viewid);");
 
-        setContentView(R.layout.activity_camera_main);
+        setContentView(R.layout.activity_camera_main1);
         tcpsdk.getInstance().setup();
-        plateHelper so = new plateHelper(CameraActivity.this, "yitijiDatabase.db", null, 1);
+        plateHelper so = new plateHelper(CameraActivity1.this, "yitijiDatabase.db", null, 1);
         plateCallbackInfoTable pct = new plateCallbackInfoTable();
         pct.setDataBaseHelper(so);
 
@@ -101,58 +94,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
         } catch (Exception e) {
             Log.e("visizion", e.toString());
         }
-
-        slideMenu = (SlideMenu) findViewById(R.id.slide_menu);
-        ImageView menuImg = (ImageView) findViewById(R.id.title_bar_menu_btn);
-        menuImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int i = v.getId();
-                if (i == R.id.title_bar_menu_btn) {
-                    if (slideMenu.isMainScreenShowing()) {
-                        slideMenu.openMenu();
-                    } else {
-                        slideMenu.closeMenu();
-                    }
-
-                }
-
-            }
-        });
-
-        TextView plateInfoView = (TextView) slideMenu.findViewById(R.id.TextView_PlateInfo);
-        //	plateInfoView.setId(PlateInfoID );
-        plateInfoView.setOnClickListener(clickListener);
-
-        TextView snapView = (TextView) slideMenu.findViewById(R.id.TextView_CpaturePicInfo);
-        //	snapView.setId(SnapImageID );
-        snapView.setOnClickListener(clickListener);
-
-
-        TextView aboutView = (TextView) slideMenu.findViewById(R.id.TextView_about);
-        //	snapView.setId(SnapImageID );
-        aboutView.setOnClickListener(clickListener);
-        initView();
         setDeviceInfo(2);
-//        vedioGroup = new HashMap<Integer, DeviceSet>();
-//        for (int i = 0; i < 12; i++) {
-//            DeviceInfo di = new DeviceInfo(10 + i);
-//            m_DeviceInfoTable.GetCallbackInfo(10 + i, di);
-//
-//            VedioSetVeiw vsv = new VedioSetVeiw(CameraActivity.this);
-//
-//            vsv.sethandle(handler);
-//            vsv.setId(di.id);
-//            DeviceSet ds = new DeviceSet(di, vsv);
-//
-//            ds.setPlateInfoCallBack(this, 1);
-//
-//
-//            celllayout.addView(vsv, i);
-//
-//
-//            vedioGroup.put(10 + i, ds);
-//        }
     }
 
     private void setDeviceInfo(int num) {
@@ -168,7 +110,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
             DeviceInfo di = new DeviceInfo(10 + i);
             m_DeviceInfoTable.GetCallbackInfo(10 + i, di);
 
-            VedioSetVeiw vsv = new VedioSetVeiw(CameraActivity.this);
+            VedioSetVeiw vsv = new VedioSetVeiw(CameraActivity1.this);
 
             vsv.sethandle(handler);
             vsv.setId(di.id);
@@ -187,7 +129,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
             public void run() {
                 java.util.Iterator it = vedioGroup.entrySet().iterator();
                 while (it.hasNext()) {
-                    java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
+                    Map.Entry entry = (Map.Entry) it.next();
                     DeviceSet ds = (DeviceSet) entry.getValue();
                     if (ds != null && ds.open()) {
                         ds.playVideo();
@@ -197,13 +139,6 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
         });
     }
 
-    private void initView() {
-        findViewById(R.id.btn_two).setOnClickListener(this);
-        findViewById(R.id.btn_four).setOnClickListener(this);
-        findViewById(R.id.btn_six).setOnClickListener(this);
-        findViewById(R.id.btn_nine).setOnClickListener(this);
-        findViewById(R.id.btn_ten).setOnClickListener(this);
-    }
 
     @Override
     public void onClick(View v) {
@@ -235,146 +170,14 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-//		java.util.Iterator it = vedioGroup.entrySet().iterator();
-//		while(it.hasNext()){
-//		   java.util.Map.Entry entry = (java.util.Map.Entry)it.next();
-//		   DeviceSet ds = (DeviceSet)entry.getValue();
-//
-//		   if( (ds != null) && ds.open())
-//			{
-//			   ds.pause();
-//			}
-//		}
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-//		java.util.Iterator it = vedioGroup.entrySet().iterator();
-//		while(it.hasNext()){
-//		   java.util.Map.Entry entry = (java.util.Map.Entry)it.next();
-//		   DeviceSet ds = (DeviceSet)entry.getValue();
-//
-//		   if( (ds != null) && ds.open())
-//			{
-//			   ds.resum();
-//			}
-//		}
-    }
-
-    @Override
-    public void finish() {
-        if (vedioGroup != null) {
-            java.util.Iterator it = vedioGroup.entrySet().iterator();
-            while (it.hasNext()) {
-                java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
-                DeviceSet ds = (DeviceSet) entry.getValue();
-                ds.stopVideo();
-                ds.close();
-
-                DeviceInfo di = ds.getDeviceInfo();
-
-                if (di != null)
-                    m_DeviceInfoTable.put(di.id, di.DeviceName, di.ip, di.port, di.username, di.userpassword);
-
-            }
-
-            vedioGroup.clear();
-            celllayout.removeAllViews();
-        }
-        super.finish();
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (vedioGroup != null) {
-            java.util.Iterator it = vedioGroup.entrySet().iterator();
-            while (it.hasNext()) {
-                java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
-                DeviceSet ds = (DeviceSet) entry.getValue();
-                ds.stopVideo();
-                ds.close();
-
-                DeviceInfo di = ds.getDeviceInfo();
-
-                if (di != null)
-                    m_DeviceInfoTable.put(di.id, di.DeviceName, di.ip, di.port, di.username, di.userpassword);
-
-            }
-
-            vedioGroup.clear();
-            celllayout.removeAllViews();
-        }
         tcpsdk.getInstance().cleanup();
-
         m_gb.getplateCallbackInfoTable().ClearAll();
         m_gb.getSnapImageTable().ClearAll();
         ThreadManager.releasePool();
-    }
-
-
-    private void showDailog(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setTitle("确认退出");
-        builder.setMessage(msg);
-//      builder.setCancelable(false);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-
-                if (vedioGroup != null) {
-                    java.util.Iterator it = vedioGroup.entrySet().iterator();
-                    while (it.hasNext()) {
-                        java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
-                        DeviceSet ds = (DeviceSet) entry.getValue();
-                        ds.stopVideo();
-                        ds.close();
-
-                        DeviceInfo di = ds.getDeviceInfo();
-
-                        if (di != null)
-                            m_DeviceInfoTable.put(di.id, di.DeviceName, di.ip, di.port, di.username, di.userpassword);
-
-                    }
-
-                    vedioGroup.clear();
-                    celllayout.removeAllViews();
-                }
-
-
-                finish();
-            }
-        });
-        builder.setNegativeButton("取消", null);
-        builder.create().show();
     }
 
     public void onDataReceive(int handle, PlateResult plateResult, int uNumPlates, int eResultType,
@@ -383,7 +186,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
             DeviceSet ds = this.getDeviceSetFromHandle(handle);
 
             if (ds == null) {
-                Toast.makeText(CameraActivity.this, "车牌回调数据失败:未找到设备", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CameraActivity1.this, "车牌回调数据失败:未找到设备", Toast.LENGTH_SHORT).show();
             }
 
             DeviceInfo di = ds.getDeviceInfo();
@@ -414,7 +217,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
             Log.e("yg", plateText);
 
             if (!m_gb.getplateCallbackInfoTable().addCallbackInfo(di.DeviceName, plateText, dateText, pImgFull, pImgPlateClip)) {
-                Toast.makeText(CameraActivity.this, "添加车牌回调数据失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CameraActivity1.this, "添加车牌回调数据失败", Toast.LENGTH_SHORT).show();
             }
 
             Log.i("visizion", "decodeByteArray begin");
@@ -451,7 +254,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
 
         } catch (UnsupportedEncodingException e) {
 
-            Toast.makeText(CameraActivity.this, "不支持的解码异常", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CameraActivity1.this, "不支持的解码异常", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -459,18 +262,18 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SelectVedio: {
                     int vediosetid = msg.arg1;
 
                     java.util.Iterator it = vedioGroup.entrySet().iterator();
                     while (it.hasNext()) {
-                        java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
+                        Map.Entry entry = (Map.Entry) it.next();
                         DeviceSet ds = (DeviceSet) entry.getValue();
 
                         if ((Integer) entry.getKey() == vediosetid) {
-                            CameraActivity.this.selectId = vediosetid;
+                            CameraActivity1.this.selectId = vediosetid;
                             ds.select();
                         } else {
                             ds.unselect();
@@ -521,7 +324,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                     DeviceSet ds = getDeviceSetFromId(vediosetid);
 
                     if (ds != null) {
-                        Intent intent = new Intent(CameraActivity.this, DeviceActivity.class);
+                        Intent intent = new Intent(CameraActivity1.this, DeviceActivity.class);
 
                         intent.putExtra(deviceNameLabel, ds.getDeviceInfo().DeviceName);
                         intent.putExtra(deviceIpLabel, ds.getDeviceInfo().ip);
@@ -529,7 +332,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                         intent.putExtra(UserNameLabel, ds.getDeviceInfo().username);
                         intent.putExtra(UserPasswordLabel, ds.getDeviceInfo().userpassword);
 
-                        CameraActivity.this.startActivityForResult(intent, 0);
+                        CameraActivity1.this.startActivityForResult(intent, 0);
                         break;
                     }
 
@@ -537,7 +340,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                 case StopVedio: {
                     int vediosetid = msg.arg1;
 
-                    DeviceSet ds = CameraActivity.this.getDeviceSetFromId(vediosetid);
+                    DeviceSet ds = CameraActivity1.this.getDeviceSetFromId(vediosetid);
                     if (ds != null) {
                         ds.stopVideo();
                     }
@@ -548,7 +351,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                     int vediosetid = msg.arg1;
 
 
-                    DeviceSet ds = CameraActivity.this.getDeviceSetFromId(vediosetid);
+                    DeviceSet ds = CameraActivity1.this.getDeviceSetFromId(vediosetid);
                     if (ds != null) {
                         ds.playVideo();
                     }
@@ -557,7 +360,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                 case PlateImage: {
                     Bitmap bmp = (Bitmap) msg.obj;
 
-                    DeviceSet ds = CameraActivity.this.getDeviceSetFromId(msg.arg1);
+                    DeviceSet ds = CameraActivity1.this.getDeviceSetFromId(msg.arg1);
 
                     if (bmp != null) {
 
@@ -573,7 +376,7 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
                 }
                 break;
                 default:
-                    Toast.makeText(CameraActivity.this, "未知消息", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity1.this, "未知消息", Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -586,11 +389,11 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
         if (RESULT_OK == resultCode) {
             Bundle bundle = intent.getExtras();
 
-            String devicename = bundle.getString(CameraActivity.deviceNameLabel);
-            String deviceip = bundle.getString(CameraActivity.deviceIpLabel);
-            String deviceport = bundle.getString(CameraActivity.devicePortLabel);
-            String userName = bundle.getString(CameraActivity.UserNameLabel);
-            String userPassword = bundle.getString(CameraActivity.UserPasswordLabel);
+            String devicename = bundle.getString(CameraActivity1.deviceNameLabel);
+            String deviceip = bundle.getString(CameraActivity1.deviceIpLabel);
+            String deviceport = bundle.getString(CameraActivity1.devicePortLabel);
+            String userName = bundle.getString(CameraActivity1.UserNameLabel);
+            String userPassword = bundle.getString(CameraActivity1.UserPasswordLabel);
 
 
             DeviceSet ds = this.getDeviceSetFromId(selectId);
@@ -617,32 +420,12 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
-    private View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            int id = view.getId();
-            if (id == R.id.TextView_CpaturePicInfo) {
-                Intent intent = new Intent(CameraActivity.this, SnapImageActivity.class);
-                CameraActivity.this.startActivity(intent);
-
-            } else if (id == R.id.TextView_PlateInfo) {
-                Intent intent = new Intent(CameraActivity.this, PlateActivity.class);
-                CameraActivity.this.startActivity(intent);
-
-            } else if (id == R.id.TextView_about) {
-                Intent intent = new Intent(CameraActivity.this, AboutActivity.class);
-                CameraActivity.this.startActivity(intent);
-
-            }
-        }
-    };
-
     public DeviceSet getDeviceSetFromId(int id) {
 
 
         java.util.Iterator it = vedioGroup.entrySet().iterator();
         while (it.hasNext()) {
-            java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
+            Map.Entry entry = (Map.Entry) it.next();
             DeviceSet ds = (DeviceSet) entry.getValue();
 
             if ((Integer) entry.getKey() == id) {
@@ -655,11 +438,9 @@ public class CameraActivity extends Activity implements tcpsdk.OnDataReceiver, V
     }
 
     public DeviceSet getDeviceSetFromHandle(int handle) {
-
-
         java.util.Iterator it = vedioGroup.entrySet().iterator();
         while (it.hasNext()) {
-            java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
+            Map.Entry entry = (Map.Entry) it.next();
             DeviceSet ds = (DeviceSet) entry.getValue();
 
             if ((ds != null) && (handle == ds.getDeviceInfo().handle)) {

@@ -62,6 +62,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.tv_out_in:
+                intent=new Intent(this,OutInRecordActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_system:
                 intent=new Intent(this,SystemStatusActivity.class);

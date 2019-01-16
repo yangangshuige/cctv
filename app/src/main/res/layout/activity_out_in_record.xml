@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
-    tools:context="com.todayin.cctv.activity.CarDetailActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/layout_tital" />
 
@@ -17,23 +15,7 @@
         app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/colorPrimaryDark"
-        app:tabTextColor="@color/text_color">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="月租车查询" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="共享车查询" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="白名单查询" />
-    </android.support.design.widget.TabLayout>
+        app:tabTextColor="@color/text_color" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

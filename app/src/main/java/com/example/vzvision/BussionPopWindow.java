@@ -18,42 +18,37 @@ import android.app.Dialog;
 import com.device.*;
 
 public class BussionPopWindow {
-	protected Dialog mPop;
-	protected DeviceSet mDs=null;
-	protected LayoutInflater lf;
-	protected Context mContent;
+    protected Dialog mPop;
+    protected DeviceSet mDs = null;
+    protected LayoutInflater lf;
+    protected Context mContent;
 
-	public  BussionPopWindow(Context content, DeviceSet ds)
-	{
-		  lf = LayoutInflater.from(content);
-		  mContent = content;
-			 
-		 mDs  = ds;
-		 
-		 init();
-	}
-	
-	
-	protected void init()
-	{
-		 
-		 
-	}
-	
-	
-	public boolean isShowing()
-	{
-	
-		return mPop.isShowing();
-	}
-	
-	public void dismiss()
-	{
-		mPop.dismiss();
-	}
-	
-	public void show()
-	{
-		 
-	}
+    public BussionPopWindow(Context content, DeviceSet ds) {
+        lf = LayoutInflater.from(content);
+        mContent = content;
+
+        mDs = ds;
+
+        init();
+    }
+
+
+    protected void init() {
+
+
+    }
+
+
+    public boolean isShowing() {
+
+        return mPop.isShowing();
+    }
+
+    public void dismiss() {
+        mPop.dismiss();
+    }
+
+    public void show() {
+
+    }
 }

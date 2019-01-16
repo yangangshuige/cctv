@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.todayin.cctv"
-    android:versionCode="1"
-    android:versionName="1.0">
-
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="21" />
+    package="com.todayin.cctv">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -90,7 +84,7 @@
             android:name=".activity.InParkDetailActivity"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            >
+
         </activity>
         <activity
             android:name=".activity.OutParkDetailActivity"
@@ -100,9 +94,12 @@
             android:name=".activity.CarDetailActivity"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.SystemStatusActivity"
-            android:theme="@style/AppTheme.Transparent"
-            ></activity>
+        <activity
+            android:name=".activity.SystemStatusActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".activity.OutInRecordActivity"
+            android:theme="@style/AppTheme.Transparent"></activity>
     </application>
 
 </manifest>
