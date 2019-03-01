@@ -9,7 +9,7 @@ import android.view.View;
 import com.base.library.R;
 import com.base.library.bean.GetConfigRequest;
 import com.base.library.bean.ParkInfo;
-import com.base.library.bean.Robot;
+import com.base.library.bean.RobotConf;
 import com.base.library.net.ApiManager;
 import com.base.library.net.BaseObserver;
 import com.base.library.net.BaseResponse;
@@ -55,10 +55,10 @@ public class TestActivity extends AppCompatActivity {
         request.setParkId(parkId);
         request.setRobotId(androidID);
         ApiManager.getInstence().getService(TestService.class).getRobotInfo(request)
-                .compose(RxSchedulers.<BaseResponse<Robot>>applySchedulers())
-                .subscribe(new BaseObserver<BaseResponse<Robot>>() {
+                .compose(RxSchedulers.<BaseResponse<RobotConf>>applySchedulers())
+                .subscribe(new BaseObserver<BaseResponse<RobotConf>>() {
                     @Override
-                    public void onSuccess(BaseResponse<Robot> parkInfoBaseResponse) {
+                    public void onSuccess(BaseResponse<RobotConf> parkInfoBaseResponse) {
                         Log.e(TAG, parkInfoBaseResponse.getData().toString());
                         if (parkInfoBaseResponse.isResponseSuccess()) {
                         }

@@ -17,7 +17,6 @@ public class ApiManager {
     private Retrofit mApiRetrofit;
     private ConcurrentHashMap<Class, Object> cachedApis = new ConcurrentHashMap<>();
     private static ApiManager apiManager;
-
     public static ApiManager getInstence() {
         if (apiManager == null) {
             apiManager = new ApiManager();
@@ -42,7 +41,7 @@ public class ApiManager {
                 .build();
 
         mApiRetrofit = new Retrofit.Builder()
-                .baseUrl(ApiConstants.BASE_URL)
+                .baseUrl(ApiConstants.BASE_URL_NEW)
                 .client(client)
 //                .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(RetrofitConfig.converter)

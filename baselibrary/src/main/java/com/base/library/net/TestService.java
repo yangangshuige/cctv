@@ -2,7 +2,7 @@ package com.base.library.net;
 
 import com.base.library.bean.GetConfigRequest;
 import com.base.library.bean.ParkInfo;
-import com.base.library.bean.Robot;
+import com.base.library.bean.RobotConf;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -18,5 +18,5 @@ public interface TestService {
     @GET(ApiConstants.PARK_INFO)
     Observable<BaseResponse<ParkInfo>> getParkInfo(@Query("robotId") String robotId);
     @POST(ApiConstants.ROBOT_INFO)
-    Observable<BaseResponse<Robot>> getRobotInfo(@Body GetConfigRequest request);
+    Observable<BaseResponse<RobotConf>> getRobotInfo(@Body GetConfigRequest request);
 }

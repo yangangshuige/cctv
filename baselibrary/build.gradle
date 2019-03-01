@@ -39,15 +39,15 @@ dependencies {
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     api rootProject.ext.dependencies["BaseAdapterHelper"]
-    api rootProject.ext.dependencies["glide"]
-    api rootProject.ext.dependencies["viewanimator"]
-    api rootProject.ext.dependencies["FlycoDialog"]
+//    api rootProject.ext.dependencies["glide"]
+//    api rootProject.ext.dependencies["viewanimator"]
+//    api rootProject.ext.dependencies["FlycoDialog"]
     api rootProject.ext.dependencies["lottie"]
-    api rootProject.ext.dependencies["progressbar"]
+//    api rootProject.ext.dependencies["progressbar"]
     api rootProject.ext.dependencies["swipebacklayout"]
     api rootProject.ext.dependencies["androideventbus"]
-    api rootProject.ext.dependencies["litepal"]
-    implementation files('libs/BASE64.jar')
+//    api rootProject.ext.dependencies["litepal"]
+//    implementation files('libs/BASE64.jar')
 }
 repositories {
     mavenCentral()

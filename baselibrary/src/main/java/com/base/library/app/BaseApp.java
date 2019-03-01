@@ -2,12 +2,13 @@ package com.base.library.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
 
-import org.litepal.LitePal;
 import java.io.File;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
 
@@ -65,5 +66,13 @@ public class BaseApp extends Application {
         return sMyApp;
     }
 
-
+    public String getVersionName() {
+        PackageManager pm = getPackageManager();
+        try {
+            PackageInfo packInfo = pm.getPackageInfo(getPackageName(), 0);
+            return packInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "V1.0.0";
+        }
+    }
 }

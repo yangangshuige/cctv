@@ -320,7 +320,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="40dp"
-                    android:text="符合条件的有：14" />
+                    android:hint="符合条件的有：0" />
 
                 <TextView
                     android:id="@+id/tv_clean"

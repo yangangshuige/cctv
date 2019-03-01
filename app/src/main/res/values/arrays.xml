@@ -94,10 +94,16 @@
         <item>系统状态</item>
         <item>监控中心</item>
     </string-array>
+    <!--停放类型 1:月租车 2:临时车 3:免费车 4:访客车 5:无牌车 6:月临车 7:共享车-->
     <string-array name="carType">
         <item>全部</item>
         <item>月租车</item>
         <item>临时车</item>
+        <item>免费车</item>
+        <item>访客车</item>
+        <item>无牌车</item>
+        <item>月临车</item>
+        <item>共享车</item>
     </string-array>
     <string-array name="order">
         <item>全部</item>

@@ -8,13 +8,13 @@ public class GetParkCarOutInfoRequest {
     private String teamId;        //park_id,停车场ID
     private String beginTime;    //查询开始时间
     private String endTime;        //是	查询结束时间
-    private int parkMark;    //车场标识：1大车场，2小车场
-    private int parkType;    //停放类型 1:月租车 2:临时车 3:免费车 4:访客车 5:无牌车 6:月临车 7:共享车
-    private int hasPlate;//是否无牌车
+    private Integer parkMark=1;    //车场标识：1大车场，2小车场
+    private Integer parkType;    //停放类型 1:月租车 2:临时车 3:免费车 4:访客车 5:无牌车 6:月临车 7:共享车
+    private Integer hasPlate;//是否无牌车
     private String outPlateCn;    //出场 含有中文的车牌号
-    private int outChannelNo;    //出场通道编码
-    private int pageStart;
-    private int pageEnd;
+    private Integer outChannelNo;    //出场通道编码
+    private Integer pageNo=1;
+    private Integer pageSize=10;
 
     public String getTeamId() {
         return teamId;
@@ -40,27 +40,27 @@ public class GetParkCarOutInfoRequest {
         this.endTime = endTime;
     }
 
-    public int getParkMark() {
+    public Integer getParkMark() {
         return parkMark;
     }
 
-    public void setParkMark(int parkMark) {
+    public void setParkMark(Integer parkMark) {
         this.parkMark = parkMark;
     }
 
-    public int getParkType() {
+    public Integer getParkType() {
         return parkType;
     }
 
-    public void setParkType(int parkType) {
+    public void setParkType(Integer parkType) {
         this.parkType = parkType;
     }
 
-    public int getHasPlate() {
+    public Integer getHasPlate() {
         return hasPlate;
     }
 
-    public void setHasPlate(int hasPlate) {
+    public void setHasPlate(Integer hasPlate) {
         this.hasPlate = hasPlate;
     }
 
@@ -72,27 +72,27 @@ public class GetParkCarOutInfoRequest {
         this.outPlateCn = outPlateCn;
     }
 
-    public int getOutChannelNo() {
+    public Integer getOutChannelNo() {
         return outChannelNo;
     }
 
-    public void setOutChannelNo(int outChannelNo) {
+    public void setOutChannelNo(Integer outChannelNo) {
         this.outChannelNo = outChannelNo;
     }
 
-    public int getPageStart() {
-        return pageStart;
+    public Integer getPageNo() {
+        return pageNo;
     }
 
-    public void setPageStart(int pageStart) {
-        this.pageStart = pageStart;
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
     }
 
-    public int getPageEnd() {
-        return pageEnd;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setPageEnd(int pageEnd) {
-        this.pageEnd = pageEnd;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

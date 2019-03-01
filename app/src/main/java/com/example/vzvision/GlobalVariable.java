@@ -6,6 +6,8 @@ import com.crash.*;
 import com.device.*;
 import com.vz.WlistVehicle;
 
+import io.rong.imkit.RongIM;
+
 
 public class GlobalVariable extends BaseApp {
     
@@ -18,8 +20,9 @@ public class GlobalVariable extends BaseApp {
 	public void onCreate() {
 		super.onCreate();
 		
-		  CrashHandler crashHandler = CrashHandler.getInstance();
-	      crashHandler.init(getApplicationContext());
+//		  CrashHandler crashHandler = CrashHandler.getInstance();
+//	      crashHandler.init(getApplicationContext());
+		RongIM.init(this);
 	}
 	
 	void setplateCallbackInfoTable(plateCallbackInfoTable table)

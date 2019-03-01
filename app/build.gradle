@@ -9,6 +9,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -59,4 +60,5 @@ dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     implementation project(':baselibrary')
+    api project(':CallKit')
 }
